@@ -13,6 +13,12 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 
+// Bootstrap
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+
 const app = createApp(App)
 export const bus = app;
 

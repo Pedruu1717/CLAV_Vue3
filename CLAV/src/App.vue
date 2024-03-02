@@ -7,38 +7,19 @@
     />
 
     <!-- Drawers -->
-    <Definicoes v-if="store.token" :drawer="drawD" />
-    <!-- <Notificacoes
-      v-if="store.token != ''"
-      :drawer="drawN"
-      :notificacoes.value="notificacoes.value"
-      @removerNotificacao="removerNotificacao($event)"
-    /> -->
+    <!--<Definicoes v-if="store.token" :drawer="drawD" /> -->
 
     <!-- Main content -->
     <v-main>
       <v-row justify="center" class="my-5">
         <v-col cols="12" sm="12" md="11">
-          <!-- passar componentes como props do slot -->
-          <!--<router-view v-slot="{ Pedidos, CriaClasse }">
-            <keep-alive>
-              <component :is="{ Pedidos, CriaClasse }"></component>
-            </keep-alive>
-          </router-view>-->
-          <router-view></router-view>
+          <router-view />
         </v-col>
       </v-row>
     </v-main>
 
     <!-- Footer -->
-    <Suspense>
-      <template #default>
-        <PageFooter />
-      </template>
-      <template #fallback>
-        <span>Loading...</span>
-      </template>
-    </Suspense>
+    <PageFooter />
 
     <!-- Utils -->
     <v-snackbar v-model="snackbar" :color="color" :top="true" :timeout="4000">
@@ -50,11 +31,11 @@
 
 <script setup>
 /* eslint-disable */
-import Pedidos from "@/pages/pedidos/Pedidos.vue"
+//import Pedidos from "@/pages/pedidos/Pedidos.vue"
 //import CriaClasse from "@/components/classes/criacao/CriaClasse.vue"
 import PageFooter from "@/components/PageFooter.vue"; // @ is an alias to /src
 import MainPageHeader from "@/components/MainPageHeader.vue"; // @ is an alias to /src
-import Definicoes from "@/components/principal/Definicoes.vue";
+//import Definicoes from "@/components/principal/Definicoes.vue";
 //import Notificacoes from "@/components/principal/Notificacoes.vue";
 // import io from "socket.io-client";
 import { bus } from "./main";

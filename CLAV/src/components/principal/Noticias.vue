@@ -1,22 +1,14 @@
 <template>
   <Loading v-if="!noticiasReady" :message="'notícias'" />
   <div v-else class="noticias mx-7">
-    <div class="separador">
-      <v-icon class="icon">mdi-newspaper</v-icon>
-      <span class="noticias">Notícias</span>
-      <div class="btns">
-        <v-btn
-          v-for="item in this.fops"
-          rounded
-          small
-          class="panelbtn"
-          @click="go(item.url)"
-          :key="item.url"
-          >{{ item.label }}</v-btn
-        >
-      </div>
-    </div>
-    <v-carousel
+    <span class="noticias">
+        <v-icon class="icon-newspaper" icon="mdi-newspaper"></v-icon>
+        <p class="big-footer-letters text-noticias">Notícias</p>
+        <div class="spacer"></div>
+        <v-btn class="btn-ver-todas" rounded="xl">VER TODAS</v-btn>
+    </span>
+    <div class="homepage-carousel">
+      <v-carousel  
       @mouseover.native="hover = false"
       @mouseleave.native="hover = true"
       :cycle="hover"
@@ -24,27 +16,25 @@
       progress-color="secondary"
       height="300"
       hide-delimiter-background
-      show-arrows-on-hover
-    >
-      <v-carousel-item v-for="(n, index) in noticias" :key="index">
-        <v-sheet class="conteudo clav-info-content" height="100%" tile>
+      show-arrows-on-hover>
+        <v-carousel-item v-for="(n, index) in noticias" :key="index">
           <span class="titulopainel">{{ n.titulo }}</span>
           <data class="data">{{ n.data }}</data>
           <div class="info">
-            <p v-html="compiledMarkdown(n.desc)" />
+            <p>{{ n.desc }}"</p>
             <v-btn
               fab
               dark
               color="primary"
               style="position: sticky; left: 100%; bottom: 3%"
-              @click="router.push('/noticias/' + n._id)"
+              @click="$router.push('/noticias/' + n._id)"
             >
-              <v-icon> mdi-plus </v-icon>
+            <v-icon> mdi-plus </v-icon>
             </v-btn>
-          </div>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
+          </div>               
+        </v-carousel-item>  
+      </v-carousel>
+    </div>
   </div>
 </template>
 
@@ -61,11 +51,11 @@ const store = useAppStore()
 
 const props = defineProps(["level"])
 
-const hover = ref(true)
-const noticias = ref([])
-const noticiasReady = ref(false)
-const publicPath = ref(process.env.BASE_URL)
-const operacoes = ref([
+var hover = true
+var noticias = ref([])
+var noticiasReady = false
+var publicPath = ref(process.env.BASE_URL)
+var operacoes = ref([
   {
     label: "Ver Todas",
     url: "/noticias",
@@ -102,26 +92,19 @@ function filtraOps(operacoes) {
   return filtered;
 }
 
-function compiledMarkdown(d) {
-  //return marked(d || "", { sanitize: true });
-  //return marked(d || "");
-}
-
 const fops = computed(() => {
   return filtraOps(operacoes);
 })
 
-//created: async function () {
+
 try {
   fetch(host + "/noticias?recentes=sim", {method: "GET", headers:{"Authorization": "token " + store.token}})
-  .then(response => noticias.value = response.data)
-  noticiasReady.valueOf = true;
-  //let response = await request("get", "/noticias?recentes=sim");
-  //noticias.value = response.data;  
+  .then(response => response.json())
+  .then(data => noticias.value = data)
+  noticiasReady = true;
 } catch (e) {
   console.log(e);
 }
-//}
 
 </script>
 
