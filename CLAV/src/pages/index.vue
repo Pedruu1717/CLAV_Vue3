@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="pa-3" color="#26c6da">
+  <v-card flat class="pa-3">
     <Info />
     <Noticias class="mt-10" :level="level" />
   </v-card>

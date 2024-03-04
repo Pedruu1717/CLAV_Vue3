@@ -1,13 +1,13 @@
 <template>
-  <!--<div>-->
+  <div>
     <!--Navbar para sm/md/lg/xl screens-->
-    <!--<v-app-bar
+    <v-app-bar
       app
       clipped-right
       class="white--text clav-linear-background hidden-xs-only"
-    >-->
+    >
       <!--Logotipo CLAV-->
-      <!--<v-tooltip bottom color="info">
+      <v-tooltip bottom color="info">
         <template v-slot:activator="{ on }">
           <v-img
             v-on:click="on"
@@ -29,13 +29,13 @@
           </v-img>
         </template>
         <span>Voltar à página inicial</span>
-      </v-tooltip>-->
+      </v-tooltip>
 
-      <!--<v-spacer></v-spacer>-->
+      <v-spacer></v-spacer>
 
       <!--Botões toolbar CLAV-->
       <!--Iniciar sessão-->
-      <!--<v-btn
+      <v-btn
         rounded
         color="#399D44"
         class="green--text text--darken-3 mt-1"
@@ -53,9 +53,9 @@
           fill="#ffffff"
         />
         <p class="d-inline ml-3 white--text">Iniciar Sessão</p>
-      </v-btn>-->
+      </v-btn>
 
-      <v-app-bar>
+      <template v-slot:extension>
         <v-tabs show-arrows fixed-tabs>
           <v-tab>
           <!--<router-link :to="{name: 'Home'}">-->
@@ -106,23 +106,10 @@
           <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
           <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
         </v-tabs>
-      </v-app-bar>  
-
-     
-
+      </template>
       
-
-      <!--Caixa de dialogo para importar legislação/tipologia/entidade-->
-      <!--<CaixaDeDialogo
-        v-if="alternar"
-        :ativo="alternar"
-        :tipo="tipo"
-        @fechar="alternar = !alternar"
-      />-->
-    <!--</v-app-bar>-->
-
-    
-  <!--</div>-->
+    </v-app-bar>  
+  </div>
 </template>
 
 <script setup>

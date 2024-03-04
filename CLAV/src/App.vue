@@ -59,10 +59,6 @@ function fecharSnackbar() {
   snackbar = false;
 }
 
-function sizeUpdate(size) {
-  size = size;
-}
-
 function drawerDefinicoes() {
   //drawN = false;
   drawD = !drawD;
@@ -116,30 +112,7 @@ function drawerDefinicoes() {
 
 </script>
 
-<style>
-/* TODO /* TODO /* TODO /* TODO
-/* TODO Para remover depois de remover todas as utilizações */
+<style lang="scss">
+@import "@/styles/variables.scss";
 
-.v-text-field--filled > .v-input__control > .v-input__slot {
-  background: none !important;
-}
-.v-input--selection-controls {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-.v-input--switch--inset .v-input--switch__track,
-.v-input--switch--inset .v-input--selection-controls__input {
-  margin: auto !important;
-}
-.v-input input,
-.v-input textarea,
-.v-select .v-select__selection--comma {
-  color: #000000 !important;
-  font-weight: bold !important;
-  text-shadow: 0px 1px 2px var(--v-textshadow-base) !important;
-}
-.v-input--is-disabled input,
-.v-input--is-disabled textarea {
-  color: var(--v-textshadow-base) !important;
-}
 </style>

@@ -2,103 +2,22 @@
   <v-footer dark padless>
     <v-card flat style="width: 100%">
       <v-card-title id="footer-bar" class="hidden-sm-and-down px-2 py-2">
-        <p class="big-footer-letters">DGLAB -</p>
-        <p class="regular-footer-letters pl-2">
-          Direção Geral do Livro, dos Arquivos e das Bibliotecas
-        </p>
+      <div class="display-flex">
+        <p class="big-footer-letters">DGLAB - </p>
+        <p class="regular-footer-letters pl-2">Direção Geral do Livro, dos Arquivos e das Bibliotecas</p>
         <v-spacer></v-spacer>
         <p class="body-2">Versão: {{ interfaceVersion }}</p>
-
         <v-spacer></v-spacer>
-
-        <p v-if="ontoReady" class="body-2">Ontologia: {{ ontologia.value }}</p>
-
+        <p v-if="ontoReady" class="body-2">Ontologia: {{ ontologia }}</p>
         <v-spacer></v-spacer>
-        <v-btn text rounded href="mailto:clav@dglab.gov.pt" id="contact-button">
-          <unicon
-            name="contacto-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 25.71 19.282"
-            fill="#e5e5e5"
-          />
-          <p class="icon-text">Contacte-nos</p>
-        </v-btn>
+        <v-icon class="icon" icon="mdi-email-outline"></v-icon>
+        <p  class="icon-text">Contacte-nos</p>
         <v-spacer></v-spacer>
-        <v-btn text rounded @click="router.push('/colaboracoes')" id="contact-button">
-          <unicon
-            name="equipa-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 20.71 20.73"
-            fill="#e5e5e5"
-          />
-
-          <p class="icon-text">Equipa técnica</p>
-        </v-btn>
-
+        <v-icon class="icon" icon="mdi-account-group-outline"></v-icon>
+        <p class="icon-text">Equipa técnica</p>
         <v-spacer></v-spacer>
-        <v-img
-          id="footer-image"
-          class="my-2"
-          :src="'./../assets/feder.png'"
-          aspect-ratio="4.8600"
-        />
-      </v-card-title>
-      <!--Mobile Footer-->
-      <v-card-title id="footer-bar" class="hidden-md-and-up px-4 py-3">
-        <p class="big-footer-letters mt-3">DGLAB-</p>
-        <p class="regular-footer-letters mt-3">
-          Direção Geral do Livro, dos Arquivos e das Bibliotecas
-        </p>
-        <v-spacer></v-spacer>
-        <p class="body-2 mt-3">Versão: {{}}</p>
-
-        <v-spacer></v-spacer>
-
-        <p v-if="ontoReady" class="body-2 mt-3">Ontologia: {{ ontologia.value }}</p>
-
-        <v-spacer></v-spacer>
-        <v-btn
-          text
-          rounded
-          href="mailto:clav@dglab.gov.pt"
-          id="contact-button"
-          class="mt-3 pa-0"
-        >
-          <unicon
-            name="contacto-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 25.71 19.282"
-            fill="#e5e5e5"
-          />
-          <p class="icon-text">Contacte-nos</p>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          text
-          rounded
-          @click="router.push('/colaboracoesInfo')"
-          id="contact-button"
-          class="mt-3 pa-0"
-        >
-          <unicon
-            name="equipa-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 20.71 20.73"
-            fill="#e5e5e5"
-          />
-          <p class="icon-text">Equipa técnica</p>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-img
-          id="footer-image"
-          class="mt-3"
-          :src="'./../assets/feder.png'"
-          aspect-ratio="4.8600"
-        />
+        <v-img id="footer-image" class="my-2" aspect-ratio="4.8600" :src="('./../assets/feder.png')"></v-img>
+      </div>
       </v-card-title>
     </v-card>
   </v-footer>
@@ -106,34 +25,34 @@
 
 <script setup>
 import { interfaceVersion, host } from "@/config/global"
-//const interfaceVersion = require("@/config/global").interfaceVersion;
-import { mdiAccountGroupOutline } from "@mdi/js"
-import router from '@/router'
-//import request from '@/plugins/request'
 import { ref } from 'vue'
 import { useAppStore } from "@/store/app"
 
 const store = useAppStore()
 
-const ontoReady = ref(false)
-const ontologia = ref("")
-//const interfaceVersion = ref(_interfaceVersion)
+var ontoReady = false
+var ontologia = ref("")
 
-//created: async function () {
 try {
   fetch(host + "/ontologia/data", {method: "GET", headers:{"Authorization": "token " + store.token}})
-  .then(response => ontologia.value = response.data)
-  ontoReady.valueOf = true;
-  //let response = await request("get", "/ontologia/data");
-  //ontologia.value = response.data; 
+  .then(response => response.json())
+  .then(data => ontologia.value = data)
+  ontoReady= true;
 } catch (error) {
     console.log(error);
 }
-//}
-
 </script>
 
 <style scoped>
+.display-flex {
+  display: flex
+}
+
+.icon {
+  margin-right: 5px;
+  color: white;
+}
+
 .v-btn:hover:before {
   opacity: 0;
 }
@@ -186,4 +105,5 @@ try {
   min-width: 90px;
   max-width: 120px;
 }
+
 </style>
