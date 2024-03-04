@@ -1,10 +1,230 @@
-/**
- * src/styles/settings.scss
- *
- * Configures SASS variables and Vuetify overwrites
- */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap");
 
-// https://vuetifyjs.com/features/sass-variables/`
-// @use 'vuetify/settings' with (
-//   $color-pack: false
-// );
+
+// global variables
+$body-font-family: "Montserrat";
+$heading-font-family: $body-font-family;
+
+// snackbars
+$snackbar-border-radius: 40px;
+
+// card variables
+$card-border-radius: 10px;
+
+// menu variables
+$menu-content-border-radius: 0px 0px 10px 10px;
+
+// table variables
+$data-table-border-radius: 10px;
+
+// expansion panel variables
+$expansion-panel-border-radius: 10px 10px 0px 0px;
+$expansion-panel-header-padding: 10px;
+$expansion-panel-content-padding: 10px;
+
+/* Classes genéricas */
+
+// Gradiente de azul 
+.clav-linear-background {
+  background: linear-gradient(
+    to right,
+    var(--v-gradientleft-base) 0%,
+    var(--v-gradientright-base) 100%
+  );
+}
+
+// Titulo
+.clav-content-title-1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--v-h1color-base);
+  text-shadow: 0px 2px 3px var(--v-textshadow-base);
+  text-align: center;
+}
+
+// Subtitulo
+.clav-content-title-2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--v-h1color-base);
+  text-shadow: 0px 1px 2px var(--v-textshadow-base);
+}
+
+// Realçar conteúdo
+.clav-info-content {
+  padding: 8px;
+  background-color: var(--v-infocontent-base) !important;
+  text-shadow: 0px 1px 2px var(--v-textshadow-base) !important;
+}
+
+// Texto de informação (padrão)
+.clav-content-text {
+  font-size: 1rem;
+  word-spacing: 2px;
+}
+
+// Labels
+.clav-info-label {
+  color: var(--v-primary-base);
+  font-weight: bold;
+}
+
+// Texto de cabeçalhos (padrão)
+.clav-header-text {
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+// global styles
+.v-application {
+  // html resets
+  p {
+    margin: 0 !important;
+  }
+  a {
+    color: var(--v-info-base) !important;
+  }
+  a:hover {
+    color: var(--v-primary-base);
+    background-color: transparent;
+  }
+
+  // Drawers
+  .v-navigation-drawer {
+    padding-top: 125px;
+  }
+
+  // Treeview
+  .v-treeview-node__toggle--open {
+    color: var(--v-success-base) !important;
+  }
+
+  //alertas
+  .v-alert {
+    text-shadow: 0px 1px 2px var(--v-textshadow2-base) !important;
+  }
+
+  // cards
+  .v-card {
+    background-color: var(--v-secondary-base) !important;
+  }
+
+  //chips
+  .v-chip {
+    white-space: normal !important;
+    .v-chip__close.v-icon {
+      color: var(--v-error-base) !important;
+    }
+  }
+
+  //file-input
+  .v-file-input {
+    .v-icon {
+      color: var(--v-primary-base) !important;
+      .v-icon.v-icon--link {
+        color: var(--v-info-base);
+      }
+    }
+  }
+
+  // tabs
+  .v-tabs {
+
+    .v-tab:hover::before {
+      border-radius: 10px 10px 0 0 !important;
+    }
+    .v-tab::before {
+      border-radius: 10px !important;
+    }
+  }
+
+  .v-radio {
+    text-shadow: 0px 1px 2px var(--v-textshadow-base) !important;
+  }
+
+  //text fields
+  .v-text-field {
+    .v-label {
+      left: 0 !important;
+      right: 0 !important;
+      margin: auto !important;
+      max-width: 100% !important;
+    }
+    .v-input__control > .v-input__slot::after {
+      border-width: 2px !important;
+    }
+    input {
+      letter-spacing: 3px;
+    }
+  }
+
+  // lists
+  .v-list {
+    .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+      fill: #ffffff !important;
+      text-shadow: 0px 1px 2px var(--v-textshadow-base) !important;
+      border-radius: 10px;
+    }
+
+    .v-list-item--active:hover::before,
+    .v-list-item--active::before {
+      border-radius: 10px;
+      background-color: #002a8f !important;
+    }
+
+    .v-list-item:hover::before {
+      opacity: 0.1;
+      background-color: var(--v-info-base);
+      border-radius: 10px;
+    }
+    .v-list-item::before {
+      background-color: var(--v-info-base);
+      border-radius: 10px;
+    }
+    .v-list-item__title,
+    .v-list-item__subtitle {
+      white-space: normal !important;
+    }
+  }
+
+  // steppers
+  .v-stepper {
+    border-radius: none !important;
+    box-shadow: none !important;
+
+    .v-stepper__header {
+      box-shadow: none !important;
+      border-bottom: 2px solid var(--v-infocontent-base);
+    }
+    .v-stepper__label {
+      display: flex !important;
+    }
+    .v-stepper__step--editable:hover {
+      background: none !important;
+    }
+    .v-stepper__step--active .v-stepper__label {
+      font-weight: bold !important;
+      color: rgb(26, 35, 126) !important;
+      text-shadow: 0px 1px 2px rgba(26, 35, 126, 0.22) !important;
+    }
+    .v-stepper__step--complete .v-stepper__label {
+      color: rgba(43, 158, 54, 0.5) !important;
+    }
+  }
+
+  // tabelas
+  .v-data-table {
+    background-color: var(--v-secondary-base) !important;
+    td {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+
+  // expansion panels
+  .v-expansion-panels {
+    .v-expansion-panel {
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <!--<div>-->
     <!--Navbar para sm/md/lg/xl screens-->
-    <v-app-bar
+    <!--<v-app-bar
       app
       clipped-right
       class="white--text clav-linear-background hidden-xs-only"
-    >
+    >-->
       <!--Logotipo CLAV-->
-      <v-tooltip bottom color="info">
+      <!--<v-tooltip bottom color="info">
         <template v-slot:activator="{ on }">
           <v-img
             v-on:click="on"
@@ -29,15 +29,13 @@
           </v-img>
         </template>
         <span>Voltar à página inicial</span>
-      </v-tooltip>
+      </v-tooltip>-->
 
-      <v-spacer></v-spacer>
+      <!--<v-spacer></v-spacer>-->
 
       <!--Botões toolbar CLAV-->
       <!--Iniciar sessão-->
-      <v-btn
-        v-if="!store.name"
-        to="/users/autenticacao"
+      <!--<v-btn
         rounded
         color="#399D44"
         class="green--text text--darken-3 mt-1"
@@ -55,387 +53,76 @@
           fill="#ffffff"
         />
         <p class="d-inline ml-3 white--text">Iniciar Sessão</p>
-      </v-btn>
+      </v-btn>-->
 
-      <!--Notificações-->
-      <v-btn
-        v-if="store.name"
-        @click="router.push('/users/painel')"
-        icon
-        color="primary"
-      >
-        <v-badge v-if="n > 0" color="error" overlap>
-          <unicon
-            name="perfil-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 20.71 23.677"
-            fill="#e5e5e5"
-          />
-          <template v-slot:badge>
-            {{ n }}
-          </template>
-        </v-badge>
-        <unicon
-          v-else
-          name="perfil-icon"
-          width="24"
-          height="24"
-          viewBox="0 0 20.71 23.677"
-          fill="#e5e5e5"
-        />
-      </v-btn>
-
-      <!--Definições-->
-      <v-btn
-        class="white--text"
-        v-if="store.name"
-        @click="drawerDefinicoes"
-        text
-      >
-        <p class="mr-2">{{ store.name }}</p>
-        <unicon
-          name="arrow-down-icon"
-          width="13"
-          height="13"
-          viewBox="0 0 37.262 20.71"
-          fill="#e5e5e5"
-        />
-      </v-btn>
-
-      <!--Extensão para as tabs-->
-      <template v-slot:extension>
-        <v-tabs
-          grow
-          dark
-          show-arrows
-          color="secondary"
-          slider-color="secondary"
-          :icons-and-text="display.mdAndDown"
-        >
-          <v-container class="pa-0" v-for="tab in tabsAcessiveis" :key="tab.titulo">
-            <!--Tab sem menus-->
-            <v-tab
-              v-if="!tab.menu"
-              :class="{ active: tab.titulo == tabAtiva.value }"
-              class="fill-height"
-              @click="go(tab.url)"
-            >
-              <p class="hidden-lg-and-up">{{ tab.titulo }}</p>
-              <unicon
-                v-if="tab.icon"
-                :name="tab.icon.nome"
-                width="22"
-                height="22"
-                :viewBox="tab.icon.viewbox"
-              />
-              <p class="ml-3 hidden-md-and-down">{{ tab.titulo }}</p>
-            </v-tab>
-            <v-menu else offset-y open-on-hover max-height="75%" z-index="99999">
-              <!--Tabs com menus -->
-              <template v-slot:activator="{ on }">
-                <v-tab
-                  v-on:click="on"
-                  :class="{ active: tab.titulo == tabAtiva.value }"
-                  @click="tab.url ? go(tab.url) : true"
-                  class="fill-height"
-                >
-                  <p class="hidden-lg-and-up">{{ tab.titulo }}</p>
-                  <unicon
-                    v-if="tab.icon"
-                    :name="tab.icon.nome"
-                    width="22"
-                    height="22"
-                    :viewBox="tab.icon.viewbox"
-                  />
-                  <p class="ml-3 hidden-md-and-down">{{ tab.titulo }}</p>
-                </v-tab>
-              </template>
-              <!--Lista de opções dos menus-->
-              <v-list color="neutralblue">
-                <v-list-item
-                  class="mb-3 pa-2 mx-2"
-                  v-for="(menuLink, i) in tab.menu"
-                  :key="menuLink.opcao"
-                  @mouseleave="hoveropt.value ? (hover.valueOf = true) : (hover.valueOf = false)"
-                  @mouseover="
-                    hover.valueOf = true;
-                    activeItem.value = i;
-                  "
-                >
-                  <!--Opção-->
-                  <v-row @click="go(menuLink.url)" justify="center" class="white--text">
-                    {{ menuLink.opcao }}
-                  </v-row>
-                  <!--Subopções-->
-                  <transition name="opcoes">
-                    <div v-if="hover.value && i === activeItem.value && menuLink.acoes" class="acoes">
-                      <div
-                        v-for="action in menuLink.acoes"
-                        :key="action.name"
-                        class="acao"
-                      >
-                        <!--Utiliza caixa de dialogo para alterar legislação/tipologia/entidade-->
-                        <v-btn
-                          v-if="action.url.includes('alterar')"
-                          @click.prevent="openDialog(action)"
-                          icon
-                          class="white--text"
-                          color="neutralblue"
-                          @mouseover="hoveropt.valueOf = true"
-                          @mouseleave="hoveropt.valueOf = false"
-                        >
-                          <unicon
-                            :name="action.icon"
-                            width="22"
-                            height="22"
-                            viewBox="0 0 20.71 20.697"
-                            fill="#ffffff"
-                          />
-                        </v-btn>
-                        <!--Subopção-->
-                        <v-btn
-                          v-else
-                          @click.prevent="go(action.url)"
-                          icon
-                          class="white--text"
-                          color="neutralblue"
-                          @mouseover="hoveropt.valueOf = true"
-                          @mouseleave="hoveropt.valueOf = false"
-                        >
-                          <unicon
-                            :name="action.icon"
-                            width="22"
-                            height="22"
-                            viewBox="0 0 20.71 20.697"
-                            fill="#ffffff"
-                          />
-                        </v-btn>
-                      </div>
-                    </div>
-                  </transition>
-                </v-list-item>
+      <v-app-bar>
+        <v-tabs show-arrows fixed-tabs>
+          <v-tab>
+          <!--<router-link :to="{name: 'Home'}">-->
+            <v-btn @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-home-outline">CLAV</v-btn>
+          <!--</router-link>-->
+          </v-tab>
+          
+          <v-tab><v-btn @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
+        
+          <v-menu>
+            <template v-slot:activator="{ props: menu }">           
+            <v-tab>
+              <v-btn
+              @click="toggle('Operações')"
+              :color="(tabAtiva=='Operações' ? 'light-blue-darken-4': 'indigo-darken-4')"
+              v-bind="menu"
+              prepend-icon="mdi-wrench"
+              >Operações</v-btn>
+            </v-tab>     
+            </template>
+            <v-card color="blue">           
+              <v-list class="list">
+                  <v-list-item>
+                    <!--<router-link :to="{name: 'Classes'}" >-->
+                      <v-btn @click="" color="indigo-darken-4">Classes</v-btn>         
+                    <!--</router-link>-->
+                  </v-list-item>             
+                  <v-list-item>
+                    <!--<router-link :to="{name: 'Entidades'}">-->
+                      <v-btn @click="" color="indigo-darken-4">Entidades</v-btn>
+                    <!--</router-link>-->
+                  </v-list-item>
+                  <v-list-item>
+                    <!--<router-link :to="{name: 'Legislações'}">-->
+                      <v-btn @click="" color="indigo-darken-4">Legislações</v-btn>
+                    <!--</router-link>-->
+                  </v-list-item>
+                  <v-list-item>
+                    <!--<router-link :to="{name: 'Tipologias'}">-->
+                      <v-btn @click="" color="indigo-darken-4">Tipologias</v-btn>
+                    <!--</router-link>-->  
+                  </v-list-item>
               </v-list>
-            </v-menu>
-          </v-container>
+            </v-card>
+          </v-menu>
+
+          <v-tab><v-btn @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
+          <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
+          <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
         </v-tabs>
-      </template>
+      </v-app-bar>  
+
+     
+
+      
 
       <!--Caixa de dialogo para importar legislação/tipologia/entidade-->
-      <CaixaDeDialogo
+      <!--<CaixaDeDialogo
         v-if="alternar"
         :ativo="alternar"
         :tipo="tipo"
         @fechar="alternar = !alternar"
-      />
-    </v-app-bar>
+      />-->
+    <!--</v-app-bar>-->
 
-    <!--Navbar para xs (mobile) screens-->
-    <v-app-bar
-      flat
-      id="mobile-toolbar"
-      class="clav-linear-background hidden-sm-and-up toolbar white--text"
-    >
-      <v-toolbar-title @click="goRoute('/')">
-        <p class="title-letters-md font-weight-bold d-inline">CLAV -</p>
-        <p
-          class="subtitle-letter-md font-weight-light d-inline text-wrap"
-          v-if="store.name == ''"
-        >
-          Classificação e Avaliação da Informação Pública
-        </p>
-        <p
-          class="subtitle-letter-md font-weight-light d-inline text-wrap"
-          v-if="store.name != ''"
-        >
-          {{ store.entidade.split("_")[1] }}
-        </p>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        v-if="store.name != ''"
-        @click="drawerNotificacoes"
-        icon
-        color="blue"
-      >
-        <v-badge color="red" :content="n" overlap>
-          <unicon
-            name="perfil-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 20.71 23.677"
-            fill="#e5e5e5"
-          />
-        </v-badge>
-      </v-btn>
-      <v-btn
-        v-if="store.name != ''"
-        @click="drawerDefinicoes"
-        text
-        dark
-        rounded
-        class="mr-8"
-        id="user-button"
-      >
-        <p class="text-wrap">{{ store.name }}</p>
-        <unicon
-          name="arrow-down-icon"
-          width="15"
-          height="15"
-          viewBox="0 0 37.262 20.71"
-          fill="#e5e5e5"
-        />
-      </v-btn>
-      <v-dialog v-model="dialog" fullscreen hide-overlay transition="fade-transition">
-        <template v-slot:activator="{ on }">
-          <v-btn v-on:click="on" icon dark>
-            <unicon
-              name="menu-icon"
-              width="24"
-              height="24"
-              viewBox="0 0 20.71 17.258"
-              fill="#ffffff"
-            />
-          </v-btn>
-        </template>
-        <v-card class="toolbar">
-          <v-app-bar flat class="clav-linear-background white--text">
-            <v-toolbar-title v-if="store.name == ''" @click="goRoute('/')">
-              <p class="title-letters-md font-weight-bold d-inline">CLAV</p>
-            </v-toolbar-title>
-            <v-toolbar-title
-              v-if="store.name != ''"
-              @click="goRoute('/')"
-              style="cursor: pointer"
-            >
-              <p class="title-letters-md font-weight-bold d-inline">CLAV -</p>
-              <p class="subtitle-letter-md font-weight-light d-inline text-wrap">
-                {{ store.entidade.split("_")[1] }}
-              </p>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn
-              to="/users/autenticacao"
-              @click="dialog.valueOf = false"
-              v-if="store.name === ''"
-              rounded
-              color="#399D44"
-              class="blue--text text--darken-3 px-3 mr-3"
-              id="authenticate-button-mobile"
-            >
-              <unicon
-                name="login-icon"
-                width="20"
-                height="20"
-                viewBox="0 0 20.711 20.862"
-                fill="#ffffff"
-              />
-              <p class="d-inline ml-3 white--text">Iniciar Sessão</p>
-            </v-btn>
-            <v-btn icon dark @click="dialog.valueOf = false">
-              <v-icon color="error">close</v-icon>
-            </v-btn>
-          </v-app-bar>
-          <v-list rounded two-line>
-            <v-container class="pa-0" v-for="tab in tabsAcessiveis" :key="tab.titulo">
-              <v-list-item
-                v-if="!tab.menu"
-                @click="
-                  go(tab.url);
-                  dialog.valueOf = false;
-                "
-              >
-                <v-list-item-title class="px-2 font-weight-bold">
-                  <unicon
-                    v-if="tab.icon"
-                    :name="tab.icon.nome"
-                    width="24"
-                    height="24"
-                    :viewBox="tab.icon.viewbox"
-                    fill="black"
-                  />
-                  <p class="ml-2 d-inline mobile-menu-link">{{ tab.titulo }}</p>
-                </v-list-item-title>
-              </v-list-item>
-
-              <v-list-group v-if="tab.menu">
-                <template v-slot:activator>
-                  <v-list-item-title class="px-2 font-weight-bold">
-                    <unicon
-                      v-if="tab.icon"
-                      :name="tab.icon.nome"
-                      width="24"
-                      height="24"
-                      :viewBox="tab.icon.viewbox"
-                    />
-                    <p class="ml-2 d-inline mobile-menu-link">{{ tab.titulo }}</p>
-                  </v-list-item-title>
-                </template>
-                <v-list-item @update:selected="selected" v-for="menuLink in tab.menu" :key="menuLink.opcao">
-                 <!-- <v-list-item-content> -->
-                    <v-list-item-title class="text-wrap">
-                      <v-row align="center">
-                        <v-col
-                          cols="8"
-                          @click="
-                            go(menuLink.url);
-                            dialog.valueOf = false;
-                          "
-                        >
-                          {{ menuLink.opcao }}</v-col
-                        >
-                        <!--Subopções-->
-                        <v-col
-                          cols="1"
-                          v-for="action in menuLink.acoes"
-                          :key="action.name"
-                        >
-                          <!--Utiliza caixa de dialogo para alterar legislação/tipologia/entidade-->
-                          <v-btn
-                            v-if="action.url.includes('alterar')"
-                            @click.prevent="
-                              openDialog(action);
-                              dialog.valueOf = false;
-                            "
-                            icon
-                          >
-                            <unicon
-                              :name="action.icon"
-                              width="22"
-                              height="22"
-                              viewBox="0 0 20.71 20.697"
-                              fill="#000000"
-                            />
-                          </v-btn>
-                          <!--Subopção-->
-                          <v-btn
-                            v-else
-                            @click.prevent="
-                              go(action.url);
-                              dialog.valueOf = false;
-                            "
-                            icon
-                          >
-                            <unicon
-                              :name="action.icon"
-                              width="22"
-                              height="22"
-                              viewBox="0 0 20.71 20.697"
-                              fill="#000000"
-                            />
-                          </v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-list-item-title>
-                  <!--</v-list-item-content>-->
-                </v-list-item>
-              </v-list-group>
-            </v-container>
-          </v-list>
-        </v-card>
-      </v-dialog>
-    </v-app-bar>
-  </div>
+    
+  <!--</div>-->
 </template>
 
 <script setup>
@@ -457,22 +144,22 @@ const display = ref(useDisplay()) // 'display' substitui 'vuetify.breakpoint' em
 const route = useRoute()
 const token = ref(store.token);
 
-const hover = ref(false)
-const hoveropt = ref(false)
-const activeItem = ref(-1)
-const snackbar = ref(false)
-const dialog = ref(false)
-const color = ref("")
-const timeout = ref(4000)
-const text = ref("")
-const counter = ref(10)
-const level = ref(0)
-const tabAtiva = ref("CLAV")
-const docs = ref(null)
+var hover = ref(false)
+var hoveropt = ref(false)
+var activeItem = ref(-1)
+var snackbar = ref(false)
+var dialog = ref(false)
+var color = ref("")
+var timeout = ref(4000)
+var text = ref("")
+var counter = ref(10)
+var level = ref(0)
+var tabAtiva = ref("CLAV")
+var docs = ref(null)
 
 // para os dialogs
-const alternar = ref(false)
-const tipo = ref(null)
+var alternar = ref(false)
+var tipo = ref(null)
 
 const navbar = ref([
   {
@@ -827,9 +514,9 @@ watch(tabAtiva, (newValue) => {
   tabAtiva.value = newValue;
 })
  
-// watch('store.name', (newValue) => {
-//  navbar.value[0].titulo = newValue ? store.value.state.entidade.split('_')[1] : 'CLAV';
-// })
+function toggle(btn) {
+  tabAtiva.value = btn   
+}
 
 function openDialog(action) {
   if (action.url.includes("tipologias")) tipo.value = "Tipologia";
@@ -896,28 +583,6 @@ function filtraTabs(navbar) {
   return filtered;
 }
 
-function drawerNotificacoes() {
-  $emit("drawerNotificacoes");
-}
-
-function drawerDefinicoes() {
-  $emit("drawerDefinicoes");
-}
-
-function fecharSnackbar() {
-  snackbar.value.valueOf = false;
-}
-
-async function testJWT() {
-  //var res = verifyTokenUser();
-  //alert(JSON.stringify(res));
-}
-
-//created: async function () {
-  //level.value = userLevel();
-  tabAtiva.value = route.meta.tabAtiva;
-  vuetify.theme.dark = false; //adicionar variavel para alterar o valor
-//}
 </script>
 
 <style scoped>

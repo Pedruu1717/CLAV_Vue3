@@ -6,9 +6,6 @@
       @drawerDefinicoes="drawerDefinicoes"
     />
 
-    <!-- Drawers -->
-    <!--<Definicoes v-if="store.token" :drawer="drawD" /> -->
-
     <!-- Main content -->
     <v-main>
       <v-row justify="center" class="my-5">
@@ -30,132 +27,92 @@
 </template>
 
 <script setup>
-/* eslint-disable */
 //import Pedidos from "@/pages/pedidos/Pedidos.vue"
 //import CriaClasse from "@/components/classes/criacao/CriaClasse.vue"
-import PageFooter from "@/components/PageFooter.vue"; // @ is an alias to /src
-import MainPageHeader from "@/components/MainPageHeader.vue"; // @ is an alias to /src
+import PageFooter from "@/components/PageFooter.vue"; 
+import MainPageHeader from "@/components/MainPageHeader.vue"; 
 //import Definicoes from "@/components/principal/Definicoes.vue";
 //import Notificacoes from "@/components/principal/Notificacoes.vue";
-// import io from "socket.io-client";
-import { bus } from "./main";
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
-//import { verifyTokenUser } from '@/plugins/verifyToken'
 import { useAppStore } from '@/store/app'
 import { host } from '@/config/global'
-//const lhost = require("@/config/global").host;
 
 const store = useAppStore()
 const lhost = host;
 const route = useRoute()
 const router = useRouter()
 
+var drawD = false
+var snackbar = false
+var authenticated = false
+var notificacoes = []
+var color = ""
+var text = ref("")
+var classeOps = ["Listar", "Consultar", "Inserir", "Alterar", "Desativar"]
+var entidadeOps = ["Listar", "Consultar", "Inserir", "Alterar", "Desativar"]
+var tipologiaOps = ["Listar", "Consultar", "Inserir", "Alterar", "Desativar"]
+var legislacaoOps = ["Listar", "Consultar", "Inserir", "Alterar", "Desativar"]
+var level = 7
+
+function fecharSnackbar() {
+  snackbar = false;
+}
+
+function sizeUpdate(size) {
+  size = size;
+}
+
+function drawerDefinicoes() {
+  //drawN = false;
+  drawD = !drawD;
+}
+
 /*watch(route, async(from, to) => {
   //verifica se o utilizador está autenticado
   if (store.token != "") {
     var user = verifyTokenUser();
-    level.value = user.level.value;
+    level = user.level;
   }
 
-  authenticated.valueOf = false;
+  authenticated = false;
   //verifica se o utilizador tem de estar autenticado para aceder à rota
   if (to.matched.some((record) => !record.meta.levels.includes(0))) {
-    if (store.token != "" && level.value > 0) {
+    if (store.token != "" && level > 0) {
       //se está autenticado, verifica se tem permissões suficientes para a ceder a página
-      if (to.matched.some((record) => record.meta.levels.includes(level.value))) {
-        authenticated.valueOf = true;
+      if (to.matched.some((record) => record.meta.levels.includes(level))) {
+        authenticated = true;
       } else {
         text = "Não tem permissões para aceder a esta página!";
-        color.value = "error";
-        snackbar.valueOf = true;
+        color = "error";
+        snackbar = true;
         router.push("/");
       }
     } else {
-      text.value =
+      text =
         "Não tem permissões para aceder a esta página! Por favor faça login.";
-        color.value = "error";
-      snackbar.valueOf = true;
+        color = "error";
+      snackbar = true;
       router.push("/users/autenticacao");
     }
   } else {
-    authenticated.valueOf = true;
+    authenticated = true;
   }
 
   if (route.query.erro) {
     //msg de erro
-    text.value = route.query.erro;
-    color.value = "error";
-    snackbar.valueOf = true;
+    text = route.query.erro;
+    color = "error";
+    snackbar = true;
     router.push(route.path);
   } else if (route.query.sucesso) {
     //msg de sucesso
-    text.value = route.query.sucesso;
-    color.value = "success";
-    snackbar.valueOf = true;
+    text = route.query.sucesso;
+    color = "success";
+    snackbar = true;
     router.push(route.path);
   }
 })*/
-
-function fecharSnackbar() {
-  snackbar.valueOf = false;
-}
-
-function sizeUpdate(size) {
-  size.value = size;
-}
-
-function drawerDefinicoes() {
-  //drawN.valueOf = false;
-  drawD.valueOf = !(drawD.valueOf);
-}
-
-// function drawerNotificacoes() {
-//   drawD.valueOf = false;
-//   drawN.valueOf = !(drawN.valueOf);
-// },
-// removerNotificacao(msg) {
-//   const index = notificacoes.value.indexOf(msg);
-//   if (index > -1) {
-//     notificacoes.value.splice(index, 1);
-//   }
-//   socket.emit("remove", msg);
-// },
-// consume() {
-//   notificacoes.value = [];
-//   var email = $verifyTokenUser().email;
-//   if (email) {
-//     socket = io.connect("http://localhost:7779", {
-//       reconnectionAttempts: 1,
-//     }); //lhost.replace('/v2', '')
-//     socket.emit("email", {
-//       email: email,
-//     });
-//     socket.on($verifyTokenUser().email, (data) => {
-//       notificacoes.value.push(JSON.parse(data));
-//     });
-//   }
-// },
-
-const drawD = ref(false)
-//const drawN = ref(false)
-const snackbar = ref(false)
-const authenticated = ref(false)
-const notificacoes = ref([])
-const color = ref("")
-var text = ref("")
-const classeOps = ref(["Listar", "Consultar", "Inserir", "Alterar", "Desativar"])
-const entidadeOps = ref(["Listar", "Consultar", "Inserir", "Alterar", "Desativar"])
-const tipologiaOps = ref(["Listar", "Consultar", "Inserir", "Alterar", "Desativar"])
-const legislacaoOps = ref(["Listar", "Consultar", "Inserir", "Alterar", "Desativar"])
-const level = ref(7)
-
-// onCreated(() => {
-//   if (store.token != "") consume();
-//   bus.$on("notificacoes.value", (d) => {
-//     consume();
-//   });
-// })
 
 </script>
 
