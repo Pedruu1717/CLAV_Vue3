@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="pa-3">
+  <v-card flat class="pa-3" color="#26c6da">
     <Info />
     <Noticias class="mt-10" :level="level" />
   </v-card>
@@ -20,3 +20,7 @@ onMounted (async () => {
   //level.value = userLevel();
 })
 </script>
+
+<style>
+
+</style>
