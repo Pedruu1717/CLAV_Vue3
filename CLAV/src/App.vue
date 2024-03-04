@@ -60,7 +60,6 @@ function fecharSnackbar() {
 }
 
 function drawerDefinicoes() {
-  //drawN = false;
   drawD = !drawD;
 }
 
@@ -112,7 +111,6 @@ function drawerDefinicoes() {
 
 </script>
 
-<style lang="scss">
-@import "@/styles/variables.scss";
+<style>
 
 </style>

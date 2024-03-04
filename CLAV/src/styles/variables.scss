@@ -28,8 +28,8 @@ $expansion-panel-content-padding: 10px;
 .clav-linear-background {
   background: linear-gradient(
     to right,
-    var(--v-gradientleft-base) 0%,
-    var(--v-gradientright-base) 100%
+    rgb(var(--v-gradientleft-base)) 0%,
+    rgb(var(--v-gradientright-base)) 100%
   );
 }
 
@@ -37,7 +37,7 @@ $expansion-panel-content-padding: 10px;
 .clav-content-title-1 {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--v-h1color-base);
+  color: rgb(var(--v-h1color-base));
   text-shadow: 0px 2px 3px var(--v-textshadow-base);
   text-align: center;
 }
@@ -46,14 +46,14 @@ $expansion-panel-content-padding: 10px;
 .clav-content-title-2 {
   font-size: 1.4rem;
   font-weight: 500;
-  color: var(--v-h1color-base);
+  color: rgb(var(--v-h1color-base));
   text-shadow: 0px 1px 2px var(--v-textshadow-base);
 }
 
 // Realçar conteúdo
 .clav-info-content {
   padding: 8px;
-  background-color: var(--v-infocontent-base) !important;
+  background-color: rgb(var(--v-infocontent-base)) !important;
   text-shadow: 0px 1px 2px var(--v-textshadow-base) !important;
 }
 
@@ -65,7 +65,7 @@ $expansion-panel-content-padding: 10px;
 
 // Labels
 .clav-info-label {
-  color: var(--v-primary-base);
+  color: rgb(var(--v-theme-primary));
   font-weight: bold;
 }
 
@@ -82,10 +82,10 @@ $expansion-panel-content-padding: 10px;
     margin: 0 !important;
   }
   a {
-    color: var(--v-info-base) !important;
+    color: rgb(var(--v-info-base)) !important;
   }
   a:hover {
-    color: var(--v-primary-base);
+    color: rgb(var(--v-theme-primary));
     background-color: transparent;
   }
 
@@ -96,7 +96,7 @@ $expansion-panel-content-padding: 10px;
 
   // Treeview
   .v-treeview-node__toggle--open {
-    color: var(--v-success-base) !important;
+    color: rgb(var(--v-success-base)) !important;
   }
 
   //alertas
@@ -106,23 +106,23 @@ $expansion-panel-content-padding: 10px;
 
   // cards
   .v-card {
-    background-color: var(--v-secondary-base) !important;
+    background-color: rgb(var(--v-secondary-base)) !important;
   }
 
   //chips
   .v-chip {
     white-space: normal !important;
     .v-chip__close.v-icon {
-      color: var(--v-error-base) !important;
+      color: rgb(var(--v-error-base)) !important;
     }
   }
 
   //file-input
   .v-file-input {
     .v-icon {
-      color: var(--v-primary-base) !important;
+      color: rgb(var(--v-theme-primary)) !important;
       .v-icon.v-icon--link {
-        color: var(--v-info-base);
+        color: rgb(var(--v-info-base));
       }
     }
   }
@@ -174,11 +174,11 @@ $expansion-panel-content-padding: 10px;
 
     .v-list-item:hover::before {
       opacity: 0.1;
-      background-color: var(--v-info-base);
+      background-color: rgb(var(--v-info-base));
       border-radius: 10px;
     }
     .v-list-item::before {
-      background-color: var(--v-info-base);
+      background-color: rgb(var(--v-info-base));
       border-radius: 10px;
     }
     .v-list-item__title,
@@ -214,7 +214,7 @@ $expansion-panel-content-padding: 10px;
 
   // tabelas
   .v-data-table {
-    background-color: var(--v-secondary-base) !important;
+    background-color: rgb(var(--v-secondary-base)) !important;
     td {
       padding-top: 10px;
       padding-bottom: 10px;

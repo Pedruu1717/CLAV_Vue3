@@ -9,16 +9,9 @@
 /* eslint-disable */
 import Noticias from "@/components/principal/Noticias.vue";
 import Info from "@/components/principal/Info.vue";
-//import userLevel from "@/plugins/userLevel";
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
-const panelHeaderColor = ref("indigo darken-4")
-const level = ref(0)
-const entidade = ref("Nome da Entidade")
-  
-onMounted (async () => {
-  //level.value = userLevel();
-})
+const level = ref(7)
 </script>
 
 <style>
