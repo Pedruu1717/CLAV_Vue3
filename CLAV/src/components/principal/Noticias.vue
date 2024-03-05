@@ -1,11 +1,11 @@
 <template>
   <Loading v-if="!noticiasReady" :message="'notícias'" />
   <div v-else class="mx-7">
-    <span class="flex">
-        <v-icon class="icon-newspaper" icon="mdi-newspaper"></v-icon>        
+    <span class="separador">
+        <v-icon icon="mdi-newspaper"></v-icon>        
         <p class="big-footer-letters">Notícias</p>
         <v-spacer></v-spacer>
-        <v-btn class="btn-ver-todas" rounded="xl">VER TODAS</v-btn>
+        <v-btn class="btns" rounded="xl">VER TODAS</v-btn>
     </span>
     <div class="homepage-carousel">
       <v-carousel  
@@ -18,20 +18,23 @@
       hide-delimiter-background
       show-arrows-on-hover>
         <v-carousel-item v-for="(n, index) in noticias" :key="index">
-          <span class="titulopainel">{{ n.titulo }}</span>
-          <data class="data">{{ n.data }}</data>
-          <div class="info">
-            <p>{{ n.desc }}"</p>
-            <v-btn
-              fab
-              dark
-              color="primary"
-              style="position: sticky; left: 100%; bottom: 3%"
-              @click="$router.push('/noticias/' + n._id)"
-            >
-            <v-icon> mdi-plus </v-icon>
-            </v-btn>
-          </div>               
+          <v-sheet class="conteudo clav-info-content" height="100%" tile>
+            <span class="titulopainel">{{ n.titulo }}</span>
+            <data class="data">{{ n.data }}</data>
+            <div class="info">
+              <p>{{ n.desc }}"</p>
+              <v-btn
+                class="btns"
+                fab
+                dark
+                color="primary"
+                style="position: sticky; left: 100%; bottom: 3%"
+                @click="$router.push('/noticias/' + n._id)"
+              >
+              <v-icon> mdi-plus </v-icon>
+              </v-btn>
+            </div>       
+          </v-sheet>        
         </v-carousel-item>  
       </v-carousel>
     </div>
@@ -109,10 +112,6 @@ try {
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-}
-
 .separador {
   display: grid;
   grid-template-columns: 0.05fr 0.15fr 0.5fr 0.3fr;
