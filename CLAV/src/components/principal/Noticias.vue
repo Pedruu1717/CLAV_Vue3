@@ -1,10 +1,10 @@
 <template>
   <Loading v-if="!noticiasReady" :message="'notícias'" />
-  <div v-else class="noticias mx-7">
-    <span class="noticias">
-        <v-icon class="icon-newspaper" icon="mdi-newspaper"></v-icon>
-        <p class="big-footer-letters text-noticias">Notícias</p>
-        <div class="spacer"></div>
+  <div v-else class="mx-7">
+    <span class="flex">
+        <v-icon class="icon-newspaper" icon="mdi-newspaper"></v-icon>        
+        <p class="big-footer-letters">Notícias</p>
+        <v-spacer></v-spacer>
         <v-btn class="btn-ver-todas" rounded="xl">VER TODAS</v-btn>
     </span>
     <div class="homepage-carousel">
@@ -109,6 +109,10 @@ try {
 </script>
 
 <style scoped>
+.flex {
+  display: flex;
+}
+
 .separador {
   display: grid;
   grid-template-columns: 0.05fr 0.15fr 0.5fr 0.3fr;

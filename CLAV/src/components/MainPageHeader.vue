@@ -12,7 +12,7 @@
           <v-img
             v-on:click="on"
             :aspect-ratio="1.7778"
-            :src="'@/assets/logo.svg'"
+            :src="'https://qldclav.dglab.gov.pt/img/logo.41995cc8.svg'"
             @click="go('/')"
             style="cursor: pointer"
             max-width="160px"
@@ -35,42 +35,24 @@
 
       <!--Botões toolbar CLAV-->
       <!--Iniciar sessão-->
-      <v-btn
-        rounded
-        color="#399D44"
-        class="green--text text--darken-3 mt-1"
-        :class="{ 
-          'px-12': display.lgAndUp,
-          'px-8': display.mdAndDown,
-        }" 
-        id="authenticate-button"
-      >
-        <unicon
-          name="login-icon"
-          width="21"
-          height="21"
-          viewBox="0 0 20.711 20.862"
-          fill="#ffffff"
-        />
-        <p class="d-inline ml-3 white--text">Iniciar Sessão</p>
-      </v-btn>
+      <v-btn rounded="xl" color="teal-accent-4" prepend-icon="mdi-key-variant">INICIAR SESSÃO</v-btn>
 
       <template v-slot:extension>
         <v-tabs show-arrows fixed-tabs>
           <v-tab>
           <!--<router-link :to="{name: 'Home'}">-->
-            <v-btn @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-home-outline">CLAV</v-btn>
+            <v-btn @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-home-outline">CLAV</v-btn>
           <!--</router-link>-->
           </v-tab>
           
-          <v-tab><v-btn @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
+          <v-tab><v-btn @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
         
           <v-menu>
             <template v-slot:activator="{ props: menu }">           
             <v-tab>
               <v-btn
               @click="toggle('Operações')"
-              :color="(tabAtiva=='Operações' ? 'light-blue-darken-4': 'indigo-darken-4')"
+              :color="(tabAtiva=='Operações' ? 'light-blue-darken-4': 'white')"
               v-bind="menu"
               prepend-icon="mdi-wrench"
               >Operações</v-btn>
@@ -80,31 +62,31 @@
               <v-list class="list">
                   <v-list-item>
                     <!--<router-link :to="{name: 'Classes'}" >-->
-                      <v-btn @click="" color="indigo-darken-4">Classes</v-btn>         
+                      <v-btn @click="" color="white">Classes</v-btn>         
                     <!--</router-link>-->
                   </v-list-item>             
                   <v-list-item>
                     <!--<router-link :to="{name: 'Entidades'}">-->
-                      <v-btn @click="" color="indigo-darken-4">Entidades</v-btn>
+                      <v-btn @click="" color="white">Entidades</v-btn>
                     <!--</router-link>-->
                   </v-list-item>
                   <v-list-item>
                     <!--<router-link :to="{name: 'Legislações'}">-->
-                      <v-btn @click="" color="indigo-darken-4">Legislações</v-btn>
+                      <v-btn @click="" color="white">Legislações</v-btn>
                     <!--</router-link>-->
                   </v-list-item>
                   <v-list-item>
                     <!--<router-link :to="{name: 'Tipologias'}">-->
-                      <v-btn @click="" color="indigo-darken-4">Tipologias</v-btn>
+                      <v-btn @click="" color="white">Tipologias</v-btn>
                     <!--</router-link>-->  
                   </v-list-item>
               </v-list>
             </v-card>
           </v-menu>
 
-          <v-tab><v-btn @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
-          <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
-          <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'indigo-darken-4')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
+          <v-tab><v-btn @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
+          <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
+          <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
         </v-tabs>
       </template>
       
@@ -572,7 +554,9 @@ function filtraTabs(navbar) {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/assets/scss/global";
+
 .v-tab {
   text-transform: none !important;
   font-weight: bold !important;

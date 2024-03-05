@@ -5,6 +5,7 @@
  */
 
 // Plugins
+
 import { registerPlugins } from '@/plugins'
 
 // Components
@@ -14,6 +15,7 @@ import App from './App.vue'
 import { createApp } from 'vue'
 
 // Bootstrap
+
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 

@@ -16,7 +16,7 @@
         <v-icon class="icon" icon="mdi-account-group-outline"></v-icon>
         <p class="icon-text">Equipa técnica</p>
         <v-spacer></v-spacer>
-        <v-img id="footer-image" class="my-2" aspect-ratio="4.8600" :src="('./../assets/feder.png')"></v-img>
+        <v-img id="footer-image" class="my-2" aspect-ratio="4.8600" :src="'https://qldclav.dglab.gov.pt/img/feder.52060cff.png'"></v-img>
       </div>
       </v-card-title>
     </v-card>
@@ -44,6 +44,7 @@ try {
 </script>
 
 <style scoped>
+
 .display-flex {
   display: flex
 }

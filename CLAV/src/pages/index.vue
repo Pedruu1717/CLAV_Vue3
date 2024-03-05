@@ -14,6 +14,6 @@ import { ref } from 'vue'
 const level = ref(7)
 </script>
 
-<style>
-
+<style lang="scss">
+@import "@/assets/scss/global";
 </style>
