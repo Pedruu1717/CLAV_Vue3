@@ -35,7 +35,7 @@
 
       <!--Botões toolbar CLAV-->
       <!--Iniciar sessão-->
-      <v-btn rounded="xl" color="teal-accent-4" prepend-icon="mdi-key-variant">INICIAR SESSÃO</v-btn>
+      <v-btn rounded="xl" color="teal-accent-4" prepend-icon="mdi-key-variant" :text="(store.token != '' ? store.name : 'INICIAR SESSÃO')"></v-btn>
 
       <template v-slot:extension>
         <v-tabs show-arrows fixed-tabs>
