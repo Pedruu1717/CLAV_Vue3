@@ -61,22 +61,22 @@
             <v-card color="blue">           
               <v-list class="list">
                   <v-list-item>
-                    <!--<router-link :to="{name: 'Classes'}" >-->
+                    <router-link :to="{name: 'classes'}" >
                       <v-btn @click="" color="white">Classes</v-btn>         
-                    <!--</router-link>-->
+                    </router-link>
                   </v-list-item>             
                   <v-list-item>
-                    <!--<router-link :to="{name: 'Entidades'}">-->
+                    <!--<router-link :to="{name: 'entidades'}">-->
                       <v-btn @click="" color="white">Entidades</v-btn>
                     <!--</router-link>-->
                   </v-list-item>
                   <v-list-item>
-                    <!--<router-link :to="{name: 'Legislações'}">-->
+                    <!--<router-link :to="{name: 'legislações'}">-->
                       <v-btn @click="" color="white">Legislações</v-btn>
                     <!--</router-link>-->
                   </v-list-item>
                   <v-list-item>
-                    <!--<router-link :to="{name: 'Tipologias'}">-->
+                    <!--<router-link :to="{name: 'tipologias'}">-->
                       <v-btn @click="" color="white">Tipologias</v-btn>
                     <!--</router-link>-->  
                   </v-list-item>

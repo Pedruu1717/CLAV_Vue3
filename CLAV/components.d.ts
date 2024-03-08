@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CaixaDeDialogo: typeof import('./src/components/generic/CaixaDeDialogo.vue')['default']
+    ClassesArvoreLateral: typeof import('./src/components/classes/ClassesArvoreLateral.vue')['default']
     Definicoes: typeof import('./src/components/principal/Definicoes.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Info: typeof import('./src/components/principal/Info.vue')['default']

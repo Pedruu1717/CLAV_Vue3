@@ -42,13 +42,11 @@
 </template>
 
 <script setup>
-//import { marked } from "marked";
 import Loading from "@/components/generic/Loading.vue";
 import router from '@/router'
 import { computed, defineProps, ref } from 'vue'
 import { host } from "@/config/global"
 import { useAppStore } from "@/store/app"
-//import request from '@/plugins/request'
 
 const store = useAppStore()
 
