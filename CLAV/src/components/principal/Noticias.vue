@@ -97,16 +97,14 @@ const fops = computed(() => {
   return filtraOps(operacoes);
 })
 
-
 try {
-  fetch(host + "/noticias?recentes=sim", {method: "GET", headers:{"Authorization": "token " + store.token}})
+  await fetch(host + "/noticias?recentes=sim", {method: "GET", headers:{"Authorization": "token " + store.token}})
   .then(response => response.json())
   .then(data => noticias.value = data)
   noticiasReady = true;
 } catch (e) {
   console.log(e);
 }
-
 </script>
 
 <style scoped>

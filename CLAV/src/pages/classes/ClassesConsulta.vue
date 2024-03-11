@@ -1,5 +1,5 @@
 <template>
-    <ConsultaClasse :idc="route.params.idClasse" />
+    <Suspense><ConsultaClasse :idc="route.params.idClasse" /></Suspense>
 </template>
   
 <script setup>
