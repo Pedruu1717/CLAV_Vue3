@@ -6,30 +6,13 @@
           <p class="clav-content-title-1">Consultar Lista Consolidada</p>
         </v-col>
         <v-col cols="12" md="4" align="center">
-          <!--<v-btn
-            @click="advancedSearch = !advancedSearch"
-            rounded
-            class="white--text clav-linear-background"
-          >
-            
-            <v-switch
-              v-model="advancedSearch"
-              color="green lighten-2"
-              disabled
-              hide-details
-              style="opacity: 1 !important"
-            ></v-switch>
-            <unicon
-              name="zoom-icon"
-              width="20"
-              height="20"
-              viewBox="0 0 20.71 20.697"
-              fill="#ffffff"
-            />
-            <p class="ml-2">Pesquisa Avançada</p>
-          </v-btn>-->
         </v-col>
       </v-row>
+      <div v-for="(classe, index) in myClasses" :key="index">
+        <router-link :to="{name: 'consultaClasse', params: {idClasse: classe.id}}">
+          <v-row>{{ classe.nome }}</v-row>
+        </router-link>
+      </div>
     </v-card>
 </template>
 
@@ -258,7 +241,6 @@ try {
   fetch(host + "/classes?info=pesquisa", {method: "GET", headers:{"Authorization": "token " + store.token}})
   .then(response => response.json())
   .then(data => myClasses.value = data)
-  console.log(myClasses) // teste
 } catch (e) {
   console.log(e);
 }
