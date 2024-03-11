@@ -1,6 +1,10 @@
 <template>
     <v-card flat class="pa-3">
       <v-row>
+        <!-- MENU LATERAL -->
+        <v-col cols="12" order="2" sm="3" order-sm="0" md="3" lg="3">
+          <ClassesArvoreLateral :classeId="props.idc" />
+        </v-col>
         <v-col cols="12" sm="9" md="9" lg="9">
           <!-- HEADER -->
           <v-row>
@@ -13,9 +17,9 @@
   
           <!-- DESCENDÊNCIA e Informação da classe -->
           <Loading v-if="!classeLoaded" :message="'classe'" />
-          <v-card v-else flat>
+          <v-card v-else flat class="info-content">
             <div v-if="classe.filhos.length > 0" class="d-inline-flex">
-              <v-card color="#f3f7fc" width="150" height="25" class="card">Descendência</v-card>
+              <v-card color="#f3f7fc" width="150" height="25" >Descendência</v-card>
               <v-card color="#f3f7fc" width="1000">
                 <div v-for="(filho, index) in classe.filhos" :key="index">
                   <v-row>{{ filho.codigo }} - {{ filho.titulo }}</v-row>
@@ -23,30 +27,27 @@
               </v-card>
             </div>
             <v-expansion-panels>
-            <v-expansion-panel>
+            <v-expansion-panel class="expandend-content">
               <v-expansion-panel-title color="#1A237E">Descritivo da Classe</v-expansion-panel-title>
               <v-expansion-panel-text>              
                   <div v-if="classe.status.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" class="card">Estado</v-card>
+                    <v-card color="#f3f7fc" width="150" height="25" >Estado</v-card>
                     <v-card color="#f3f7fc" width="1000">{{ classe.status }}</v-card>
                   </div>
-                  <v-spacer></v-spacer>
                   <div v-if="classe.descricao.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" class="card">Descrição</v-card> 
+                    <v-card color="#f3f7fc" width="150" height="25" >Descrição</v-card> 
                     <v-card color="#f3f7fc" width="1000">{{ classe.descricao }}</v-card>
                   </div>
-                  <v-spacer></v-spacer>
                   <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" class="card">Notas de Exclusão</v-card> 
+                    <v-card color="#f3f7fc" width="150" height="25" >Notas de Exclusão</v-card> 
                     <v-card color="#f3f7fc" width="1000">
                     <ul v-for="item in classe.notasEx">
                       <li>{{ item.nota }}</li>
                     </ul>
                     </v-card>
                   </div>
-                  <v-spacer></v-spacer>
                   <div v-if="classe.notasAp.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" class="card">Notas de Aplicação</v-card>
+                    <v-card color="#f3f7fc" width="150" height="25" >Notas de Aplicação</v-card>
                     <v-card color="#f3f7fc" width="1000">
                       <ul v-for="item in classe.notasAp">
                         <li>{{ item.nota }}</li>
@@ -67,12 +68,12 @@
 //import Participantes from "@/components/classes/consulta/Participantes.vue";
 //import ProcessosRelacionados from "@/components/classes/consulta/ProcessosRelacionados.vue";
 //import Legislacao from "@/components/classes/consulta/Legislacao.vue";
-//import ClassesArvoreLateral from "@/components/classes/ClassesArvoreLateral.vue";
+import ClassesArvoreLateral from "@/components/classes/ClassesArvoreLateral.vue";
 //import Voltar from "@/components/generic/Voltar.vue";
 import Loading from "@/components/generic/Loading.vue";
 import PainelCLAV from "@/components/generic/PainelCLAV"
 import Campo from "@/components/generic/CampoCLAV"
-import { defineProps, onMounted } from 'vue'
+import { defineProps } from 'vue'
 import myhelp from "@/config/help"
 import { criterios as mylabels } from "@/config/labels"
 import { useAppStore } from "@/store/app"
@@ -128,7 +129,8 @@ try {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+
 .info-label {
   color: var(--v-primary-base) !important;
   padding: 8px;
