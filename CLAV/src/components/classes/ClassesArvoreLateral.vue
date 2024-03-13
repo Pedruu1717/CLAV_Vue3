@@ -1,50 +1,16 @@
 <template>
     <v-card id="treeview-card">
-      <v-tooltip top color="info" open-delay="500">
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            class="centered-input mx-4"
-            v-model="search"
-            v-on="on"
-            label="Filtrar por código, título, notas aplic., exemplos de notas ou termos de índice"
-            text
-            hide-details
-            single-line
-            clearable
-            color="blue darken-3"
-          ></v-text-field>
+      <v-tooltip text="Filtrar por código, título, notas aplic., exemplos de notas ou termos de índice">
+        <template v-slot:activator="{ props }">
+          <v-text-field v-bind="props" label="Filtrar por código, título, notas aplic., exemplos de notas ou termos de índice"></v-text-field>
         </template>
-        <span
-          >Filtrar por código, título, notas de aplicação, exemplos de notas de
-          aplicação ou termos de índice...</span
-        >
-      </v-tooltip>
-      <v-card-text>
+      </v-tooltip>    
+      <v-card-text id="treeview-content">
         <div v-if="classesCarregadas">
-          <v-treeview
-            rounded
-            dense
-            hoverable
-            activatable
-            :active="[props.classeId]"
-            :open="selectedParents"
-            :items="classesTree"
-            item-key="id"
-            :search="search"
-            :filter="filter"
-          >
-            <template v-slot:label="{ item }">
-              <v-tooltip bottom color="info" open-delay="500">
-                <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" rounded text color="blue" @click="go(item.id)">
-                    {{ item.name }}
-                  </v-btn>
-                </template>
-                <span>{{ item.name }} - {{ formatarLabel(item.titulo) }} </span>
-              </v-tooltip>
-              <br />
-            </template>
-          </v-treeview>
+          <treeview
+            :config="config" :nodes="nodes"
+          >        
+          </treeview>
         </div>
       </v-card-text>
     </v-card>
@@ -55,6 +21,11 @@ import { defineProps } from 'vue'
 import { host } from '@/config/global'
 import { useAppStore } from '@/store/app';
 import router from '@/router'
+import treeview from "vue3-treeview";
+
+var config = {}
+var raizes = []
+var nodes = {}
 
 const props = defineProps(["classeId"])
 const store = useAppStore()
@@ -83,8 +54,20 @@ try {
   .then(data => myIndice = data);
   
   classesTree = await preparaTree(myClasses, myIndice);
-  console.log(classesTree)
+  for(var i = 0; i< classesTree.length; i++) {
+    let classe = classesTree[i]
+    classe["text"] = classe.name + ' - ' + classe.titulo
+    nodes["id"+(i+1)] = classe
+  }
+
+  raizes = Object.keys(nodes)
+  config = { roots: raizes }
+
   classesCarregadas = true;
+
+  //console.log(raizes)
+  //console.log(nodes)
+  //console.log(classesTree) // teste
 } catch (e) {
     console.log(e);
 }
@@ -141,6 +124,11 @@ const filter = computed(() => {
 </script>
   
 <style lang="scss">
+// Treeview
+#treeview-content {
+  color: rgb(42, 107, 235) !important;
+}
+
 #treeview-card {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.22);
   border-radius: 10px;
