@@ -1,5 +1,5 @@
 <template>
-    <v-card flat class="pa-3">
+   <v-card flat class="pa-3">
       <v-row align="center" justify="center">
         <v-col cols="12" md="3" align="center"> <!--<Voltar />--> </v-col>
         <v-col cols="12" md="5" align="center">
@@ -8,21 +8,18 @@
         <v-col cols="12" md="4" align="center">
         </v-col>
       </v-row>
-      <div v-for="(classe, index) in myClasses" :key="index">
-        <router-link :to="{name: 'consultaClasse', params: {idClasse: classe.id}}">
-          <v-row>{{ classe.nome }}</v-row>
-        </router-link>
-      </div>
-    </v-card>
+    <Suspense><ClassesArvoreLateral /></Suspense>
+  </v-card>
 </template>
 
 <script setup>
-import Loading from "@/components/generic/Loading";
+//import Loading from "@/components/generic/Loading";
 import { host } from "@/config/global"
-import router from '@/router'
+//import router from '@/router'
 import { defineProps, ref } from 'vue'
 import { useAppStore } from "@/store/app"
 //import Voltar from "@/components/generic/Voltar";
+import ClassesArvoreLateral from "@/components/classes/ClassesArvoreLateral.vue";
 
 const store = useAppStore()
 const props= defineProps(["savedSearch"])
@@ -216,7 +213,7 @@ var camposPesquisa = [
   },
 ]
 
-var classesTree = ref([])
+/*var classesTree = ref([])
 var classesOriginal = ref([])
 var entidades = ref([])
 var tipologias = ref([])
@@ -243,7 +240,7 @@ try {
   .then(data => myClasses.value = data)
 } catch (e) {
   console.log(e);
-}
+}*/
 </script>
 
 <style scoped>

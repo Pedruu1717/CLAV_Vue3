@@ -5,7 +5,7 @@
           <v-text-field v-bind="props" label="Filtrar por código, título, notas aplic., exemplos de notas ou termos de índice"></v-text-field>
         </template>
       </v-tooltip>    
-      <v-card-text id="treeview-content">
+      <v-card-text>
         <div v-if="classesCarregadas">
           <treeview
             :config="config" :nodes="nodes"
@@ -34,7 +34,7 @@ const store = useAppStore()
  
 var classesTree = []
 var classesCarregadas = false
-var search = null
+/*var search = null
 var selectedParents = []
 
 var levelIds = props.classeId.split(".")
@@ -42,7 +42,7 @@ var iteracoes = levelIds.length
 for (let i = 0; i < iteracoes; i++) {
     levelIds.splice(levelIds.length - 1, 1);
     selectedParents.push(levelIds.join("."));
-}
+}*/
 
 var myClasses = []
 var myIndice = null
