@@ -9,7 +9,7 @@
         <div v-if="classesCarregadas">
           <treeview
             :config="config" :nodes="nodes"
-          >        
+          >
           </treeview>
         </div>
       </v-card-text>
@@ -22,10 +22,12 @@ import { host } from '@/config/global'
 import { useAppStore } from '@/store/app';
 import router from '@/router'
 import treeview from "vue3-treeview";
+import "vue3-treeview/dist/style.css";
 
-var config = {}
+
+var config = ref({})
+var nodes = ref({})
 var raizes = []
-var nodes = {}
 
 const props = defineProps(["classeId"])
 const store = useAppStore()
@@ -37,7 +39,7 @@ var selectedParents = []
 
 var levelIds = props.classeId.split(".")
 var iteracoes = levelIds.length
-for (var i = 0; i < iteracoes; i++) {
+for (let i = 0; i < iteracoes; i++) {
     levelIds.splice(levelIds.length - 1, 1);
     selectedParents.push(levelIds.join("."));
 }
@@ -54,23 +56,45 @@ try {
   .then(data => myIndice = data);
   
   classesTree = await preparaTree(myClasses, myIndice);
-  for(var i = 0; i< classesTree.length; i++) {
-    let classe = classesTree[i]
-    classe["text"] = classe.name + ' - ' + classe.titulo
-    nodes["id"+(i+1)] = classe
+  // Remover classes repetidas
+  const ids = classesTree.map(({ id }) => id);
+  const classesTreeFiltered = classesTree.filter(({ id }, index) => !ids.includes(id, index + 1))
+
+  for (let i = 0; i < classesTreeFiltered.length; i++) {
+    let classe = classesTreeFiltered[i]
+    // Adicionar nó raíz.
+    raizes.push(classe.id)
+    // Adicionar filhos.
+    addTreeviewChildren(classe)    
   }
 
-  raizes = Object.keys(nodes)
-  config = { roots: raizes }
-
+  config.value = { roots: raizes }
   classesCarregadas = true;
-
-  //console.log(raizes)
-  //console.log(nodes)
-  //console.log(classesTree) // teste
 } catch (e) {
-    console.log(e);
+  console.log(e);
 }
+
+function addTreeviewChildren(classe) {
+  let treeview_children = []
+  if (classe.children.length > 0) {
+    for (let i = 0; i < classe.children.length; i++) {
+      let children = classe.children[i]
+      treeview_children.push(children.id)
+      nodes.value[children.id] = {text: children.name + ' - ' + children.titulo}
+    }
+  }
+
+  let treeview_classe = {}
+  treeview_classe.text = classe.name + ' - ' + classe.titulo
+  treeview_classe.children = treeview_children
+  nodes.value[classe.id] = treeview_classe
+
+  // Repetir a função para cada nó filho.
+  if (classe.children.length > 0) {
+    classe.children.forEach((c) => addTreeviewChildren(c))
+  }
+}
+
 
 function go(idClasse) {
   router.push("/classes/consultar/c" + idClasse);
