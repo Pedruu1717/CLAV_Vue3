@@ -1,115 +1,102 @@
 <template>
-  <div>
-    <!--Navbar para sm/md/lg/xl screens-->
-    <v-app-bar
-      app
-      clipped-right
-      class="white--text clav-linear-background hidden-xs-only"
-    >
-      <!--Logotipo CLAV-->
-      <v-tooltip bottom color="info">
-        <template v-slot:activator="{ on }">
-          <v-img
-            v-on:click="on"
-            :aspect-ratio="1.7778"
-            :src="'https://qldclav.dglab.gov.pt/img/logo.41995cc8.svg'"
-            @click="go('/')"
-            style="cursor: pointer"
-            max-width="160px"
-            contain
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </template>
-        <span>Voltar à página inicial</span>
-      </v-tooltip>
-
-      <v-spacer></v-spacer>
-
-      <!--Botões toolbar CLAV-->
-      <!--Iniciar sessão-->
-      <v-btn rounded="xl" color="teal-accent-4" prepend-icon="mdi-key-variant" :text="(store.token != '' ? store.name : 'INICIAR SESSÃO')"></v-btn>
-
-      <template v-slot:extension>
-        <v-tabs show-arrows fixed-tabs>
-          <v-tab>
-          <!--<router-link :to="{name: 'Home'}">-->
-            <v-btn @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-home-outline">CLAV</v-btn>
-          <!--</router-link>-->
-          </v-tab>
-          
-          <v-tab><v-btn @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
-        
-          <v-menu>
-            <template v-slot:activator="{ props: menu }">           
-            <v-tab>
-              <v-btn
-              @click="toggle('Operações')"
-              :color="(tabAtiva=='Operações' ? 'light-blue-darken-4': 'white')"
-              v-bind="menu"
-              prepend-icon="mdi-wrench"
-              >Operações</v-btn>
-            </v-tab>     
-            </template>
-            <v-card color="blue">           
-              <v-list class="list">
-                  <v-list-item>
-                    <router-link :to="{name: 'classes'}" >
-                      <v-btn @click="" color="white">Classes</v-btn>         
-                    </router-link>
-                  </v-list-item>             
-                  <v-list-item>
-                    <!--<router-link :to="{name: 'entidades'}">-->
-                      <v-btn @click="" color="white">Entidades</v-btn>
-                    <!--</router-link>-->
-                  </v-list-item>
-                  <v-list-item>
-                    <!--<router-link :to="{name: 'legislações'}">-->
-                      <v-btn @click="" color="white">Legislações</v-btn>
-                    <!--</router-link>-->
-                  </v-list-item>
-                  <v-list-item>
-                    <!--<router-link :to="{name: 'tipologias'}">-->
-                      <v-btn @click="" color="white">Tipologias</v-btn>
-                    <!--</router-link>-->  
-                  </v-list-item>
-              </v-list>
-            </v-card>
-          </v-menu>
-
-          <v-tab><v-btn @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
-          <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
-          <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
-        </v-tabs>
+  <!--Iniciar sessão-->
+  <v-btn class="btn-iniciar-sessao" rounded="xl" color="teal-accent-4" prepend-icon="mdi-key-variant" :text="(store.token != '' ? store.name : 'INICIAR SESSÃO')"></v-btn>
+  <!--Navbar para sm/md/lg/xl screens-->
+  <v-tool-bar
+    app
+    clipped-right
+    class="white--text clav-linear-background hidden-xs-only"
+  >
+    <!--Logotipo CLAV-->
+    <v-tooltip bottom color="info">
+      <template v-slot:activator="{ on }">
+        <v-img
+          v-on:click="on"
+          :aspect-ratio="1.7778"
+          :src="'https://qldclav.dglab.gov.pt/img/logo.41995cc8.svg'"
+          @click="go('/')"
+          style="cursor: pointer"
+          max-width="160px"
+          contain
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </template>
+      <span>Voltar à página inicial</span>
+    </v-tooltip>      
+    
+    <!--Botões toolbar CLAV-->
+    <v-tabs show-arrows fixed-tabs>
+      <v-tab>
+      <!--<router-link :to="{name: 'Home'}">-->
+        <v-btn @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-home-outline">CLAV</v-btn>
+      <!--</router-link>-->
+      </v-tab>
       
-    </v-app-bar>  
-  </div>
+      <v-tab><v-btn @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
+    
+      <v-menu>
+        <template v-slot:activator="{ props: menu }">           
+        <v-tab>
+          <v-btn
+          @click="toggle('Operações')"
+          :color="(tabAtiva=='Operações' ? 'light-blue-darken-4': 'white')"
+          v-bind="menu"
+          prepend-icon="mdi-wrench"
+          >Operações</v-btn>
+        </v-tab>     
+        </template>
+        <v-card color="blue">           
+          <v-list class="list">
+              <v-list-item>
+                <router-link :to="{name: 'classes'}" >
+                  <v-btn @click="" color="white">Classes</v-btn>         
+                </router-link>
+              </v-list-item>             
+              <v-list-item>
+                <!--<router-link :to="{name: 'entidades'}">-->
+                  <v-btn @click="" color="white">Entidades</v-btn>
+                <!--</router-link>-->
+              </v-list-item>
+              <v-list-item>
+                <!--<router-link :to="{name: 'legislações'}">-->
+                  <v-btn @click="" color="white">Legislações</v-btn>
+                <!--</router-link>-->
+              </v-list-item>
+              <v-list-item>
+                <!--<router-link :to="{name: 'tipologias'}">-->
+                  <v-btn @click="" color="white">Tipologias</v-btn>
+                <!--</router-link>-->  
+              </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
+      <v-tab><v-btn @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
+      <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
+      <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
+    </v-tabs>
+  </v-tool-bar>
 </template>
 
 <script setup>
-import CaixaDeDialogo from "@/components/generic/CaixaDeDialogo.vue";
 import { computed, ref, watch } from "vue";
 import { useRoute } from 'vue-router'
-import vuetify  from '@/plugins/vuetify'
 import router from '@/router'
 import { useAppStore } from '@/store/app'
-//import userLevel from "@/plugins/userLevel";
-import { useDisplay } from 'vuetify'
-//import { verifyTokenUser } from '@/plugins/verifyToken'
+//import { useDisplay } from 'vuetify'
 
 const store = useAppStore()
 
 const props = defineProps(["n"])
 
-const display = ref(useDisplay()) // 'display' substitui 'vuetify.breakpoint' em Vue 3
+//const display = ref(useDisplay()) // 'display' substitui 'vuetify.breakpoint' em Vue 3
 const route = useRoute()
 const token = ref(store.token);
 
@@ -554,8 +541,12 @@ function filtraTabs(navbar) {
 
 </script>
 
-<style scoped lang="scss">
-@import "@/assets/scss/global";
+<style scoped>
+.btn-iniciar-sessao {
+  position: absolute; 
+  right: 0; 
+  margin-top:30px;
+}
 
 .v-tab {
   text-transform: none !important;

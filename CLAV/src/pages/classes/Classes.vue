@@ -1,7 +1,7 @@
 <template>
    <v-card flat class="pa-3">
       <v-row align="center" justify="center">
-        <v-col cols="12" md="3" align="center"> <!--<Voltar />--> </v-col>
+        <v-col cols="12" md="3" align="center"> <Voltar /> </v-col>
         <v-col cols="12" md="5" align="center">
           <p class="clav-content-title-1">Consultar Lista Consolidada</p>
         </v-col>
@@ -18,7 +18,7 @@ import { host } from "@/config/global"
 //import router from '@/router'
 import { defineProps, ref } from 'vue'
 import { useAppStore } from "@/store/app"
-//import Voltar from "@/components/generic/Voltar";
+import Voltar from "@/components/generic/Voltar";
 import ClassesArvoreLateral from "@/components/classes/ClassesArvoreLateral.vue";
 
 const store = useAppStore()

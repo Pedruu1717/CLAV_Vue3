@@ -148,11 +148,6 @@ const filter = computed(() => {
 </script>
   
 <style lang="scss">
-// Treeview
-#treeview-content {
-  color: rgb(42, 107, 235) !important;
-}
-
 #treeview-card {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.22);
   border-radius: 10px;

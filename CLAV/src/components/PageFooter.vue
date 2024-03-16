@@ -44,7 +44,6 @@ try {
 </script>
 
 <style scoped>
-
 .display-flex {
   display: flex
 }

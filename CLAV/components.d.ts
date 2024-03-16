@@ -24,5 +24,6 @@ declare module 'vue' {
     PainelCLAV: typeof import('./src/components/generic/PainelCLAV.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Voltar: typeof import('./src/components/generic/Voltar.vue')['default']
   }
 }
