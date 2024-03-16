@@ -1,6 +1,6 @@
 <template>
   <!--Iniciar sessão-->
-  <v-btn class="btn-iniciar-sessao" rounded="xl" color="teal-accent-4" prepend-icon="mdi-key-variant" :text="(store.token != '' ? store.name : 'INICIAR SESSÃO')"></v-btn>
+  <v-btn class="btn-iniciar-sessao text-white" rounded="xl" color="green-accent-4" prepend-icon="mdi-key-variant" :text="'INICIAR SESSÃO'"></v-btn>
   <!--Navbar para sm/md/lg/xl screens-->
   <v-tool-bar
     app
@@ -15,7 +15,7 @@
           :aspect-ratio="1.7778"
           :src="'https://qldclav.dglab.gov.pt/img/logo.41995cc8.svg'"
           @click="go('/')"
-          style="cursor: pointer"
+          style="cursor: pointer; left: 1%;"
           max-width="160px"
           contain
         >
@@ -35,450 +35,61 @@
     <!--Botões toolbar CLAV-->
     <v-tabs show-arrows fixed-tabs>
       <v-tab>
-      <!--<router-link :to="{name: 'Home'}">-->
-        <v-btn @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-home-outline">CLAV</v-btn>
-      <!--</router-link>-->
-      </v-tab>
-      
-      <v-tab><v-btn @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
-    
+      <router-link :to="{name: 'home'}">
+        <v-btn :class="(tabAtiva=='CLAV' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'white' : 'transparent')" prepend-icon="mdi-home-outline">CLAV</v-btn>
+      </router-link>
+      </v-tab>      
+      <v-tab><v-btn :class="(tabAtiva=='Registo na CLAV' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'white' : 'transparent')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
       <v-menu>
         <template v-slot:activator="{ props: menu }">           
         <v-tab>
-          <v-btn
-          @click="toggle('Operações')"
-          :color="(tabAtiva=='Operações' ? 'light-blue-darken-4': 'white')"
-          v-bind="menu"
-          prepend-icon="mdi-wrench"
-          >Operações</v-btn>
+          <v-btn :class="(tabAtiva=='Operações' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Operações')" :color="(tabAtiva=='Operações' ? 'white' : 'transparent')" v-bind="menu" prepend-icon="mdi-wrench">Operações</v-btn>
         </v-tab>     
         </template>
         <v-card color="blue">           
           <v-list class="list">
               <v-list-item>
                 <router-link :to="{name: 'classes'}" >
-                  <v-btn @click="" color="white">Classes</v-btn>         
+                  <v-btn flat @click="" color="white">Classes</v-btn>         
                 </router-link>
               </v-list-item>             
               <v-list-item>
-                <!--<router-link :to="{name: 'entidades'}">-->
-                  <v-btn @click="" color="white">Entidades</v-btn>
+                <!-- TODO <router-link :to="{name: 'entidades'}">-->
+                  <v-btn flat @click="" color="white">Entidades</v-btn>
                 <!--</router-link>-->
               </v-list-item>
               <v-list-item>
-                <!--<router-link :to="{name: 'legislações'}">-->
-                  <v-btn @click="" color="white">Legislações</v-btn>
+                <!-- TODO <router-link :to="{name: 'legislações'}">-->
+                  <v-btn flat @click="" color="white">Legislações</v-btn>
                 <!--</router-link>-->
               </v-list-item>
               <v-list-item>
-                <!--<router-link :to="{name: 'tipologias'}">-->
-                  <v-btn @click="" color="white">Tipologias</v-btn>
+                <!-- TODO <router-link :to="{name: 'tipologias'}">-->
+                  <v-btn flat @click="" color="white">Tipologias</v-btn>
                 <!--</router-link>-->  
               </v-list-item>
           </v-list>
         </v-card>
       </v-menu>
-      <v-tab><v-btn @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
-      <v-tab><v-btn @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
-      <v-tab><v-btn @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'light-blue-darken-4': 'white')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
+      <v-tab><v-btn :class="(tabAtiva=='Estatística' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Estatística')" :color="(tabAtiva=='Estatística' ? 'white' : 'transparent')" prepend-icon="mdi-chart-line">Estatística</v-btn></v-tab>
+      <v-tab><v-btn :class="(tabAtiva=='Documentação' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Documentação')" :color="(tabAtiva=='Documentação' ? 'white' : 'transparent')" prepend-icon="mdi-file-document-outline">Documentação</v-btn></v-tab>
+      <v-tab><v-btn :class="(tabAtiva=='Gestão da Plataforma' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Gestão da Plataforma')" :color="(tabAtiva=='Gestão da Plataforma' ? 'white' : 'transparent')" prepend-icon="mdi-tune-variant">Gestão da Plataforma</v-btn></v-tab>
     </v-tabs>
   </v-tool-bar>
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
-import { useRoute } from 'vue-router'
+import { ref } from "vue";
 import router from '@/router'
-import { useAppStore } from '@/store/app'
-//import { useDisplay } from 'vuetify'
 
-const store = useAppStore()
-
-const props = defineProps(["n"])
-
-//const display = ref(useDisplay()) // 'display' substitui 'vuetify.breakpoint' em Vue 3
-const route = useRoute()
-const token = ref(store.token);
-
-var hover = ref(false)
-var hoveropt = ref(false)
-var activeItem = ref(-1)
-var snackbar = ref(false)
-var dialog = ref(false)
-var color = ref("")
-var timeout = ref(4000)
-var text = ref("")
-var counter = ref(10)
-var level = ref(0)
 var tabAtiva = ref("CLAV")
-var docs = ref(null)
-
-// para os dialogs
-var alternar = ref(false)
-var tipo = ref(null)
-
-const navbar = ref([
-  {
-    titulo: "CLAV",
-    icon: {
-      nome: "home-icon",
-      viewbox: "0 0 25.71 25.81",
-    },
-    level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-    url: "/",
-  },
-  {
-    titulo: "Registo na CLAV",
-    icon: {
-      nome: "registo-icon",
-      viewbox: "0 0 25.71 25.809",
-    },
-    level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-    url: "/registo",
-  },
-  {
-    titulo: "Operações",
-    icon: {
-      nome: "operacoes-icon",
-      viewbox: "0 0 25.71 26.68",
-    },
-    level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-    menu: [
-      {
-        opcao: "Lista Consolidada",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/lcInfo",
-        acoes: [
-          {
-            url: "/classes/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/classes/criar",
-            level: [1, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            url: "/classes/editar",
-            level: [4, 5, 6, 7],
-            icon: "alterar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Tabelas de Seleção",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/tsInfo",
-        acoes: [
-          {
-            url: "/ts/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/ts/criar",
-            level: [1, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            url: "/ts/importar/csv",
-            level: [4, 5, 6, 7],
-            icon: "importar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Relatórios de Avaliação de Documentação Acumulada",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/radaInfo",
-        acoes: [
-          {
-            url: "/rada/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/rada/criar",
-            level: [4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Autos de Eliminação",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/autosEliminacaoInfo",
-        acoes: [
-          {
-            url: "/autosEliminacao/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/autosEliminacao/criar",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            url: "/autosEliminacao/importar",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "importar-icon",
-          },
-          {
-            url: "/autosEliminacao/importarCSV",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "importar2-icon",
-          }
-        ],
-      },
-      {
-        opcao: "Planos de preservação digital",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/planosDePreservacaoDigital",
-        acoes: [
-          {
-            url: "/ppd/lista",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/ppd/criar",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            url: "/ppd/importar",
-            icon: "importar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Entidades",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/entidades",
-        acoes: [
-          {
-            url: "/entidades/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/entidades/criar",
-            level: [1, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            url: "/entidades/alterar",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "alterar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Tipologias de Entidades",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/tipologias",
-        acoes: [
-          {
-            url: "/tipologias/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/tipologias/criar",
-            level: [1, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            url: "/tipologias/alterar",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "alterar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Legislação",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/legislacao",
-        acoes: [
-          {
-            url: "/legislacao/consultar",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-          {
-            url: "/legislacao/criar",
-            level: [1, 3, 3.5, 4, 5, 6, 7],
-            icon: "criar-icon",
-          },
-          {
-            url: "/legislacao/alterar",
-            level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "alterar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Termos de Índice",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/termosIndiceInfo",
-        acoes: [
-          {
-            url: "/termosIndice",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "consultar-icon",
-          },
-        ],
-      },
-      {
-        opcao: "Exportação de dados",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/exportar",
-      },
-    ],
-  },
-  {
-    titulo: "Gestão de Pedidos",
-    icon: {
-      nome: "pedido-novo-icon",
-      viewbox: "0 0 20.83 20.831",
-    },
-    level: [1, 3, 3.5, 4, 5, 6, 7],
-    url: "/pedidos",
-  },
-  {
-    titulo: "Estatística",
-    icon: {
-      nome: "estatisticas-icon",
-      viewbox: "0 0 20.71 20.75",
-    },
-    level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-    menu: [
-      {
-        opcao: "Métricas Gerais",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/gestao/gerais",
-      },
-      {
-        opcao: "Métricas de API",
-        level: [3, 3.5, 4, 5, 6, 7],
-        url: "/gestao/metrica",
-      },
-      {
-        opcao: "Métricas de Classes",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/gestao/classes",
-      },
-      {
-        opcao: "Tabela de Indicadores",
-        level: [3, 3.5, 4, 5, 6, 7],
-        url: "/gestao/tabela",
-      },
-    ],
-  },
-  {
-    titulo: "Documentação",
-    icon: {
-      nome: "documentacao-icon",
-      viewbox: "0 0 25.71 29.383",
-    },
-    level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-    menu: [
-      {
-        opcao: "Documentação Técnica de Apoio",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/docsporclasse",
-      },
-      {
-        opcao: "Adicionar Documentação",
-        level: [4, 5, 6, 7],
-        url: "/documentacaoApoioInfo",
-      },
-    ],
-  },
-  {
-    titulo: "Gestão da Plataforma",
-    icon: {
-      nome: "gestao-icon",
-      viewbox: "0 0 20.83 20.831",
-    },
-    menu: [
-      {
-        opcao: "Utilizadores",
-        level: [5, 6, 7],
-        url: "/usersInfo",
-      },
-      {
-        opcao: "Utilizadores com chaves API",
-        level: [7],
-        url: "/gestao/api/listagem",
-      },
-      {
-        opcao: "Perfis de utilizadores",
-        level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/permissoesAcesso",
-      },
-      {
-        opcao: "Vocabulários Controlados",
-        level: [1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/vocabularios",
-      },
-      {
-        opcao: "Invariantes",
-        level: [6, 7],
-        url: "/invariantes",
-      },
-      {
-        opcao: "Administração",
-        level: [7],
-        url: "/gestaoInfo",
-      },
-      {
-        opcao: "Importação/Exportação de Dados",
-        level: [4, 5, 6, 7],
-        url: "/importExportInfo",
-      },
-      {
-        opcao: "API de dados",
-        level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-        url: "/docs",
-        acoes: [
-          {
-            url: "http://clav.di.uminho.pt/v2/docs/",
-            level: [0, 1, 2, 3, 3.5, 4, 5, 6, 7],
-            icon: "api-icon",
-          },
-        ],
-      },
-    ],
-  },
-])
-
-const tabsAcessiveis = computed(() => {
-  store.token;
-  return filtraTabs(navbar);  
-})
-
-//apenas atualiza o nível quando o valor do token muda
-watch(token, async(newToken, oldToken) => {
-  //level.value = userLevel();
-})
 
 watch(tabAtiva, (newValue) => {
   tabAtiva.value = newValue;
 })
- 
+
 function toggle(btn) {
   tabAtiva.value = btn   
-}
-
-function openDialog(action) {
-  if (action.url.includes("tipologias")) tipo.value = "Tipologia";
-  else if (action.url.includes("entidades")) tipo.value = "Entidade";
-  else tipo.value = "Legislação";
-  alternar.value = true;
 }
 
 function go(url, param) {
@@ -488,64 +99,13 @@ function go(url, param) {
     router.push(url);
   }
 }
-
-function filtraTabs(navbar) {
-  var filtered = [];
-  for (var i = 0; i < navbar.length; i++) {
-    var levelsSet = new Set();
-
-    if (navbar[i].menu) {
-      navbar[i].menu.forEach((m) => m.level.forEach((l) => levelsSet.add(l)));
-    } else {
-      navbar[i].level.forEach((l) => levelsSet.add(l));
-    }
-
-    var levels = Array.from(levelsSet);
-    if (
-      levels.includes(level.value) &&
-      navbar[i].menu &&
-      ((level.value > 0 &&
-        store.token != "" &&
-        store.name != "") ||
-        level.value === 0)
-    ) {
-      var menu = navbar[i].menu.filter((o) => o.level.includes(level.value));
-      menu = JSON.parse(JSON.stringify(menu));
-      for (var j = 0; j < menu.length; j++)
-        if (navbar[i].menu[j].acoes)
-          menu[j].acoes = menu[j].acoes.filter((o) => o.level.includes(level.value));
-      filtered.push({
-        titulo: navbar[i].titulo,
-        icon: navbar[i].icon,
-        url: navbar[i].url ? navbar[i].url : undefined,
-        menu: menu,
-      });
-    } else if (
-      levels.includes(level.value) &&
-      !navbar[i].menu &&
-      ((level.value > 0 &&
-        store.token != "" &&
-        store.name != "") ||
-        level.value === 0)
-    ) {
-      filtered.push({
-        titulo: navbar[i].titulo,
-        icon: navbar[i].icon,
-        level: navbar[i].level,
-        url: navbar[i].url,
-      });
-    }
-  }
-  return filtered;
-}
-
 </script>
 
 <style scoped>
 .btn-iniciar-sessao {
   position: absolute; 
-  right: 0; 
-  margin-top:30px;
+  right: 1%; 
+  margin-top: 30px;
 }
 
 .v-tab {

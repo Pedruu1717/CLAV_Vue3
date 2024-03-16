@@ -5,7 +5,7 @@
         <v-icon icon="mdi-newspaper"></v-icon>        
         <p class="big-footer-letters">Notícias</p>
         <v-spacer></v-spacer>
-        <v-btn class="btns" rounded="xl">VER TODAS</v-btn>
+        <v-btn class="btns text-blue-darken-4" rounded="xl">VER TODAS</v-btn>
     </span>
     <div class="homepage-carousel">
       <v-carousel  
@@ -25,6 +25,8 @@
               <p>{{ n.desc }}"</p>
               <v-btn
                 class="btns"
+                rounded="circle"
+                size="60px"                
                 fab
                 dark
                 color="primary"
