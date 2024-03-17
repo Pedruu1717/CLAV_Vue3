@@ -3,7 +3,7 @@
       <v-row>
         <!-- MENU LATERAL -->
         <v-col cols="12" order="2" sm="3" order-sm="0" md="3" lg="3">
-          <ClassesArvoreLateral :classeId="props.idc" />
+          <ClassesArvore :classeId="props.idc" />
         </v-col>
         <v-col cols="12" sm="9" md="9" lg="9">
           <!-- HEADER -->
@@ -68,7 +68,7 @@
 //import Participantes from "@/components/classes/consulta/Participantes.vue";
 //import ProcessosRelacionados from "@/components/classes/consulta/ProcessosRelacionados.vue";
 //import Legislacao from "@/components/classes/consulta/Legislacao.vue";
-import ClassesArvoreLateral from "@/components/classes/ClassesArvoreLateral.vue";
+import ClassesArvore from "@/components/classes/ClassesArvore.vue";
 //import Voltar from "@/components/generic/Voltar.vue";
 import Loading from "@/components/generic/Loading.vue";
 import PainelCLAV from "@/components/generic/PainelCLAV"

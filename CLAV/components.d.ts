@@ -9,7 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     CaixaDeDialogo: typeof import('./src/components/generic/CaixaDeDialogo.vue')['default']
     CampoCLAV: typeof import('./src/components/generic/CampoCLAV.vue')['default']
-    ClassesArvoreLateral: typeof import('./src/components/classes/ClassesArvoreLateral.vue')['default']
+    ClassesArvore: typeof import('./src/components/classes/ClassesArvore.vue')['default']
     ClassesFilho: typeof import('./src/components/classes/consulta/ClassesFilho.vue')['default']
     ConsultaClasse: typeof import('./src/components/classes/consulta/ConsultaClasse.vue')['default']
     copy: typeof import('./src/components/generic/PainelCLAV copy.vue')['default']

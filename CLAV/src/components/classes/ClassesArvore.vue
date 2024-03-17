@@ -1,29 +1,25 @@
 <template>
     <v-card id="treeview-card">
-      <v-tooltip text="Filtrar por código, título, notas aplic., exemplos de notas ou termos de índice">
+      <v-tooltip text="Pesquisar por código, título, notas de aplicação, exemplos de notas de aplicação ou termos de índice...">
         <template v-slot:activator="{ props }">
-          <v-text-field v-bind="props" label="Filtrar por código, título, notas aplic., exemplos de notas ou termos de índice"></v-text-field>
+          <v-text-field v-bind="props" label="Pesquisar por código, título, notas de aplicação, exemplos de notas de aplicação ou termos de índice..."></v-text-field>
         </template>
       </v-tooltip>    
       <v-card-text>
         <div v-if="classesCarregadas">
-          <treeview
-            :config="config" :nodes="nodes"
-          >
-          </treeview>
+          <treeview :config="config" :nodes="nodes" />          
         </div>
       </v-card-text>
     </v-card>
 </template>
   
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, onMounted } from 'vue'
 import { host } from '@/config/global'
 import { useAppStore } from '@/store/app';
 import router from '@/router'
 import treeview from "vue3-treeview";
 import "vue3-treeview/dist/style.css";
-
 
 var config = ref({})
 var nodes = ref({})
@@ -34,15 +30,6 @@ const store = useAppStore()
  
 var classesTree = []
 var classesCarregadas = false
-/*var search = null
-var selectedParents = []
-
-var levelIds = props.classeId.split(".")
-var iteracoes = levelIds.length
-for (let i = 0; i < iteracoes; i++) {
-    levelIds.splice(levelIds.length - 1, 1);
-    selectedParents.push(levelIds.join("."));
-}*/
 
 var myClasses = []
 var myIndice = null
@@ -145,6 +132,16 @@ const filter = computed(() => {
     );
   };
 })
+
+onMounted(() => {
+  let treeview_nodes = Array.from(document.getElementsByClassName("input-wrapper"))
+  treeview_nodes.forEach((node) => {
+    let classeId = node.innerText.substring(0,3);
+    node.innerHTML = `<a href=${"/classes/consultar/c" + classeId}>` + node.innerHTML + "</a>";
+  })
+  let nodes_text = Array.from(document.getElementsByClassName("node-text"))
+  nodes_text.forEach((node) => node.style.color = "blue")
+});
 </script>
   
 <style lang="scss">
