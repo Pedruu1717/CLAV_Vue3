@@ -17,7 +17,6 @@
 import { defineProps, onMounted } from 'vue'
 import { host } from '@/config/global'
 import { useAppStore } from '@/store/app';
-import router from '@/router'
 import treeview from "vue3-treeview";
 import "vue3-treeview/dist/style.css";
 
@@ -55,7 +54,23 @@ try {
     addTreeviewChildren(classe)    
   }
 
-  config.value = { roots: raizes }
+  config.value = { 
+    roots: raizes,
+    openedIcon: {
+      type: "shape",
+      stroke: "grey",
+      strokeWidth: 3,
+      viewBox: "0 0 24 24",
+      draw: "M 0 0 L 12 12 M 24 0 L 12 12",
+    },
+    closedIcon: {
+      type: "shape",
+      stroke: "grey",
+      strokeWidth: 3,
+      viewBox: "0 0 24 24",
+      draw: "M 2 0 L 22 12 M 2 22 L 22 12",
+    },    
+  }
   classesCarregadas = true;
 } catch (e) {
   console.log(e);
@@ -67,12 +82,12 @@ function addTreeviewChildren(classe) {
     for (let i = 0; i < classe.children.length; i++) {
       let children = classe.children[i]
       treeview_children.push(children.id)
-      nodes.value[children.id] = {text: children.name + ' - ' + children.titulo}
+      nodes.value[children.id] = {text: formatarLabel(children.name + ' - ' + children.titulo)}
     }
   }
 
   let treeview_classe = {}
-  treeview_classe.text = classe.name + ' - ' + classe.titulo
+  treeview_classe.text = formatarLabel(classe.name + ' - ' + classe.titulo)
   treeview_classe.children = treeview_children
   nodes.value[classe.id] = treeview_classe
 
@@ -82,14 +97,11 @@ function addTreeviewChildren(classe) {
   }
 }
 
-
-function go(idClasse) {
-  router.push("/classes/consultar/c" + idClasse);
-  router.go();
-}
-
 function formatarLabel(titulo) {
-  return titulo.toUpperCase();
+  if (window.location.pathname == "/classes/consultar") titulo.toUpperCase();
+  else titulo = titulo.split("-")[0];
+
+  return titulo;
 }
 
 async function preparaTree(lclasses, linfo) {
@@ -114,24 +126,7 @@ async function preparaTree(lclasses, linfo) {
   }
 }
 
-const filter = computed(() => {
-  return (item, queryText, itemText) => {
-    const codigo = item.id;
-    const titulo = item.titulo;
-    const notas = item.notas;
-    const exemplos = item.exemplos;
-    const tis = item.tis;
-    const searchText = queryText.toLowerCase();
 
-    return (
-      codigo.indexOf(searchText) > -1 ||
-      titulo.indexOf(searchText) > -1 ||
-      notas.indexOf(searchText) > -1 ||
-      exemplos.indexOf(searchText) > -1 ||
-      tis.indexOf(searchText) > -1
-    );
-  };
-})
 
 onMounted(() => {
   let treeview_nodes = Array.from(document.getElementsByClassName("input-wrapper"))
@@ -140,18 +135,34 @@ onMounted(() => {
     node.innerHTML = `<a href=${"/classes/consultar/c" + classeId}>` + node.innerHTML + "</a>";
   })
   let nodes_text = Array.from(document.getElementsByClassName("node-text"))
-  nodes_text.forEach((node) => node.style.color = "blue")
+  nodes_text.forEach((node) => node.classList.add("text-blue", "treeview-font"))
 });
 </script>
   
 <style lang="scss">
+.treeview-font {
+  font-family: "Roboto Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 100,
+    "GRAD" 0,
+    "XOPQ" 96,
+    "XTRA" 468,
+    "YOPQ" 79,
+    "YTAS" 750,
+    "YTDE" -203,
+    "YTFI" 738,
+    "YTLC" 514,
+    "YTUC" 712;
+  font-size: medium;
+}
+
 #treeview-card {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.22);
   border-radius: 10px;
   background-color: #f4f5f7;
 }
-.centered-input >>> input {
-  text-align: center;
-}
 </style>
-  

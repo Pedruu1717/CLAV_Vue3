@@ -2,8 +2,8 @@
   <Loading v-if="!noticiasReady" :message="'notícias'" />
   <div v-else class="mx-7">
     <span class="separador">
-        <v-icon icon="mdi-newspaper"></v-icon>        
-        <p class="big-footer-letters">Notícias</p>
+        <v-icon style="margin-left: 30%;" icon="mdi-newspaper"/>     
+        <span style="margin-left: 5%;">Notícias</span>
         <v-spacer></v-spacer>
         <v-btn class="btns text-blue-darken-4" rounded="xl">VER TODAS</v-btn>
     </span>

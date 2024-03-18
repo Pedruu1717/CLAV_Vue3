@@ -5,30 +5,33 @@
         <v-col cols="12" order="2" sm="3" order-sm="0" md="3" lg="3">
           <ClassesArvore :classeId="props.idc" />
         </v-col>
-        <v-col cols="12" sm="9" md="9" lg="9">
-          <!-- HEADER -->
-          <v-row>
-            <v-col cols="12" md="9">
+        <v-col cols="12" sm="9" md="9" lg="9">          
+          <v-row>           
+              <Voltar class="voltar" />            
               <p class="clav-content-title-2 pa-5">
                 {{ classe.codigo }}: {{ classe.titulo }}
-              </p>
-            </v-col>
+              </p>           
           </v-row>
-  
+
           <!-- DESCENDÊNCIA e Informação da classe -->
           <Loading v-if="!classeLoaded" :message="'classe'" />
-          <v-card v-else flat class="info-content">
+          <v-card v-else flat class="info-content conteudo-classe">
             <div v-if="classe.filhos.length > 0" class="d-inline-flex">
-              <v-card color="#f3f7fc" width="150" height="25" >Descendência</v-card>
-              <v-card color="#f3f7fc" width="1000">
-                <div v-for="(filho, index) in classe.filhos" :key="index">
-                  <v-row>{{ filho.codigo }} - {{ filho.titulo }}</v-row>
+              <v-card class="text-center text-blue-darken-4 clav-info-label" color="#f3f7fc" width="150" height="25" >Descendência</v-card>
+              <v-card style="margin-left: 20px;" color="#f3f7fc" width="1000">
+                <div style="margin: 20px;" v-for="(filho, index) in classe.filhos" :key="index">
+                  <v-row style="margin-bottom: 10px;">
+                    <a :href="'/classes/consultar/c' + filho.codigo">
+                      <span class="text-blue">{{ filho.codigo }}</span>
+                    </a>
+                    <span>&nbsp- {{ filho.titulo }}</span>
+                  </v-row>
                 </div>
               </v-card>
             </div>
             <v-expansion-panels>
             <v-expansion-panel class="expandend-content">
-              <v-expansion-panel-title color="#1A237E">Descritivo da Classe</v-expansion-panel-title>
+              <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-clipboard-text"/>Descritivo da Classe</v-expansion-panel-title>
               <v-expansion-panel-text>              
                   <div v-if="classe.status.length > 0" class="d-inline-flex">
                     <v-card color="#f3f7fc" width="150" height="25" >Estado</v-card>
@@ -64,20 +67,11 @@
 </template>
   
 <script setup>
-//import ClassesFilho from "@/components/classes/consulta/ClassesFilho.vue";
-//import Participantes from "@/components/classes/consulta/Participantes.vue";
-//import ProcessosRelacionados from "@/components/classes/consulta/ProcessosRelacionados.vue";
-//import Legislacao from "@/components/classes/consulta/Legislacao.vue";
 import ClassesArvore from "@/components/classes/ClassesArvore.vue";
-//import Voltar from "@/components/generic/Voltar.vue";
+import Voltar from "@/components/generic/Voltar.vue";
 import Loading from "@/components/generic/Loading.vue";
-import PainelCLAV from "@/components/generic/PainelCLAV"
-import Campo from "@/components/generic/CampoCLAV"
 import { defineProps } from 'vue'
-import myhelp from "@/config/help"
-import { criterios as mylabels } from "@/config/labels"
 import { useAppStore } from "@/store/app"
-import router from "@/router"
 import { host } from "@/config/global"
 
 const store = useAppStore()
@@ -88,35 +82,6 @@ var classeLoaded = false
 var codeFormats = {
   2: /[0-9]{3}\.[0-9]{2}(?!\.)/,
   3: /[0-9]{3}\.[0-9]{2}\.[0-9]{3}(?!\.)/,
-}
-
-var filhosHeaders = [
-  {
-    text: "Código",
-    align: "left",
-    sortable: false,
-    value: "codigo",
-  },
-  {
-    text: "Título",
-    value: "titulo",
-  },
-]
-  
-function go(idClasse) {
-  router.push("/classes/consultar/c" + idClasse);
-}
-
-function analisaRefs(nota) {
-  var notaHtml = nota.replace(
-    codeFormats[3],
-    '<a href="/classes/consultar/c$&">$&</a>'
-  );
-  notaHtml = notaHtml.replace(
-    codeFormats[2],
-    '<a href="/classes/consultar/c$&">$&</a>'
-  );
-  return notaHtml;
 }
 
 try {
@@ -130,6 +95,31 @@ try {
 </script>
 
 <style lang="scss">
+.conteudo-classe {
+  margin-top: 20px;
+}
+
+.voltar {
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-right: 30px;
+}
+
+.separador {
+  display: grid;
+  grid-template-columns: 0.05fr 0.15fr 0.5fr 0.3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "icon titulo . btns";
+  color: white;
+  align-items: center;
+  padding: 5px;
+  font-weight: 400;
+  min-height: 50px;
+  background: linear-gradient(to right, #19237e 0%, #0056b6 100%) !important;
+  font-size: 14pt;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
 
 .info-label {
   color: var(--v-primary-base) !important;

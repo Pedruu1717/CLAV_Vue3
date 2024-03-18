@@ -50,23 +50,23 @@
           <v-list class="list">
               <v-list-item>
                 <router-link :to="{name: 'classes'}" >
-                  <v-btn flat @click="" color="white">Classes</v-btn>         
+                  <v-btn flat @click="" color="white">Lista Consolidada</v-btn>         
                 </router-link>
               </v-list-item>             
               <v-list-item>
                 <!-- TODO <router-link :to="{name: 'entidades'}">-->
                   <v-btn flat @click="" color="white">Entidades</v-btn>
                 <!--</router-link>-->
+              </v-list-item>              
+              <v-list-item>
+                <!-- TODO <router-link :to="{name: 'tipologias'}">-->
+                  <v-btn flat @click="" color="white">Tipologias de Entidades</v-btn>
+                <!--</router-link>-->  
               </v-list-item>
               <v-list-item>
                 <!-- TODO <router-link :to="{name: 'legislações'}">-->
-                  <v-btn flat @click="" color="white">Legislações</v-btn>
+                  <v-btn flat @click="" color="white">Legislação</v-btn>
                 <!--</router-link>-->
-              </v-list-item>
-              <v-list-item>
-                <!-- TODO <router-link :to="{name: 'tipologias'}">-->
-                  <v-btn flat @click="" color="white">Tipologias</v-btn>
-                <!--</router-link>-->  
               </v-list-item>
           </v-list>
         </v-card>
