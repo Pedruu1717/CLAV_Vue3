@@ -42,7 +42,10 @@ declare module 'vue-router/auto/routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/classes/Classes': RouteRecordInfo<'/classes/Classes', '/classes/Classes', Record<never, never>, Record<never, never>>,
     '/classes/ClassesConsulta': RouteRecordInfo<'/classes/ClassesConsulta', '/classes/ClassesConsulta', Record<never, never>, Record<never, never>>,
+    '/entidades/Entidades': RouteRecordInfo<'/entidades/Entidades', '/entidades/Entidades', Record<never, never>, Record<never, never>>,
+    '/legislacao/Legislacao': RouteRecordInfo<'/legislacao/Legislacao', '/legislacao/Legislacao', Record<never, never>, Record<never, never>>,
     '/pedidos/Pedidos': RouteRecordInfo<'/pedidos/Pedidos', '/pedidos/Pedidos', Record<never, never>, Record<never, never>>,
+    '/tipologias/Tipologias': RouteRecordInfo<'/tipologias/Tipologias', '/tipologias/Tipologias', Record<never, never>, Record<never, never>>,
   }
 }
 

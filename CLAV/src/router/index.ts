@@ -30,6 +30,24 @@ const routes = [
     component: () => import("@/pages/classes/ClassesConsulta.vue"),
     meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7], tabAtiva: "Operações" }
   },
+  {
+    path: "/entidades/consultar",
+    name: "entidades",
+    component: () => import("@/pages/entidades/Entidades.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
+  },
+  {
+    path: "/tipologias/consultar",
+    name: "tipologias",
+    component: () => import("@/pages/tipologias/Tipologias.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
+  },
+  {
+    path: "/legislacao/consultar",
+    name: "legislacao",
+    component: () => import("@/pages/legislacao/Legislacao.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
+  },
 
 ]
 

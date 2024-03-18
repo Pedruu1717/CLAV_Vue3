@@ -34,26 +34,26 @@
               <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-clipboard-text"/>Descritivo da Classe</v-expansion-panel-title>
               <v-expansion-panel-text>              
                   <div v-if="classe.status.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" >Estado</v-card>
-                    <v-card color="#f3f7fc" width="1000">{{ classe.status }}</v-card>
+                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Estado</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935"><div style="margin: 20px;" >{{ classe.status }}</div></v-card>
                   </div>
                   <div v-if="classe.descricao.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" >Descrição</v-card> 
-                    <v-card color="#f3f7fc" width="1000">{{ classe.descricao }}</v-card>
+                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Descrição</v-card> 
+                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935"><div style="margin: 20px;" >{{ classe.descricao }}</div></v-card>
                   </div>
                   <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" >Notas de Exclusão</v-card> 
-                    <v-card color="#f3f7fc" width="1000">
+                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Notas de Exclusão</v-card> 
+                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935">
                     <ul v-for="item in classe.notasEx">
-                      <li>{{ item.nota }}</li>
+                      <li style="margin: 20px;" >{{ item.nota }}</li>
                     </ul>
                     </v-card>
                   </div>
                   <div v-if="classe.notasAp.length > 0" class="d-inline-flex">
-                    <v-card color="#f3f7fc" width="150" height="25" >Notas de Aplicação</v-card>
-                    <v-card color="#f3f7fc" width="1000">
+                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Notas de Aplicação</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935">
                       <ul v-for="item in classe.notasAp">
-                        <li>{{ item.nota }}</li>
+                        <li style="margin: 20px;" >{{ item.nota }}</li>
                       </ul>              
                     </v-card>
                   </div>               

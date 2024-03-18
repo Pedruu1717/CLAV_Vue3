@@ -82,13 +82,14 @@ function addTreeviewChildren(classe) {
     for (let i = 0; i < classe.children.length; i++) {
       let children = classe.children[i]
       treeview_children.push(children.id)
-      nodes.value[children.id] = {text: formatarLabel(children.name + ' - ' + children.titulo)}
+      nodes.value[children.id] = {text: formatarLabel(children.name + ' - ' + children.titulo), state: {opened: false}}
     }
   }
 
   let treeview_classe = {}
   treeview_classe.text = formatarLabel(classe.name + ' - ' + classe.titulo)
   treeview_classe.children = treeview_children
+  treeview_classe.state = {opened: false}
   nodes.value[classe.id] = treeview_classe
 
   // Repetir a função para cada nó filho.
@@ -100,7 +101,7 @@ function addTreeviewChildren(classe) {
 function formatarLabel(titulo) {
   if (window.location.pathname == "/classes/consultar") titulo.toUpperCase();
   else titulo = titulo.split("-")[0];
-
+  
   return titulo;
 }
 
@@ -126,17 +127,27 @@ async function preparaTree(lclasses, linfo) {
   }
 }
 
-
-
-onMounted(() => {
+function formatTreeviewNodes() {
   let treeview_nodes = Array.from(document.getElementsByClassName("input-wrapper"))
   treeview_nodes.forEach((node) => {
-    let classeId = node.innerText.substring(0,3);
+    let classeId = node.innerText.split("-")[0];
     node.innerHTML = `<a href=${"/classes/consultar/c" + classeId}>` + node.innerHTML + "</a>";
   })
   let nodes_text = Array.from(document.getElementsByClassName("node-text"))
   nodes_text.forEach((node) => node.classList.add("text-blue", "treeview-font"))
+}
+
+onMounted(() => {
+  formatTreeviewNodes()
 });
+
+watch(nodes, (newValue, oldValue) => {
+  Object.entries(newValue).forEach(([key, value]) => {
+    if (value.state.opened == true) {
+      formatTreeviewNodes()
+    }
+  })
+}, {deep: true});
 </script>
   
 <style lang="scss">
