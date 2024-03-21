@@ -49,13 +49,13 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 import { host } from "@/config/global"
 import { useAppStore } from "@/store/app"
 //import request from '@/plugins/request'
 
 const store = useAppStore()
-const router = useRouter()
+
 
 const props = defineProps(["ativo", "tipo"])
 const dadosEditar = ref(null)

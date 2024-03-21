@@ -5,9 +5,9 @@
 
 <script setup>
 //import GestaoPedidos from "@/components/pedidos/GestaoPedidos.vue"; // @ is an alias to /src
-import { useRouter } from 'vue-router'
+import router from '@/router'
 
-const router = useRouter()
+
 
 function consultaPedido(item) {
   switch (item.objeto.tipo) {

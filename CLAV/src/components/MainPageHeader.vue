@@ -46,26 +46,38 @@
           <v-btn :class="(tabAtiva=='Operações' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Operações')" :color="(tabAtiva=='Operações' ? 'white' : 'transparent')" v-bind="menu" prepend-icon="mdi-wrench">Operações</v-btn>
         </v-tab>     
         </template>
-        <v-card color="blue">           
+        <v-card>           
           <v-list class="list">
               <v-list-item>
-                <router-link :to="{name: 'classes'}" >
-                  <v-btn flat @click="" color="white">Lista Consolidada</v-btn>         
+                <router-link :to="{name: 'lcInfo'}" >
+                  <v-btn flat @click="" color="white">Lista Consolidada</v-btn>
+                  <router-link :to="{name: 'classes'}" >
+                    <v-icon icon="mdi-magnify"/>
+                  </router-link>
                 </router-link>
               </v-list-item>             
               <v-list-item>
-                <router-link :to="{name: 'entidades'}">
+                <router-link :to="{name: 'entInfo'}">
                   <v-btn flat @click="" color="white">Entidades</v-btn>
+                  <router-link :to="{name: 'entidades'}" >
+                    <v-icon icon="mdi-magnify"/>
+                  </router-link>
                 </router-link>
               </v-list-item>              
               <v-list-item>
-                <router-link :to="{name: 'tipologias'}">
+                <router-link :to="{name: 'tipEntInfo'}">
                   <v-btn flat @click="" color="white">Tipologias de Entidades</v-btn>
+                  <router-link :to="{name: 'tipologias'}" >
+                    <v-icon icon="mdi-magnify"/>
+                  </router-link>
                 </router-link>
               </v-list-item>
               <v-list-item>
-                <router-link :to="{name: 'legislacao'}">
+                <router-link :to="{name: 'legInfo'}">
                   <v-btn flat @click="" color="white">Legislação</v-btn>
+                  <router-link :to="{name: 'legislacao'}" >
+                    <v-icon icon="mdi-magnify"/>
+                  </router-link>
                 </router-link>
               </v-list-item>
           </v-list>
@@ -111,98 +123,9 @@ function go(url, param) {
 .v-tab {
   text-transform: none !important;
   font-weight: bold !important;
-  color: var(--v-secondary-base) !important;
-  fill: var(--v-secondary-base) !important;
+  color: #f3f7fc !important;
+  fill: #f3f7fc !important;
   min-width: 250px !important;
-}
-
-.active {
-  color: #0057b7 !important;
-  background-color: #f3f7fc !important;
-  border-radius: 10px 10px 0px 0px;
-  fill: #0057b7 !important;
-}
-/*Web css*/
-#authenticate-button,
-#authenticate-button-mobile {
-  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.4),
-    0 2px 4px -1px rgba(255, 255, 255, 0.36);
-  background-color: var(--v-success-base) !important;
-  text-decoration: none;
-}
-
-/* Mobile CSS */
-#mobile-toolbar {
-  height: 60px !important;
-}
-
-#tab-bar {
-  margin-top: 15px;
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.button-pad {
-  padding: 0px 20px;
-}
-
-.title-letters-lg {
-  font-size: 2.4rem;
-}
-
-.title-letters-md {
-  font-size: 1.8rem;
-}
-
-.subtitle-letter-md {
-  padding-left: 6px;
-  font-size: 1rem;
-  vertical-align: text-bottom;
-}
-
-.subtitle-letter-lg {
-  padding-left: 12px;
-  vertical-align: text-bottom;
-}
-
-.toolbar-title-sm {
-  padding-top: 8px !important;
-  line-height: 1 !important;
-}
-
-.subtitle-letter-sm {
-  vertical-align: unset !important;
-}
-
-#authenticate-button-mobile {
-  height: 29px !important;
-}
-
-#authenticate-button:before,
-#authenticate-button-mobile:before {
-  background-color: #46c354 !important;
-}
-
-#user-button::before {
-  background-color: transparent !important;
-}
-
-#user-button {
-  outline: none !important;
-  padding: 0 4px !important;
-}
-
-#authenticate-button:hover,
-#authenticate-button-mobile:hover {
-  background-color: rgb(70, 195, 84, 0.8) !important;
-}
-
-#authenticate-button:hover:before,
-#authenticate-button-mobile:hover:before {
-  color: green;
-}
-
-#authenticate-icon {
-  vertical-align: bottom;
 }
 
 .theme--dark.v-footer,
@@ -226,39 +149,8 @@ function go(url, param) {
   font-weight: 500;
 }
 
-.mobile-menu-link {
-  margin-left: 20px;
-  margin-top: 10px;
-}
-
 .v-application .primary--text {
   color: #3899b7 !important;
   fill: #3899b7 !important;
-}
-
-/*CSS Ações rápidas*/
-.acoes {
-  min-width: 150px !important; /*Para os 4 itens na opção de "Autos de Eliminição" ficarem na mesma linha*/
-  position: absolute;
-  left: 50%;
-  bottom: -30%;
-}
-
-.acao {
-  display: inline-block;
-  position: relative;
-  left: -50%;
-}
-
-.opcoes-enter-active {
-  transition: all 0.3s ease;
-}
-.opcoes-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.opcoes-enter,
-.opcoes-leave-to {
-  transform: translateY(10px);
-  opacity: 0;
 }
 </style>
