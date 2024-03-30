@@ -26,7 +26,8 @@
               <v-btn
                 class="btns"
                 rounded="circle"
-                size="60px"                
+                size="50px"
+                elevation="5"        
                 fab
                 dark
                 color="primary"
@@ -152,7 +153,7 @@ try {
 }
 
 .titulopainel {
-  color: black;
+  color: #3b3b3b;
   grid-area: titulopainel;
   padding: 1%;
   align-self: center;
@@ -162,14 +163,14 @@ try {
 .data {
   align-self: center;
   justify-self: right;
-  color: black;
+  color: #3b3b3b;
   grid-area: data;
 }
 .info {
   border-top: 1px solid black !important;
   padding: 0% 5%;
   background-color: white !important;
-  color: black;
+  color: #3b3b3b;
   overflow: auto;
   grid-area: info;
 }

@@ -6,8 +6,7 @@
       :items="items_list"
       :loading="loading"
       :search="search"
-      item-value="sigla"
-      @update:options="fetchItems"
+      item-value="sigla"      
     >
     </v-data-table>
 </template>

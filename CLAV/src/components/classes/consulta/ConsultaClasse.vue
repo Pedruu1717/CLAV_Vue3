@@ -17,7 +17,7 @@
           <Loading v-if="!classeLoaded" :message="'classe'" />
           <v-card v-else flat class="info-content conteudo-classe">
             <div v-if="classe.filhos.length > 0" class="d-inline-flex">
-              <v-card class="text-center text-blue-darken-4 clav-info-label" color="#f3f7fc" width="150" height="25" >Descendência</v-card>
+              <v-card class="text-center text-blue-darken-4 clav-info-label" width="150" height="25" >Descendência</v-card>
               <v-card style="margin-left: 20px;" color="#f3f7fc" width="1000">
                 <div style="margin: 20px;" v-for="(filho, index) in classe.filhos" :key="index">
                   <v-row style="margin-bottom: 10px;">
@@ -34,26 +34,26 @@
               <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-clipboard-text"/>Descritivo da Classe</v-expansion-panel-title>
               <v-expansion-panel-text>              
                   <div v-if="classe.status.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Estado</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935"><div style="margin: 20px;" >{{ classe.status }}</div></v-card>
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Estado</v-card>
+                    <v-card :class="(classe.status=='Ativa' ? 'text-green' : 'text-red')" style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.status }}</div></v-card>
                   </div>
                   <div v-if="classe.descricao.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Descrição</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935"><div style="margin: 20px;" >{{ classe.descricao }}</div></v-card>
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Descrição</v-card> 
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.descricao }}</div></v-card>
                   </div>
                   <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Notas de Exclusão</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Exclusão</v-card> 
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
                     <ul v-for="item in classe.notasEx">
-                      <li style="margin: 20px;" >{{ item.nota }}</li>
+                      <li style="margin: 20px;">{{ item.nota }}</li>
                     </ul>
                     </v-card>
                   </div>
                   <div v-if="classe.notasAp.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center" color="#f3f7fc" width="150" height="25" >Notas de Aplicação</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" color="#f3f7fc" width="935">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Aplicação</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
                       <ul v-for="item in classe.notasAp">
-                        <li style="margin: 20px;" >{{ item.nota }}</li>
+                        <li style="margin: 20px;">{{ item.nota }}</li>
                       </ul>              
                     </v-card>
                   </div>               
@@ -79,16 +79,16 @@ const props = defineProps(['idc'])
 
 var classe = ref({})
 var classeLoaded = false
-var codeFormats = {
-  2: /[0-9]{3}\.[0-9]{2}(?!\.)/,
-  3: /[0-9]{3}\.[0-9]{2}\.[0-9]{3}(?!\.)/,
-}
 
 try {
   await fetch(host + "/classes/c" + props.idc, { method: "GET", headers: { "Authorization": "token " + store.token } })
   .then(response => response.json())
   .then(data => classe.value = data);
   classeLoaded = true;
+
+  if (classe.value.status == "A") classe.value.status = "Ativa";
+  else classe.value.status = "Inativa";
+
 } catch (e) {
   console.log(e);
 }

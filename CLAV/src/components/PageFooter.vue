@@ -6,9 +6,9 @@
         <p class="big-footer-letters">DGLAB - </p>
         <p class="regular-footer-letters pl-2">Direção Geral do Livro, dos Arquivos e das Bibliotecas</p>
         <v-spacer></v-spacer>
-        <p class="body-2">Versão: {{ interfaceVersion }}</p>
+        <p class="icon-text">Versão: {{ interfaceVersion }}</p>
         <v-spacer></v-spacer>
-        <p v-if="ontoReady" class="body-2">Ontologia: {{ ontologia }}</p>
+        <p v-if="ontoReady" class="icon-text">Ontologia: {{ ontologia }}</p>
         <v-spacer></v-spacer>
         <v-icon class="icon" icon="mdi-email-outline"></v-icon>
         <p  class="icon-text">Contacte-nos</p>
