@@ -30,36 +30,43 @@
               </v-card>
             </div>
             <v-expansion-panels>
-            <v-expansion-panel class="expandend-content">
-              <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-clipboard-text"/>Descritivo da Classe</v-expansion-panel-title>
-              <v-expansion-panel-text>              
-                  <div v-if="classe.status.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Estado</v-card>
-                    <v-card :class="(classe.status=='Ativa' ? 'text-green' : 'text-red')" style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.status }}</div></v-card>
-                  </div>
-                  <div v-if="classe.descricao.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Descrição</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.descricao }}</div></v-card>
-                  </div>
-                  <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Exclusão</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                    <ul v-for="item in classe.notasEx">
-                      <li style="margin: 20px;">{{ item.nota }}</li>
-                    </ul>
-                    </v-card>
-                  </div>
-                  <div v-if="classe.notasAp.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Aplicação</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                      <ul v-for="item in classe.notasAp">
-                        <li style="margin: 20px;">{{ item.nota }}</li>
-                      </ul>              
-                    </v-card>
-                  </div>               
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            </v-expansion-panels> 
+              <v-expansion-panel class="expandend-content">
+                <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-clipboard-text"/>Descritivo da Classe</v-expansion-panel-title>
+                <v-expansion-panel-text>              
+                    <div v-if="classe.status.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Estado</v-card>
+                      <v-card :class="(classe.status=='Ativa' ? 'text-green' : 'text-red')" style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.status }}</div></v-card>
+                    </div>
+                    <div v-if="classe.descricao.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Descrição</v-card> 
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.descricao }}</div></v-card>
+                    </div>                  
+                    <div v-if="classe.notasAp.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Aplicação</v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <ul v-for="item in classe.notasAp">
+                          <li style="margin: 20px;">{{ item.nota }}</li>
+                        </ul>              
+                      </v-card>
+                    </div>
+                    <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Exclusão</v-card> 
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" style="margin: 20px;"></ul></v-card>
+                    </div>
+                    <!-- TODO ACRESCENTAR MAIS CAMPOS. VER TODOS OS CAMPOS QUE EXISTEM NO CODIGO ORIGINAL-->               
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel class="expandend-content">
+                <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-folder-text-outline"/>Contexto de Avaliação</v-expansion-panel-title>
+                <v-expansion-panel-text>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel class="expandend-content">
+                <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-message-processing-outline"/>Decisões de Avaliação</v-expansion-panel-title>
+                <v-expansion-panel-text>
+                </v-expansion-panel-text>
+              </v-expansion-panel>  
+            </v-expansion-panels>
           </v-card>
         </v-col>
       </v-row>
@@ -76,6 +83,10 @@ import { host } from "@/config/global"
 
 const store = useAppStore()
 const props = defineProps(['idc'])
+const codeFormats = {
+      2: /[0-9]{3}\.[0-9]{2}(?!\.)/,
+      3: /[0-9]{3}\.[0-9]{2}\.[0-9]{3}(?!\.)/,
+    }
 
 var classe = ref({})
 var classeLoaded = false
@@ -92,6 +103,19 @@ try {
 } catch (e) {
   console.log(e);
 }
+
+function analisaRefs(nota) {
+  var notaHtml = nota.replace(
+    this.codeFormats[3],
+    '<a href="/classes/consultar/c$&">$&</a>'
+  );
+  notaHtml = notaHtml.replace(
+    this.codeFormats[2],
+    '<a href="/classes/consultar/c$&">$&</a>'
+  );
+  return notaHtml;
+}
+
 </script>
 
 <style lang="scss">
