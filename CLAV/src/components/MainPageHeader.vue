@@ -43,7 +43,7 @@
       <v-menu>
         <template v-slot:activator="{ props: menu }">           
         <v-tab>
-          <v-btn :class="(tabAtiva=='Operações' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Operações')" :color="(tabAtiva=='Operações' ? 'white' : 'transparent')" v-bind="menu" prepend-icon="mdi-wrench">Operações</v-btn>
+          <v-btn :class="(tabAtiva=='Operações' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Operações')" :color="(tabAtiva=='Operações' ? 'white' : 'transparent')" v-bind="menu" prepend-icon="mdi-cog-outline">Operações</v-btn>
         </v-tab>     
         </template>
         <v-card>           

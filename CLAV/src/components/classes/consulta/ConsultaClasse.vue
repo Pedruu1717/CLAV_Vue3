@@ -49,21 +49,119 @@
                         </ul>              
                       </v-card>
                     </div>
+                    <div v-if="classe.exemplosNotasAp.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Exemple de Notas de Aplicação</v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <ul v-for="item in classe.exemplosNotasAp">
+                          <li style="margin: 20px;">{{ item.exemplo }}</li>
+                        </ul>              
+                      </v-card>
+                    </div>
                     <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Exclusão</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" style="margin: 20px;"></ul></v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" style="margin: 20px;"></ul>
+                      </v-card>
                     </div>
-                    <!-- TODO ACRESCENTAR MAIS CAMPOS. VER TODOS OS CAMPOS QUE EXISTEM NO CODIGO ORIGINAL-->               
+                    <div v-if="classe.termosInd.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Termos de Índice</v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <ul v-for="item in classe.termosInd">
+                          <li style="margin: 20px;">{{ item.termo }}</li>
+                        </ul>              
+                      </v-card>
+                    </div>
                 </v-expansion-panel-text>
               </v-expansion-panel>
-              <v-expansion-panel class="expandend-content">
+              <v-expansion-panel v-if="classe.tipoProc.length > 0" class="expandend-content">
                 <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-folder-text-outline"/>Contexto de Avaliação</v-expansion-panel-title>
                 <v-expansion-panel-text>
+                  <div v-if="classe.tipoProc.length > 0" class="d-inline-flex">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Tipo de Processo</v-card> 
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.tipoProc }}</div></v-card>
+                  </div>
+                  <div v-if="classe.procTrans.length > 0" class="d-inline-flex">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Processo Transversal</v-card> 
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.procTrans }}</div></v-card>
+                  </div>
+                  <div v-if="classe.donos.length > 0" class="d-inline-flex">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Donos do processo</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                      <ul v-for="item in classe.donos">
+                        <li style="margin: 20px;">{{ item.sigla}}: {{ item.designacao }}</li>
+                      </ul>              
+                    </v-card>
+                  </div>
+                  <div v-if="classe.participantes.length > 0" class="d-inline-flex">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Participantes no processo</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                      <ul v-for="item in classe.participantes">
+                        <li style="margin: 20px;">Tipo de intervenção: {{ item.participLabel }} | {{ item.sigla}}: {{ item.designacao }}</li>
+                      </ul>              
+                    </v-card>
+                  </div>   
+                  <div v-if="classe.processosRelacionados.length > 0" class="d-inline-flex">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Processos Relacionados</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                      <ul v-for="item in classe.processosRelacionados">
+                        <li style="margin: 20px;">Relação: {{ item.idRel }} | {{ item.codigo}}: {{ item.titulo }}</li>
+                      </ul>              
+                    </v-card>
+                  </div>  
+                  <div v-if="classe.legislacao.length > 0" class="d-inline-flex">
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Legislação</v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                      <ul v-for="item in classe.legislacao">
+                        <li style="margin: 20px;">Tipo: {{ item.tipo }} | {{ item.numero}}: {{ item.sumario }}</li>
+                      </ul>              
+                    </v-card>
+                  </div>  
                 </v-expansion-panel-text>
               </v-expansion-panel>
-              <v-expansion-panel class="expandend-content">
+              <v-expansion-panel v-if="classe.pca.valores.length > 0 || classe.df.valor.length > 0" class="expandend-content">
                 <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-message-processing-outline"/>Decisões de Avaliação</v-expansion-panel-title>
                 <v-expansion-panel-text>
+                  <div v-if="Object.keys(classe.pca).length > 0">
+                    <span class="clav-content-title-2" style="margin: 30%;">Prazo de Conservação Administrativa</span>
+                    <div v-if="classe.pca.valores.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Prazo</v-card> 
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.valores }}</div></v-card>
+                    </div>
+                    <div v-if="classe.pca.formaContagem.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Forma de Contagem</v-card> 
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.formaContagem }}</div></v-card>
+                    </div>
+                    <div v-if="classe.pca.justificacao.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Justificação</v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <ul v-for="item in classe.pca.justificacao">
+                          <li style="margin: 20px;">Tipo: {{ item.tipoId }} | {{ item.conteudo }}</li>
+                        </ul>              
+                      </v-card>
+                    </div>
+                  </div>
+                  <br>
+                  <div v-if="Object.keys(classe.df).length > 0">
+                    <span class="clav-content-title-2"  style="margin: 40%;">Destino final</span>
+                    <div v-if="classe.df.valor.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Destino final</v-card> 
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.df.valor }}</div></v-card>
+                    </div>
+                    <div v-if="classe.df.justificacao.length > 0" class="d-inline-flex">
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Justificação</v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <ul v-for="item in classe.df.justificacao">
+                          <li style="margin: 20px;">Tipo: {{ item.tipoId }} | {{ item.conteudo }}
+                            <div v-if="item.processos.length > 0">
+                              <ul v-for="proc in item.processos">
+                                <li style="margin: 20px;">{{ proc.procId }}</li>
+                              </ul>
+                            </div>
+                          </li>
+                        </ul>              
+                      </v-card>
+                    </div>
+                  </div>
                 </v-expansion-panel-text>
               </v-expansion-panel>  
             </v-expansion-panels>
