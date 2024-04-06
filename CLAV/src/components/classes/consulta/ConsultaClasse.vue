@@ -50,7 +50,7 @@
                       </v-card>
                     </div>
                     <div v-if="classe.exemplosNotasAp.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Exemple de Notas de Aplicação</v-card>
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Exemplo de Notas de Aplicação</v-card>
                       <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
                         <ul v-for="item in classe.exemplosNotasAp">
                           <li style="margin: 20px;">{{ item.exemplo }}</li>
@@ -81,40 +81,25 @@
                     <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.tipoProc }}</div></v-card>
                   </div>
                   <div v-if="classe.procTrans.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Processo Transversal</v-card> 
+                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Processo Transversal</v-card> 
                     <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.procTrans }}</div></v-card>
                   </div>
                   <div v-if="classe.donos.length > 0" class="d-inline-flex">
                     <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Donos do processo</v-card>
                     <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
                       <ul v-for="item in classe.donos">
-                        <li style="margin: 20px;">{{ item.sigla}}: {{ item.designacao }}</li>
+                        <li style="margin: 20px;"><a :href="`${getOriginURL() + '/entidades/' + item.idDono}`">{{ item.sigla}}: {{ item.designacao }}</a></li>
                       </ul>              
                     </v-card>
                   </div>
-                  <div v-if="classe.participantes.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Participantes no processo</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                      <ul v-for="item in classe.participantes">
-                        <li style="margin: 20px;">Tipo de intervenção: {{ item.participLabel }} | {{ item.sigla}}: {{ item.designacao }}</li>
-                      </ul>              
-                    </v-card>
-                  </div>   
-                  <div v-if="classe.processosRelacionados.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Processos Relacionados</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                      <ul v-for="item in classe.processosRelacionados">
-                        <li style="margin: 20px;">Relação: {{ item.idRel }} | {{ item.codigo}}: {{ item.titulo }}</li>
-                      </ul>              
-                    </v-card>
+                  <div v-if="classe.participantes.length > 0" class="d-inline-flex" style="margin-top: 20px;">       
+                    <Participantes :entidades="classe.participantes" />
+                  </div>
+                  <div v-if="classe.processosRelacionados.length > 0" class="d-inline-flex" style="margin-top: 20px;">
+                    <ProcessosRelacionados :processos="classe.processosRelacionados" />
                   </div>  
-                  <div v-if="classe.legislacao.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Legislação</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                      <ul v-for="item in classe.legislacao">
-                        <li style="margin: 20px;">Tipo: {{ item.tipo }} | {{ item.numero}}: {{ item.sumario }}</li>
-                      </ul>              
-                    </v-card>
+                  <div v-if="classe.legislacao.length > 0" class="d-inline-flex" style="margin-top: 20px;">
+                    <Legislacao :legs="classe.legislacao" />
                   </div>  
                 </v-expansion-panel-text>
               </v-expansion-panel>
@@ -128,7 +113,7 @@
                       <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.valores }}</div></v-card>
                     </div>
                     <div v-if="classe.pca.formaContagem.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Forma de Contagem</v-card> 
+                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Forma de Contagem</v-card> 
                       <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.formaContagem }}</div></v-card>
                     </div>
                     <div v-if="classe.pca.justificacao.length > 0" class="d-inline-flex">
@@ -175,6 +160,9 @@
 import ClassesArvore from "@/components/classes/ClassesArvore.vue";
 import Voltar from "@/components/generic/Voltar.vue";
 import Loading from "@/components/generic/Loading.vue";
+import Participantes from "@/components/classes/consulta/Participantes.vue";
+import ProcessosRelacionados from "@/components/classes/consulta/ProcessosRelacionados.vue";
+import Legislacao from "@/components/classes/consulta/Legislacao.vue";
 import { defineProps } from 'vue'
 import { useAppStore } from "@/store/app"
 import { host } from "@/config/global"
@@ -188,18 +176,26 @@ const codeFormats = {
 
 var classe = ref({})
 var classeLoaded = false
+const headersPartProc = [{title: "Tipo de intervenção", key: "Tipo de intervenção"}, {title: "Participantes", key: "Participantes"}]
+var participantesProc = ref([])
+var totalPartProc = 0
+var loadingPartProc = true
+var itemsPerPagePartProc = 10
 
 try {
   await fetch(host + "/classes/c" + props.idc, { method: "GET", headers: { "Authorization": "token " + store.token } })
   .then(response => response.json())
   .then(data => classe.value = data);
   classeLoaded = true;
-
   if (classe.value.status == "A") classe.value.status = "Ativa";
   else classe.value.status = "Inativa";
 
 } catch (e) {
   console.log(e);
+}
+
+function getOriginURL() {
+  return window.location.origin
 }
 
 function analisaRefs(nota) {
