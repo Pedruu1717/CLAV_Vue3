@@ -8,7 +8,7 @@
     color="neutralpurple"
   >
     <template v-slot:conteudo>
-      <v-data-table :headers="headers" :items="myProcRel" hide-default-footer>
+      <v-data-table :headers="headers" :items="myProcRel">
         <template v-slot:item="props">
           <tr>
             <td style="color: #1a237e">{{ props.item.label }}</td>
@@ -22,11 +22,12 @@
             </td>
           </tr>
         </template>
+        <template #bottom v-if="!showFooter"></template>
       </v-data-table>
     </template>
   </Campo>
   <div v-else>
-    <v-data-table :headers="headers" :items="myProcRel" hide-default-footer>
+    <v-data-table :headers="headers" :items="myProcRel">
       <template v-slot:item="props">
         <tr>
           <td style="color: #1a237e">{{ props.item.label }}</td>
@@ -40,83 +41,74 @@
           </td>
         </tr>
       </template>
+      <template #bottom v-if="!showFooter"></template>
     </v-data-table>
   </div>
 </template>
 
-<script>
-import Campo from "@/components/generic/CampoCLAV.vue";
-const help = require("@/config/help").help;
+<script setup>
+import Campo from "@/components/generic/CampoCLAV.vue"
+import help from "@/config/help"
+import { defineProps } from 'vue'
 
-export default {
-  props: ["processos", "valida"],
-  components: { Campo },
+var showFooter = ref(false)
+const props = defineProps(["processos", "valida"])
 
-  data: function () {
-    return {
-      headers: [
-        {
-          text: "Relação",
-          align: "left",
-          sortable: false,
-          value: "label",
-          class: ["body-2", "font-weight-bold"],
-        },
-        {
-          text: "Processos",
-          value: "processos",
-          class: ["body-2", "font-weight-bold"],
-        },
-      ],
-      relPorTipo: {
-        eAntecessorDe: [],
-        eComplementarDe: [],
-        eCruzadoCom: [],
-        eSinteseDe: [],
-        eSintetizadoPor: [],
-        eSucessorDe: [],
-        eSuplementoDe: [],
-        eSuplementoPara: [],
-      },
-      labels: {
-        eAntecessorDe: "É Antecessor de",
-        eComplementarDe: "É Complementar de",
-        eCruzadoCom: "É Cruzado com",
-        eSinteseDe: "É Síntese de",
-        eSintetizadoPor: "É Sintetizado por",
-        eSucessorDe: "É Sucessor de",
-        eSuplementoDe: "É Suplemento de",
-        eSuplementoPara: "É Suplemento para",
-      },
-      myProcRel: [],
-      myhelp: help,
-    };
+var headers = ref([
+  {
+    title: "Relação",
+    key: "relacao",
+    sortable: false,
   },
-
-  methods: {
-    go: function (id) {
-      this.$router.push("/classes/consultar/c" + id);
-      this.$router.go();
-    },
+  {
+    title: "Processos",
+    key: "processos",
   },
+])
 
-  mounted: function () {
+var relPorTipo = ref({
+  eAntecessorDe: [],
+  eComplementarDe: [],
+  eCruzadoCom: [],
+  eSinteseDe: [],
+  eSintetizadoPor: [],
+  eSucessorDe: [],
+  eSuplementoDe: [],
+  eSuplementoPara: [],
+})
+
+var labels = ref({
+  eAntecessorDe: "É Antecessor de",
+  eComplementarDe: "É Complementar de",
+  eCruzadoCom: "É Cruzado com",
+  eSinteseDe: "É Síntese de",
+  eSintetizadoPor: "É Sintetizado por",
+  eSucessorDe: "É Sucessor de",
+  eSuplementoDe: "É Suplemento de",
+  eSuplementoPara: "É Suplemento para",
+})
+
+var myProcRel = ref([])
+var myhelp = help
+
+onMounted(() => {
     var tipo;
-    for (var i = 0; i < this.processos.length; i++) {
-      tipo = this.processos[i].idRel;
-      this.relPorTipo[tipo].push(this.processos[i]);
+    for (var i = 0; i < props.processos.length; i++) {
+      tipo = props.processos[i].idRel;
+      relPorTipo.value[tipo].push(props.processos[i]);
     }
-    for (var j = 0; j < Object.keys(this.relPorTipo).length; j++) {
-      tipo = Object.keys(this.relPorTipo)[j];
-      if (this.relPorTipo[tipo].length > 0) {
-        this.myProcRel.push({
-          label: this.labels[tipo],
-          processos: this.relPorTipo[tipo],
+    for (var j = 0; j < Object.keys(relPorTipo.value).length; j++) {
+      tipo = Object.keys(relPorTipo.value)[j];
+      if (relPorTipo.value[tipo].length > 0) {
+        myProcRel.value.push({
+          label: labels.value[tipo],
+          processos: relPorTipo.value[tipo],
         });
       }
     }
-  },
-};
+})
+
+
 </script>
 
 <style>

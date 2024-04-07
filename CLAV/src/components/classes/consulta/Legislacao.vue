@@ -8,7 +8,7 @@
     color="neutralpurple"
   >
     <template v-slot:conteudo>
-      <v-data-table :headers="headers" :items="legs" hide-default-footer>
+      <v-data-table :headers="headers" :items="legs">
         <template v-slot:item="props">
           <tr>
             <td>{{ props.item.tipo }}</td>
@@ -18,11 +18,12 @@
             <td>{{ props.item.sumario }}</td>
           </tr>
         </template>
+        <template #bottom v-if="!showFooter"></template>
       </v-data-table>
     </template>
   </Campo>
   <div v-else>
-    <v-data-table :headers="headers" :items="legs" hide-default-footer>
+    <v-data-table :headers="headers" :items="legs">
       <template v-slot:item="props">
         <tr>
           <td>{{ props.item.tipo }}</td>
@@ -32,59 +33,36 @@
           <td>{{ props.item.sumario }}</td>
         </tr>
       </template>
+      <template #bottom v-if="!showFooter"></template>
     </v-data-table>
   </div>
 </template>
 
-<script>
-import Campo from "@/components/generic/CampoCLAV.vue";
-const help = require("@/config/help").help;
+<script setup>
+import Campo from "@/components/generic/CampoCLAV.vue"
+import help from "@/config/help"
+import { defineProps } from 'vue'
 
-export default {
-  props: ["legs", "valida"],
-  components: { Campo },
+var showFooter = ref(false)
 
-  data: function () {
-    return {
-      headers: [
-        {
-          text: "Tipo",
-          align: "left",
-          value: "tipo",
-          class: ["body-2", "font-weight-bold"],
-        },
-        {
-          text: "Número",
-          value: "numero",
-          class: ["body-2", "font-weight-bold"],
-        },
-        {
-          text: "Sumário",
-          value: "sumario",
-          class: ["body-2", "font-weight-bold"],
-        },
-      ],
-      myhelp: help,
-    };
+const props = defineProps(["legs", "valida"])
+
+var headers = ref([
+  {
+    title: "Tipo",
+    key: "tipo",
   },
-
-  methods: {
-    go: function (idClasse) {
-      this.$router.push("/entidades/" + idClasse);
-      this.$router.go();
-    },
+  {
+    title: "Número",
+    key: "numero",
   },
-};
+  {
+    title: "Sumário",
+    key: "sumario",
+    
+  },
+])
+
+var myhelp = help
+
 </script>
-
-<style>
-a:link {
-  color: #1a237e;
-  background-color: transparent;
-}
-
-a:hover {
-  color: white;
-  background-color: #1a237e;
-}
-</style>

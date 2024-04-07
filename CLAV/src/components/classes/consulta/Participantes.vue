@@ -63,8 +63,8 @@
 
 <script setup>
 import Campo from "@/components/generic/CampoCLAV"
-import router from "@/router"
 import help from "@/config/help"
+import { defineProps } from 'vue'
 
 const props = defineProps(["entidades", "valida"])
 var showFooter = ref(false)
@@ -72,13 +72,12 @@ var showFooter = ref(false)
 var headers = ref([
   {
     title: "Tipo de Intervenção",
-    key: "Tipo de Intervenção",
+    key: "tipo de intervencao",
     sortable: false,
   },
   {
     title: "Participantes",
-    key: "Participantes",
-    sortable: true,
+    key: "participantes",
   },
 ])
 
@@ -93,11 +92,6 @@ var participPorTipo = ref({
 
 var myParticipantes = ref([])
 var myhelp = help
-
-function go(idClasse) {
-  router.push("/entidades/" + idClasse);
-  router.go();
-}
 
 function normaliza(tipo) {
   var res = "";
