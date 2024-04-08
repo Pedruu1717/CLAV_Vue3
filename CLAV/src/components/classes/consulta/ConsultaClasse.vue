@@ -35,7 +35,20 @@
                 <v-expansion-panel-text>              
                     <div v-if="classe.status.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Estado</v-card>
-                      <v-card :class="(classe.status=='Ativa' ? 'text-green' : 'text-red')" style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.status }}</div></v-card>
+                      <v-card :class="(classe.status=='Ativa' ? 'text-green' : 'text-red')" style="margin-left: 20px; margin-top: 10px;" width="935">                        
+                        <div v-if="classe.status == 'A'" style="color: #46c354 !important; margin: 20px;">
+                          Ativa
+                        </div>
+                        <div
+                          v-else-if="classe.status == 'H'"
+                          style="color: #dfb83a !important; margin: 20px;"
+                        >
+                          Em revisão...
+                        </div>
+                        <div v-else style="color: #f44336 !important; margin: 20px;">
+                          Inativa
+                        </div>
+                      </v-card>
                     </div>
                     <div v-if="classe.descricao.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Descrição</v-card> 
@@ -82,7 +95,7 @@
                   </div>
                   <div v-if="classe.procTrans.length > 0" class="d-inline-flex">
                     <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Processo Transversal</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.procTrans }}</div></v-card>
+                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.procTrans == "S" ? "Sim" : "Não" }}</div></v-card>
                   </div>
                   <div v-if="classe.donos.length > 0" class="d-inline-flex">
                     <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Donos do processo</v-card>
@@ -110,7 +123,7 @@
                     <span class="clav-content-title-2" style="margin: 30%;">Prazo de Conservação Administrativa</span>
                     <div v-if="classe.pca.valores.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Prazo</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.valores }}</div></v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.valores }} anos</div></v-card>
                     </div>
                     <div v-if="classe.pca.formaContagem.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Forma de Contagem</v-card> 
@@ -118,10 +131,70 @@
                     </div>
                     <div v-if="classe.pca.justificacao.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Justificação</v-card>
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <ul v-for="item in classe.pca.justificacao">
-                          <li style="margin: 20px;">Tipo: {{ item.tipoId }} | {{ item.conteudo }}</li>
-                        </ul>              
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">                        
+                      <div v-for="c in classe.pca.justificacao" :key="c.tipoId" style="margin: 20px;">
+                        <!-- Critério Gestionário ...............................-->
+                        <v-row v-if="c.tipoId == 'CriterioJustificacaoGestionario'">
+                          <v-col cols="3" class="pt-0">
+                            <div class="sub-info-label">Critério Gestionário</div>
+                          </v-col>
+                          <v-col cols="9" class="pt-0">
+                            <div>
+                              {{
+                                /* texto normalizado:
+                                  mylabels.textoCriterioJustificacaoGestionario
+                                  texto proveniente da FRD: */
+                                c.conteudo
+                              }}
+                            </div>
+                          </v-col>
+                        </v-row>
+
+                        <!-- Critério Utilidade Administrativa .................-->
+                        <v-row v-if="c.tipoId == 'CriterioJustificacaoUtilidadeAdministrativa'">
+                          <v-col cols="3" class="pt-0">
+                            <div class="sub-info-label">
+                              Critério de Utilidade Administrativa
+                            </div>
+                          </v-col>
+                          <v-col cols="9" class="pt-0">
+                            <div>
+                              {{ c.conteudo }}
+                              <br />
+                              <br />
+                              <ul>
+                                <li v-for="p in c.processos" :key="p.procId">
+                                  <a :href="'/classes/consultar/' + p.procId">
+                                    {{ p.procId.split("c")[1] }} -
+                                    {{ p.nome }}
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </v-col>
+                        </v-row>
+
+                        <!-- Critério Legal ...................................-->
+                        <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
+                          <v-col cols="3" class="pt-0">
+                            <div class="sub-info-label">Critério Legal</div>
+                          </v-col>
+                          <v-col cols="9" class="pt-0">
+                            <div>
+                              {{ c.conteudo }}
+                              <br />
+                              <br />
+                              <ul>
+                                <li v-for="l in c.legislacao" :key="l.legId">
+                                  <a :href="'/legislacao/' + l.legId">
+                                    {{ l.tipo }} {{ l.numero }}
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </div>                    
                       </v-card>
                     </div>
                   </div>
@@ -130,20 +203,102 @@
                     <span class="clav-content-title-2"  style="margin: 40%;">Destino final</span>
                     <div v-if="classe.df.valor.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Destino final</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.df.valor }}</div></v-card>
+                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
+                        <div style="margin: 20px;">
+                          <span v-if="classe.df.valor == 'E'">Eliminação</span>
+                          <span v-else-if="classe.df.valor == 'C'"> Conservação </span>
+                          <span v-else-if="classe.df.valor == 'CP'">
+                            Conservação Parcial
+                          </span>
+                          <span v-else-if="classe.df.nota != ''">Não Especificado</span>
+                        </div>                        
+                      </v-card>
                     </div>
                     <div v-if="classe.df.justificacao.length > 0" class="d-inline-flex">
                       <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Justificação</v-card>
                       <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <ul v-for="item in classe.df.justificacao">
-                          <li style="margin: 20px;">Tipo: {{ item.tipoId }} | {{ item.conteudo }}
-                            <div v-if="item.processos.length > 0">
-                              <ul v-for="proc in item.processos">
-                                <li style="margin: 20px;">{{ proc.procId }}</li>
+                        <div v-for="c in classe.df.justificacao" :key="c.tipoId" style="margin: 20px;">
+                          <!-- Critério Legal ...................................-->
+                          <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
+                            <v-col cols="3" class="pt-0">
+                              <div class="sub-info-label">Critério Legal</div>
+                            </v-col>
+                            <v-col cols="9" class="pt-0">
+                              <div>
+                                {{ c.conteudo }}
+                                <br />
+                                <br />
+                                <ul>
+                                  <li v-for="l in c.legislacao" :key="l.legId">
+                                    <a :href="'/legislacao/' + l.legId">
+                                      {{ l.tipo }} {{ l.numero }}
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </v-col>
+                          </v-row>
+
+                          <!-- Critério de Densidade Informacional ..............-->
+                          <v-row v-if="c.tipoId == 'CriterioJustificacaoDensidadeInfo'">
+                            <v-col cols="3" class="pt-0">
+                              <div class="sub-info-label">
+                                Critério de Densidade Informacional
+                              </div>
+                            </v-col>
+                            <v-col cols="9" class="pt-0">
+                              <div>
+                                {{
+                                  /* texto normalizado:
+                                    mylabels.textoCriterioDensidadeInfo
+                                    texto proveniente da FRD: */
+                                  c.conteudo
+                                }}
+                                <br />
+                                <br />
+                                <ul>
+                                  <li v-for="p in c.processos" :key="p.procId">
+                                    <a :href="'/classes/consultar/' + p.procId">
+                                      {{ p.procId.split("c")[1] }} -
+                                      {{ p.nome }}
+                                    </a>
+                                  </li>
+                                </ul>
+                            </div>
+                          </v-col>
+                        </v-row>
+
+                        <!-- Critério de Complementaridade Informacional ..............-->
+                        <v-row
+                          v-if="c.tipoId == 'CriterioJustificacaoComplementaridadeInfo'"
+                        >
+                          <v-col cols="3" class="pt-0">
+                            <div class="sub-info-label">
+                              Critério de Complementaridade Informacional
+                            </div>
+                          </v-col>
+                          <v-col cols="9" class="pt-0">
+                            <div>
+                              {{
+                                /* texto normalizado:
+                                  mylabels.textoCriterioComplementaridade
+                                  texto proveniente da FRD: */
+                                c.conteudo
+                              }}
+                              <br />
+                              <br />
+                              <ul>
+                                <li v-for="p in c.processos" :key="p.procId">
+                                  <a :href="'/classes/consultar/' + p.procId">
+                                    {{ p.procId.split("c")[1] }} -
+                                    {{ p.nome }}
+                                  </a>
+                                </li>
                               </ul>
                             </div>
-                          </li>
-                        </ul>              
+                          </v-col>
+                        </v-row>
+                        </div>            
                       </v-card>
                     </div>
                   </div>
@@ -176,19 +331,29 @@ const codeFormats = {
 
 var classe = ref({})
 var classeLoaded = false
-const headersPartProc = [{title: "Tipo de intervenção", key: "Tipo de intervenção"}, {title: "Participantes", key: "Participantes"}]
-var participantesProc = ref([])
-var totalPartProc = 0
-var loadingPartProc = true
-var itemsPerPagePartProc = 10
 
 try {
   await fetch(host + "/classes/c" + props.idc, { method: "GET", headers: { "Authorization": "token " + store.token } })
   .then(response => response.json())
   .then(data => classe.value = data);
   classeLoaded = true;
-  if (classe.value.status == "A") classe.value.status = "Ativa";
-  else classe.value.status = "Inativa";
+
+  if (classe.value.df.justificacao) {
+    for (let i = 0; i < classe.value.df.justificacao.length; i++) {
+      if (classe.value.df.justificacao[i].processos) {
+        for (let j = 0; j < classe.value.df.justificacao[i].processos.length; j++) {
+          let help =
+            "/classes/" +
+            classe.value.df.justificacao[i].processos[j].procId +
+            "/meta";
+
+          await fetch(host + help, { method: "GET", headers: { "Authorization": "token " + store.token } })
+          .then(response => response.json())
+          .then(data => classe.value.df.justificacao[i].processos[j].nome = data.titulo);
+        }
+      }
+    }
+  }
 
 } catch (e) {
   console.log(e);
@@ -200,11 +365,11 @@ function getOriginURL() {
 
 function analisaRefs(nota) {
   var notaHtml = nota.replace(
-    this.codeFormats[3],
+    codeFormats[3],
     '<a href="/classes/consultar/c$&">$&</a>'
   );
   notaHtml = notaHtml.replace(
-    this.codeFormats[2],
+    codeFormats[2],
     '<a href="/classes/consultar/c$&">$&</a>'
   );
   return notaHtml;
