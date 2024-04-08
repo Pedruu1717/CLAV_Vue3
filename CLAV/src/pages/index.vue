@@ -11,7 +11,7 @@ import Noticias from "@/components/principal/Noticias.vue";
 import Info from "@/components/principal/Info.vue";
 import { ref } from 'vue';
 
-const level = ref(7);
+const level = ref(7); // teste
 </script>
 
 <style>

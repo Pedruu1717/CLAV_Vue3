@@ -8,7 +8,7 @@
   
   
 <script setup>
-import Listagem from '@/components/Listagem'
+import Listagem from '@/components/generic/Listagem'
 import Voltar from '@/components/generic/Voltar.vue'
 
 </script>
