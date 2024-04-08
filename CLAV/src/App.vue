@@ -21,7 +21,7 @@
 import MainPageHeader from "@/components/MainPageHeader.vue";
 import PageFooter from "@/components/PageFooter.vue";
 
-var authenticated = true; // teste
+var authenticated = true; // teste. deve ir buscar o estado da autenticacao
 </script>
 
 <style scoped>
