@@ -1,12 +1,11 @@
 <template>
-    <v-data-table
-      v-model:items-per-page="itemsPerPage"
+    <v-data-table      
       :headers="headers"
       :items-length="totalItems"
       :items="items_list"
       :loading="loading"
       :search="search"
-      item-value="sigla"      
+      item-value="id"      
     >
     </v-data-table>
 </template>
@@ -21,7 +20,6 @@ const props = defineProps(["tipo"])
 const store = useAppStore()
 
 var items_list = ref([])
-var itemsPerPage = 10
 var headers = ref([])
 var search = ''
 var loading = true

@@ -1,11 +1,6 @@
-<template>
+<template> 
+  <v-icon icon="mdi-information-outline" size="xs" @click="dialog = true" :color="props.helpColor ? props.helpColor : 'info'" style="margin-top: 5px; margin-left: 2px;" />  
   <v-dialog v-model="dialog" :width="widthDialog">
-    <template v-slot:activator="{ on }">
-      <v-icon v-on="on" small :color="props.helpColor ? props.helpColor : 'info'">
-        info_outline
-      </v-icon>
-    </template>
-
     <v-card :color="colorDialog">
       <v-card-title>
         <span class="title font-weight-light">{{ props.header }}</span>
@@ -18,10 +13,13 @@
 
       <v-divider></v-divider>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="red darken-4" props.text @click="dialog = false">Fechar</v-btn>
-      </v-card-actions>
+      <template v-slot:actions>
+        <v-btn
+          class="ms-auto text-red"
+          text="Fechar"
+          @click="dialog = false"
+        ></v-btn>
+      </template>
     </v-card>
   </v-dialog>
 </template>
@@ -31,7 +29,7 @@ import { defineProps } from 'vue'
 
 const props = defineProps(["text", "header", "helpColor", "dialogColor", "helpWidth"])
  
-var dialog = false
+var dialog = ref(false)
 var colorHelp = ""
 var colorDialog = ""
 var widthDialog = ""

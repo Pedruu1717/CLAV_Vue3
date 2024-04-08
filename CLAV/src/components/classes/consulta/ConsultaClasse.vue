@@ -11,10 +11,9 @@
               <p class="clav-content-title-2 pa-5">
                 {{ classe.codigo }}: {{ classe.titulo }}
               </p>           
-          </v-row>
-
-          <!-- DESCENDÊNCIA e Informação da classe -->
-          <Loading v-if="!classeLoaded" :message="'classe'" />
+          </v-row>          
+          <Loading v-if="!classeLoaded" :message="'classe'" />          
+          <!-- DESCENDÊNCIA -->
           <v-card v-else flat class="info-content conteudo-classe">
             <div v-if="classe.filhos.length > 0" class="d-inline-flex">
               <v-card class="text-center text-blue-darken-4 clav-info-label" width="150" height="25" >Descendência</v-card>
@@ -30,80 +29,139 @@
               </v-card>
             </div>
             <v-expansion-panels>
+              <!-- DESCRITIVO DA CLASSE -->
               <v-expansion-panel class="expandend-content">
                 <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-clipboard-text"/>Descritivo da Classe</v-expansion-panel-title>
                 <v-expansion-panel-text>              
-                    <div v-if="classe.status.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Estado</v-card>
-                      <v-card :class="(classe.status=='Ativa' ? 'text-green' : 'text-red')" style="margin-left: 20px; margin-top: 10px;" width="935">                        
-                        <div v-if="classe.status == 'A'" style="color: #46c354 !important; margin: 20px;">
-                          Ativa
-                        </div>
-                        <div
-                          v-else-if="classe.status == 'H'"
-                          style="color: #dfb83a !important; margin: 20px;"
-                        >
-                          Em revisão...
-                        </div>
-                        <div v-else style="color: #f44336 !important; margin: 20px;">
-                          Inativa
-                        </div>
-                      </v-card>
+                    <div v-if="classe.status.length > 0" class="d-inline-flex">                     
+                      <Campo nome="Estado" infoHeader="Estado" color="neutralpurple">
+                        <template v-slot:conteudo>                      
+                          <div v-if="classe.status == 'A'" style="color: #46c354 !important;">
+                            Ativa
+                          </div>
+                          <div
+                            v-else-if="classe.status == 'H'"
+                            style="color: #dfb83a !important;"
+                          >
+                            Em revisão...
+                          </div>
+                          <div v-else style="color: #f44336 !important;">
+                            Inativa
+                          </div>
+                        </template>  
+                      </Campo>                     
                     </div>
-                    <div v-if="classe.descricao.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Descrição</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.descricao }}</div></v-card>
-                    </div>                  
+                    <div v-if="classe.descricao.length > 0" class="d-inline-flex">                      
+                      <Campo
+                        nome="Descrição"
+                        infoHeader="Descrição"
+                        :infoBody="myhelp.Classe.Campos.Descricao"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          {{ classe.descricao }}
+                        </template>
+                      </Campo>
+                    </div>
                     <div v-if="classe.notasAp.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Aplicação</v-card>
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <ul v-for="item in classe.notasAp">
-                          <li style="margin: 20px;">{{ item.nota }}</li>
-                        </ul>              
-                      </v-card>
+                      <Campo                        
+                        nome="Notas de Aplicação"
+                        infoHeader="Notas de Aplicação"
+                        :infoBody="myhelp.Classe.Campos.NotasAp"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          <ul v-for="item in classe.notasAp">
+                            <li style="margin-left: 20px;">{{ item.nota }}</li>
+                          </ul>              
+                        </template>
+                      </Campo>
                     </div>
                     <div v-if="classe.exemplosNotasAp.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Exemplo de Notas de Aplicação</v-card>
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <ul v-for="item in classe.exemplosNotasAp">
-                          <li style="margin: 20px;">{{ item.exemplo }}</li>
-                        </ul>              
-                      </v-card>
+                      <Campo                        
+                        nome="Exemplos de Notas de Aplicação"
+                        infoHeader="Exemplos de Notas de Aplicação"
+                        :infoBody="myhelp.Classe.Campos.ExemplosNotasAp"
+                        color="neutralpurple"
+                        >
+                        <template v-slot:conteudo>
+                              <ul v-for="item in classe.exemplosNotasAp">
+                                <li style="margin-left: 20px;">{{ item.exemplo }}</li>
+                              </ul>              
+                        </template>
+                      </Campo>
                     </div>
                     <div v-if="classe.notasEx.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Notas de Exclusão</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" style="margin: 20px;"></ul>
-                      </v-card>
+                      <Campo                        
+                        nome="Notas de Exclusão"
+                        infoHeader="Notas de Exclusão"
+                        :infoBody="myhelp.Classe.Campos.NotasEx"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                              <ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" style="margin: 20px;"></ul>
+                        </template>
+                      </Campo>
                     </div>
                     <div v-if="classe.termosInd.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Termos de Índice</v-card>
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <ul v-for="item in classe.termosInd">
-                          <li style="margin: 20px;">{{ item.termo }}</li>
-                        </ul>              
-                      </v-card>
+                      <Campo                        
+                        nome="Termos de Índice"
+                        infoHeader="Termos de Índice"
+                        :infoBody="myhelp.Classe.Campos.TermosIndice"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          <ul v-for="item in classe.termosInd">
+                            <li style="margin: 20px;">{{ item.termo }}</li>
+                          </ul>
+                        </template>
+                      </Campo>
                     </div>
                 </v-expansion-panel-text>
               </v-expansion-panel>
+              <!-- CONTEXTO DE AVALIAÇÃO -->
               <v-expansion-panel v-if="classe.tipoProc.length > 0" class="expandend-content">
                 <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-folder-text-outline"/>Contexto de Avaliação</v-expansion-panel-title>
                 <v-expansion-panel-text>
                   <div v-if="classe.tipoProc.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Tipo de Processo</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.tipoProc }}</div></v-card>
+                    <!-- TIPO DE PROCESSO -->
+                    <Campo
+                      nome="Tipo de Processo"
+                      infoHeader="Tipo de Processo"
+                      :infoBody="myhelp.Classe.Campos.TipoProcesso"
+                      color="neutralpurple"
+                    >
+                      <template v-slot:conteudo>
+                        {{ classe.tipoProc }}
+                      </template>
+                    </Campo>
                   </div>
                   <div v-if="classe.procTrans.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Processo Transversal</v-card> 
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.procTrans == "S" ? "Sim" : "Não" }}</div></v-card>
+                    <!-- TRANSVERSALIDADE -->
+                    <Campo
+                      nome="Processo Transversal"
+                      infoHeader="Processo Transversal"
+                      :infoBody="myhelp.Classe.Campos.ProcessoTransversal"
+                      color="neutralpurple"
+                    >
+                      <template v-slot:conteudo>
+                        {{ classe.procTrans == "S" ? "Sim" : "Não" }}
+                      </template>
+                    </Campo>
                   </div>
                   <div v-if="classe.donos.length > 0" class="d-inline-flex">
-                    <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Donos do processo</v-card>
-                    <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                      <ul v-for="item in classe.donos">
-                        <li style="margin: 20px;"><a :href="`${getOriginURL() + '/entidades/' + item.idDono}`">{{ item.sigla}}: {{ item.designacao }}</a></li>
-                      </ul>              
-                    </v-card>
+                    <Campo                      
+                      nome="Donos do processo"
+                      infoHeader="Donos do processo"
+                      :infoBody="myhelp.Classe.Campos.Donos"
+                      color="neutralpurple"
+                    >
+                      <template v-slot:conteudo>
+                        <ul v-for="item in classe.donos">
+                          <li style="margin: 20px;"><a :href="`${getOriginURL() + '/entidades/' + item.idDono}`">{{ item.sigla}}: {{ item.designacao }}</a></li>
+                        </ul>              
+                      </template>
+                    </Campo>
                   </div>
                   <div v-if="classe.participantes.length > 0" class="d-inline-flex" style="margin-top: 20px;">       
                     <Participantes :entidades="classe.participantes" />
@@ -116,141 +174,257 @@
                   </div>  
                 </v-expansion-panel-text>
               </v-expansion-panel>
+              <!-- DECISÕES DE AVALIAÇÃO -->
               <v-expansion-panel v-if="classe.pca.valores.length > 0 || classe.df.valor.length > 0" class="expandend-content">
                 <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" icon="mdi-message-processing-outline"/>Decisões de Avaliação</v-expansion-panel-title>
                 <v-expansion-panel-text>
                   <div v-if="Object.keys(classe.pca).length > 0">
                     <span class="clav-content-title-2" style="margin: 30%;">Prazo de Conservação Administrativa</span>
                     <div v-if="classe.pca.valores.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Prazo</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.valores }} anos</div></v-card>
+                      <!-- PRAZO -->
+                      <Campo
+                        nome="Prazo"
+                        infoHeader="Prazo"
+                        :infoBody="myhelp.Classe.Campos.Prazo"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          <div v-if="classe.pca.valores > 1">
+                            {{ classe.pca.valores + " anos" }}
+                          </div>
+                          <div v-else-if="classe.pca.valores == 1">
+                            {{ classe.pca.valores + " ano" }}
+                          </div>
+                          <div v-else-if="classe.pca.notas != ''">Não especificado</div>
+                        </template>
+                      </Campo>
+                    </div>                    
+                    <div v-if="classe.pca.notas != ''" class="d-inline-flex">
+                      <!-- NOTAS -->
+                      <Campo                        
+                        nome="Notas"
+                        infoHeader="Notas ao PCA"
+                        :infoBody="myhelp.Classe.Campos.Notas"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          {{ classe.pca.notas }}
+                        </template>
+                      </Campo>
                     </div>
-                    <div v-if="classe.pca.formaContagem.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="50">Forma de Contagem</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935"><div style="margin: 20px;">{{ classe.pca.formaContagem }}</div></v-card>
+                    <div v-if="classe.pca.formaContagem" class="d-inline-flex">
+                      <!-- FORMA DE CONTAGEM -->
+                      <Campo                        
+                        nome="Forma de Contagem"
+                        infoHeader="Forma de Contagem"
+                        :infoBody="myhelp.Classe.Campos.FormaContagem"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          {{ classe.pca.formaContagem }}
+                        </template>
+                      </Campo>
                     </div>
-                    <div v-if="classe.pca.justificacao.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Justificação</v-card>
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">                        
-                      <div v-for="c in classe.pca.justificacao" :key="c.tipoId" style="margin: 20px;">
-                        <!-- Critério Gestionário ...............................-->
-                        <v-row v-if="c.tipoId == 'CriterioJustificacaoGestionario'">
-                          <v-col cols="3" class="pt-0">
-                            <div class="sub-info-label">Critério Gestionário</div>
-                          </v-col>
-                          <v-col cols="9" class="pt-0">
-                            <div>
-                              {{
-                                /* texto normalizado:
-                                  mylabels.textoCriterioJustificacaoGestionario
-                                  texto proveniente da FRD: */
-                                c.conteudo
-                              }}
-                            </div>
-                          </v-col>
-                        </v-row>
+                    <div v-if="classe.pca.subFormaContagem" class="d-inline-flex">
+                      <!-- SUBFORMA DE CONTAGEM -->
+                      <Campo                        
+                        nome="Subforma de Contagem"
+                        infoHeader="Subforma de Contagem"
+                        :infoBody="myhelp.Classe.Campos.SubformaContagem"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          {{ classe.pca.subFormaContagem }}
+                        </template>
+                      </Campo>
+                    </div>
+                    <div v-if="classe.pca.justificacao" class="d-inline-flex">
+                      <!-- JUSTIFICAÇÂO -->
+                      <Campo                        
+                        nome="Justificação"
+                        infoHeader="Justificação"
+                        :infoBody="myhelp.Classe.Campos.JustificacaoPCA"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>                        
+                          <div v-for="c in classe.pca.justificacao" :key="c.tipoId" style="margin: 20px;">
+                            <!-- Critério Gestionário ...............................-->
+                            <v-row v-if="c.tipoId == 'CriterioJustificacaoGestionario'">
+                              <v-col cols="3" class="pt-0">
+                                <div class="sub-info-label">Critério Gestionário</div>
+                              </v-col>
+                              <v-col cols="9" class="pt-0">
+                                <div>
+                                  {{
+                                    /* texto normalizado:
+                                      mylabels.textoCriterioJustificacaoGestionario
+                                      texto proveniente da FRD: */
+                                    c.conteudo
+                                  }}
+                                </div>
+                              </v-col>
+                            </v-row>
 
-                        <!-- Critério Utilidade Administrativa .................-->
-                        <v-row v-if="c.tipoId == 'CriterioJustificacaoUtilidadeAdministrativa'">
-                          <v-col cols="3" class="pt-0">
-                            <div class="sub-info-label">
-                              Critério de Utilidade Administrativa
-                            </div>
-                          </v-col>
-                          <v-col cols="9" class="pt-0">
-                            <div>
-                              {{ c.conteudo }}
-                              <br />
-                              <br />
-                              <ul>
-                                <li v-for="p in c.processos" :key="p.procId">
-                                  <a :href="'/classes/consultar/' + p.procId">
-                                    {{ p.procId.split("c")[1] }} -
-                                    {{ p.nome }}
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </v-col>
-                        </v-row>
+                            <!-- Critério Utilidade Administrativa .................-->
+                            <v-row v-if="c.tipoId == 'CriterioJustificacaoUtilidadeAdministrativa'">
+                              <v-col cols="3" class="pt-0">
+                                <div class="sub-info-label">
+                                  Critério de Utilidade Administrativa
+                                </div>
+                              </v-col>
+                              <v-col cols="9" class="pt-0">
+                                <div>
+                                  {{ c.conteudo }}
+                                  <br />
+                                  <br />
+                                  <ul>
+                                    <li v-for="p in c.processos" :key="p.procId">
+                                      <a :href="'/classes/consultar/' + p.procId">
+                                        {{ p.procId.split("c")[1] }} -
+                                        {{ p.nome }}
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </v-col>
+                            </v-row>
 
-                        <!-- Critério Legal ...................................-->
-                        <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
-                          <v-col cols="3" class="pt-0">
-                            <div class="sub-info-label">Critério Legal</div>
-                          </v-col>
-                          <v-col cols="9" class="pt-0">
-                            <div>
-                              {{ c.conteudo }}
-                              <br />
-                              <br />
-                              <ul>
-                                <li v-for="l in c.legislacao" :key="l.legId">
-                                  <a :href="'/legislacao/' + l.legId">
-                                    {{ l.tipo }} {{ l.numero }}
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </v-col>
-                        </v-row>
-                      </div>                    
-                      </v-card>
+                            <!-- Critério Legal ...................................-->
+                            <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
+                              <v-col cols="3" class="pt-0">
+                                <div class="sub-info-label">Critério Legal</div>
+                              </v-col>
+                              <v-col cols="9" class="pt-0">
+                                <div>
+                                  {{ c.conteudo }}
+                                  <br />
+                                  <br />
+                                  <ul>
+                                    <li v-for="l in c.legislacao" :key="l.legId">
+                                      <a :href="'/legislacao/' + l.legId">
+                                        {{ l.tipo }} {{ l.numero }}
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </div>                    
+                        </template>
+                      </Campo>
                     </div>
                   </div>
                   <br>
+                  <!-- DESTINO FINAL ................................................... -->
                   <div v-if="Object.keys(classe.df).length > 0">
                     <span class="clav-content-title-2"  style="margin: 40%;">Destino final</span>
                     <div v-if="classe.df.valor.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Destino final</v-card> 
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <div style="margin: 20px;">
-                          <span v-if="classe.df.valor == 'E'">Eliminação</span>
-                          <span v-else-if="classe.df.valor == 'C'"> Conservação </span>
-                          <span v-else-if="classe.df.valor == 'CP'">
-                            Conservação Parcial
-                          </span>
-                          <span v-else-if="classe.df.nota != ''">Não Especificado</span>
-                        </div>                        
-                      </v-card>
+                      <!-- VALOR -->
+                      <Campo
+                        nome="Destino final"
+                        infoHeader="Destino final"
+                        :infoBody="myhelp.Classe.Campos.DF"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                              <div style="margin: 20px;">
+                                <span v-if="classe.df.valor == 'E'">Eliminação</span>
+                                <span v-else-if="classe.df.valor == 'C'"> Conservação </span>
+                                <span v-else-if="classe.df.valor == 'CP'">
+                                  Conservação Parcial
+                                </span>
+                                <span v-else-if="classe.df.nota != ''">Não Especificado</span>
+                              </div>                        
+                        </template>
+                      </Campo>
                     </div>
-                    <div v-if="classe.df.justificacao.length > 0" class="d-inline-flex">
-                      <v-card style="margin-top: 20px;" class="text-center text-blue-darken-4 clav-info-label" width="150" height="25">Justificação</v-card>
-                      <v-card style="margin-left: 20px; margin-top: 10px;" width="935">
-                        <div v-for="c in classe.df.justificacao" :key="c.tipoId" style="margin: 20px;">
-                          <!-- Critério Legal ...................................-->
-                          <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
-                            <v-col cols="3" class="pt-0">
-                              <div class="sub-info-label">Critério Legal</div>
-                            </v-col>
-                            <v-col cols="9" class="pt-0">
-                              <div>
-                                {{ c.conteudo }}
-                                <br />
-                                <br />
-                                <ul>
-                                  <li v-for="l in c.legislacao" :key="l.legId">
-                                    <a :href="'/legislacao/' + l.legId">
-                                      {{ l.tipo }} {{ l.numero }}
-                                    </a>
-                                  </li>
-                                </ul>
+                    <div v-if="classe.df.nota" class="d-inline-flex">
+                      <!-- NOTA ao DF -->
+                      <Campo                  
+                        nome="Nota"
+                        infoHeader="Nota ao DF"
+                        :infoBody="myhelp.Classe.Campos.NotasDF"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          {{ classe.df.nota }}
+                        </template>
+                      </Campo>
+                    </div>
+                    <div v-if="classe.df.justificacao" class="d-inline-flex">
+                      <!-- JUSTIFICAÇÂO -->
+                      <Campo
+                        nome="Justificação"
+                        infoHeader="Justificação do DF"
+                        :infoBody="myhelp.Classe.Campos.JustificacaoDF"
+                        color="neutralpurple"
+                      >
+                        <template v-slot:conteudo>
+                          <div v-for="c in classe.df.justificacao" :key="c.tipoId" style="margin: 20px;">
+                            <!-- Critério Legal ...................................-->
+                            <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
+                              <v-col cols="3" class="pt-0">
+                                <div class="sub-info-label">Critério Legal</div>
+                              </v-col>
+                              <v-col cols="9" class="pt-0">
+                                <div>
+                                  {{ c.conteudo }}
+                                  <br />
+                                  <br />
+                                  <ul>
+                                    <li v-for="l in c.legislacao" :key="l.legId">
+                                      <a :href="'/legislacao/' + l.legId">
+                                        {{ l.tipo }} {{ l.numero }}
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </v-col>
+                            </v-row>
+
+                            <!-- Critério de Densidade Informacional ..............-->
+                            <v-row v-if="c.tipoId == 'CriterioJustificacaoDensidadeInfo'">
+                              <v-col cols="3" class="pt-0">
+                                <div class="sub-info-label">
+                                  Critério de Densidade Informacional
+                                </div>
+                              </v-col>
+                              <v-col cols="9" class="pt-0">
+                                <div>
+                                  {{
+                                    /* texto normalizado:
+                                      mylabels.textoCriterioDensidadeInfo
+                                      texto proveniente da FRD: */
+                                    c.conteudo
+                                  }}
+                                  <br />
+                                  <br />
+                                  <ul>
+                                    <li v-for="p in c.processos" :key="p.procId">
+                                      <a :href="'/classes/consultar/' + p.procId">
+                                        {{ p.procId.split("c")[1] }} -
+                                        {{ p.nome }}
+                                      </a>
+                                    </li>
+                                  </ul>
                               </div>
                             </v-col>
                           </v-row>
 
-                          <!-- Critério de Densidade Informacional ..............-->
-                          <v-row v-if="c.tipoId == 'CriterioJustificacaoDensidadeInfo'">
+                          <!-- Critério de Complementaridade Informacional ..............-->
+                          <v-row
+                            v-if="c.tipoId == 'CriterioJustificacaoComplementaridadeInfo'"
+                          >
                             <v-col cols="3" class="pt-0">
                               <div class="sub-info-label">
-                                Critério de Densidade Informacional
+                                Critério de Complementaridade Informacional
                               </div>
                             </v-col>
                             <v-col cols="9" class="pt-0">
                               <div>
                                 {{
                                   /* texto normalizado:
-                                    mylabels.textoCriterioDensidadeInfo
+                                    mylabels.textoCriterioComplementaridade
                                     texto proveniente da FRD: */
                                   c.conteudo
                                 }}
@@ -264,42 +438,12 @@
                                     </a>
                                   </li>
                                 </ul>
-                            </div>
-                          </v-col>
-                        </v-row>
-
-                        <!-- Critério de Complementaridade Informacional ..............-->
-                        <v-row
-                          v-if="c.tipoId == 'CriterioJustificacaoComplementaridadeInfo'"
-                        >
-                          <v-col cols="3" class="pt-0">
-                            <div class="sub-info-label">
-                              Critério de Complementaridade Informacional
-                            </div>
-                          </v-col>
-                          <v-col cols="9" class="pt-0">
-                            <div>
-                              {{
-                                /* texto normalizado:
-                                  mylabels.textoCriterioComplementaridade
-                                  texto proveniente da FRD: */
-                                c.conteudo
-                              }}
-                              <br />
-                              <br />
-                              <ul>
-                                <li v-for="p in c.processos" :key="p.procId">
-                                  <a :href="'/classes/consultar/' + p.procId">
-                                    {{ p.procId.split("c")[1] }} -
-                                    {{ p.nome }}
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </v-col>
-                        </v-row>
-                        </div>            
-                      </v-card>
+                              </div>
+                            </v-col>
+                          </v-row>
+                          </div>
+                        </template>
+                      </Campo>                      
                     </div>
                   </div>
                 </v-expansion-panel-text>
@@ -313,6 +457,7 @@
   
 <script setup>
 import ClassesArvore from "@/components/classes/ClassesArvore.vue";
+import Campo from "@/components/generic/CampoCLAV.vue";
 import Voltar from "@/components/generic/Voltar.vue";
 import Loading from "@/components/generic/Loading.vue";
 import Participantes from "@/components/classes/consulta/Participantes.vue";
@@ -321,6 +466,7 @@ import Legislacao from "@/components/classes/consulta/Legislacao.vue";
 import { defineProps } from 'vue'
 import { useAppStore } from "@/store/app"
 import { host } from "@/config/global"
+import help from "@/config/help"
 
 const store = useAppStore()
 const props = defineProps(['idc'])
@@ -331,6 +477,7 @@ const codeFormats = {
 
 var classe = ref({})
 var classeLoaded = false
+var myhelp = help
 
 try {
   await fetch(host + "/classes/c" + props.idc, { method: "GET", headers: { "Authorization": "token " + store.token } })
@@ -342,12 +489,12 @@ try {
     for (let i = 0; i < classe.value.df.justificacao.length; i++) {
       if (classe.value.df.justificacao[i].processos) {
         for (let j = 0; j < classe.value.df.justificacao[i].processos.length; j++) {
-          let help =
+          let helpMeta =
             "/classes/" +
             classe.value.df.justificacao[i].processos[j].procId +
             "/meta";
 
-          await fetch(host + help, { method: "GET", headers: { "Authorization": "token " + store.token } })
+          await fetch(host + helpMeta, { method: "GET", headers: { "Authorization": "token " + store.token } })
           .then(response => response.json())
           .then(data => classe.value.df.justificacao[i].processos[j].nome = data.titulo);
         }

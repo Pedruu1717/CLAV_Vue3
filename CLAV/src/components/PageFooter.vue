@@ -10,10 +10,10 @@
         <v-spacer></v-spacer>
         <p v-if="ontoReady" class="icon-text">Ontologia: {{ ontologia }}</p>
         <v-spacer></v-spacer>
-        <v-icon class="icon" icon="mdi-email-outline"></v-icon>
+        <v-icon class="icon" icon="mdi-email-outline" />
         <p  class="icon-text">Contacte-nos</p>
         <v-spacer></v-spacer>
-        <v-icon class="icon" icon="mdi-account-group-outline"></v-icon>
+        <v-icon class="icon" icon="mdi-account-group-outline" />
         <p class="icon-text">Equipa técnica</p>
         <v-spacer></v-spacer>
         <v-img id="footer-image" class="my-2" aspect-ratio="4.8600" :src="'https://qldclav.dglab.gov.pt/img/feder.52060cff.png'"></v-img>
@@ -49,6 +49,7 @@ try {
 }
 
 .icon {
+  margin-top: 5px;
   margin-right: 5px;
   color: white;
 }
