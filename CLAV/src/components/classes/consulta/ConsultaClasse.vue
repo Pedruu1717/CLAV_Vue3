@@ -79,8 +79,8 @@
                     </div>
                     <div v-if="classe.exemplosNotasAp.length > 0" class="d-inline-flex">
                       <Campo                        
-                        nome="Exemplos de Notas de Aplicação"
-                        infoHeader="Exemplos de Notas de Aplicação"
+                        nome="Ex. de Notas de Aplicação"
+                        infoHeader="Ex. de Notas de Aplicação"
                         :infoBody="myhelp.Classe.Campos.ExemplosNotasAp"
                         color="neutralpurple"
                         >

@@ -1,13 +1,34 @@
 <template>
-    <v-data-table      
-      :headers="headers"
+  <div>
+    <v-text-field
+      v-model="search"
+      label="Procurar / filtrar"
+      prepend-inner-icon="mdi-magnify"
+      hide-details
+      single-line
+      color="blue"
+      class="font-weight-medium"
+    ></v-text-field>
+    <v-data-table
+      :headers="cabecalhos"
       :items-length="totalItems"
       :items="items_list"
       :loading="loading"
       :search="search"
-      item-value="id"      
+      item-value="id"
     >
+      <template v-slot:no-data>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+          class="font-weight-medium my-3"
+          id="alerta-erro"
+          >Não foram encontrados resultados para "{{ search }}".</v-alert
+        >
+      </template>
     </v-data-table>
+  </div>
 </template>
   
   
@@ -21,10 +42,11 @@ const props = defineProps(["tipo"])
 const store = useAppStore()
 
 var items_list = ref([])
-var headers = ref([])
-var search = ''
+var search = ref('')
 var loading = true
 var totalItems = 0
+var cabecalhos = ref([])
+var level = 0  // teste. é preciso ir buscar o nivel ao utilizador logado
 
 async function fetchItems() {
   try {
@@ -34,37 +56,8 @@ async function fetchItems() {
     })
     .then(response => response.json())
     .then(data => {
-      items_list.value = data;
-      loading = false;
+      items_list.value = data;      
       totalItems = items_list.length;
-      let keys = Object.keys(items_list.value[0])
-
-      // CONSOANTE O TIPO MUDAR OS HEADERS. SE O NIVEL FOR MAIOR Q O MINIMO TAMBEM TEM "OPERACOES" NOS CABEÇALHOS E CAMPOS -- if (level >= CONSTS.NIVEL_MINIMO_ALTERAR) {
-      /*
-      ENTIDADES  this.cabecalhos = ["Sigla", "Designação", "Estado", "Internacional"];
-                  this.campos = ["id", "designacao", "estado", "internacional"];
-
-      TIPOL ENTIDADES this.cabecalhos = ["Sigla", "Designação"];
-        this.campos = ["id", "designacao"];
-
-      LEGISLACAO   this.cabecalhos = [
-          "Data do diploma",
-          "Tipo",
-          "Entidade(s)",
-          "Número",
-          "Sumário",
-          "Estado"
-        ];
-        this.campos = [
-          "data",
-          "tipo",
-          "entidades",
-          "numero",
-          "sumario",
-          "estado"
-        ];
-      */
-      keys.forEach(k => headers.value.push({title: k, key: k}))
     })
     
   } catch(error) {
@@ -74,7 +67,33 @@ async function fetchItems() {
 
 onMounted(() => {
   fetchItems()
+  switch (props.tipo) {
+    case "entidades":
+      cabecalhos.value = [{title: "Sigla", key: "id"}, {title: "Designação", key: "designacao"}, {title: "Estado", key: "estado"}, {title: "Internacional", key: "internacional"}]
+      break
+
+    case "tipologias":
+      cabecalhos.value = [{title: "Sigla", key: "id"}, {title: "Designação", key: "designacao"}]
+      break
+
+    case "legislacao":
+      cabecalhos.value = [
+        {title: "Data do diploma", key: "data"},
+        {title: "Tipo", key: "tipo"},
+        {title: "Entidade(s)", key: "entidades"},
+        {title: "Número", key: "numero"},
+        {title: "Sumário", key: "sumario"},
+        {title: "Estado", key: "estado"}
+      ]
+      break
+  }
+  // Tem direito a operações quando tem nivel igual ou acima ao definido.
+  if (level >= CONSTS.NIVEL_MINIMO_ALTERAR) { 
+    cabecalhos.value.push({title: "Operações", key: "operacoes"})
+  }
+  loading = false;
 })
+
 </script>
 
 <style scoped>

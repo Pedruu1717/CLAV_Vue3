@@ -42,7 +42,6 @@ declare module 'vue-router/auto/routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/classes/Classes': RouteRecordInfo<'/classes/Classes', '/classes/Classes', Record<never, never>, Record<never, never>>,
     '/classes/ClassesConsulta': RouteRecordInfo<'/classes/ClassesConsulta', '/classes/ClassesConsulta', Record<never, never>, Record<never, never>>,
-    '/entidades/apagar_Entidades': RouteRecordInfo<'/entidades/apagar_Entidades', '/entidades/apagar_Entidades', Record<never, never>, Record<never, never>>,
     '/entidades/Entidades': RouteRecordInfo<'/entidades/Entidades', '/entidades/Entidades', Record<never, never>, Record<never, never>>,
     '/legislacao/Legislacao': RouteRecordInfo<'/legislacao/Legislacao', '/legislacao/Legislacao', Record<never, never>, Record<never, never>>,
     '/paginasInfo/Entidade': RouteRecordInfo<'/paginasInfo/Entidade', '/paginasInfo/Entidade', Record<never, never>, Record<never, never>>,

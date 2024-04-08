@@ -1,10 +1,14 @@
 <template>
-    <v-card id="treeview-card">
-      <v-tooltip text="Pesquisar por código, título, notas de aplicação, exemplos de notas de aplicação ou termos de índice...">
-        <template v-slot:activator="{ props }">
-          <v-text-field v-bind="props" label="Pesquisar por código, título, notas de aplicação, exemplos de notas de aplicação ou termos de índice..."></v-text-field>
-        </template>
-      </v-tooltip>    
+  <v-card id="treeview-card">
+    <v-text-field
+      v-model="search"
+      label="Pesquisar por código, título, notas de aplicação, exemplos de notas de aplicação ou termos de índice..."
+      prepend-inner-icon="mdi-magnify"
+      hide-details
+      single-line
+      color="blue"
+      class="font-weight-medium"
+    ></v-text-field>
       <v-card-text>
         <div v-if="classesCarregadas">
           <treeview :config="config" :nodes="nodes" />          
@@ -23,6 +27,7 @@ import "vue3-treeview/dist/style.css";
 var config = ref({})
 var nodes = ref({})
 var raizes = []
+var search = ref('')
 
 const props = defineProps(["classeId"])
 const store = useAppStore()
@@ -42,12 +47,13 @@ try {
   .then(data => myIndice = data);
   
   classesTree = await preparaTree(myClasses, myIndice);
+  
   // Remover classes repetidas
   const ids = classesTree.map(({ id }) => id);
-  const classesTreeFiltered = classesTree.filter(({ id }, index) => !ids.includes(id, index + 1))
+  classesTree = classesTree.filter(({ id }, index) => !ids.includes(id, index + 1))
 
-  for (let i = 0; i < classesTreeFiltered.length; i++) {
-    let classe = classesTreeFiltered[i]
+  for (let i = 0; i < classesTree.length; i++) {
+    let classe = classesTree[i]
     // Adicionar nó raíz.
     raizes.push(classe.id)
     // Adicionar filhos.
