@@ -24,19 +24,19 @@ import { useAppStore } from '@/store/app';
 import treeview from "vue3-treeview";
 import "vue3-treeview/dist/style.css";
 
+const props = defineProps(["classeId"])
+const store = useAppStore()
+
 var config = ref({})
 var nodes = ref({})
 var raizes = []
-var search = ref('')
 
-const props = defineProps(["classeId"])
-const store = useAppStore()
- 
+var search = ref('')
 var classesTree = []
 var classesCarregadas = false
-
 var myClasses = []
 var myIndice = null
+
 try {
   await fetch(host + "/classes", { method: "GET", headers: { "Authorization": "token " + store.token } })
   .then(response => response.json())
@@ -143,8 +143,40 @@ function formatTreeviewNodes() {
   nodes_text.forEach((node) => node.classList.add("text-blue", "treeview-font"))
 }
 
+function openParentNode() {
+  Object.entries(nodes.value).forEach(([key, value]) => {
+    let keyLength = key.length
+    if (key == props.classeId && keyLength > 3) {
+      let parentClasseId
+      let grandparentClasseId
+      let grandgrandparentClasseId
+      switch (keyLength) {
+        case 6: // classe nivel 2
+          parentClasseId = key.split('.')[0]
+          nodes.value[parentClasseId].state.opened = true
+          break
+        case 10: // classe nivel 3          
+          parentClasseId = key.split('.')[0] + '.' + key.split('.')[1]
+          grandparentClasseId = key.split('.')[0]
+          nodes.value[grandparentClasseId].state.opened = true
+          nodes.value[parentClasseId].state.opened = true
+          break
+        case 13: // classe nivel 4
+          parentClasseId = key.split('.')[0] + '.' + key.split('.')[1] + '.' + key.split('.')[2]
+          grandparentClasseId = key.split('.')[0] + '.' + key.split('.')[1]
+          grandgrandparentClasseId = key.split('.')[0]
+          nodes.value[grandgrandparentClasseId].state.opened = true
+          nodes.value[grandparentClasseId].state.opened = true
+          nodes.value[parentClasseId].state.opened = true
+          break
+      }      
+    }
+  })
+}
+
 onMounted(() => {
   formatTreeviewNodes()
+  openParentNode()
 });
 
 watch(nodes, (newValue, oldValue) => {
