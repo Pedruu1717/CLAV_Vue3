@@ -57,9 +57,33 @@ async function fetchItems() {
     .then(response => response.json())
     .then(data => {
       items_list.value = data;      
+      if (props.tipo == "legislacao") {
+        let legislacoes = data;
+        let legislacao;
+        let entidades;
+        for (let i = 0; i < legislacoes.length; i++) {          
+          legislacao = items_list.value[i]
+          if (legislacao.entidades.length > 0) {
+            entidades = legislacao.entidades;
+            for (let e = 0; e < entidades.length; e++) {
+              /* Passar cada entidade de {"id": "ent_DGLAB", "sigla": "DGLAB"} para "DGLAB", por exemplo. */          
+              items_list.value[i].entidades[e] = items_list.value[i].entidades[e].sigla;
+            };  
+          }
+          else if (legislacao.entidades1.length > 0) {
+            entidades = legislacao.entidades1;
+            for (let e = 0; e < entidades.length; e++) {
+              /* Passar cada entidade de {"id": "ent_DGLAB", "sigla": "DGLAB"} para "DGLAB", por exemplo. */          
+              items_list.value[i].entidades1[e] = items_list.value[i].entidades1[e].sigla;
+            };  
+          }
+          else continue;           
+        };     
+      };
+
       totalItems = items_list.length;
     })
-    
+        
   } catch(error) {
     console.log(error)
   }
