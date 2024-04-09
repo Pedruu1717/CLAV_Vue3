@@ -1,6 +1,6 @@
 <template>
-  <v-footer dark padless>
-    <v-card flat style="width: 100%">
+  <v-footer dark padless class="footer">
+    <v-card flat width="100%">
       <v-card-title id="footer-bar" class="hidden-sm-and-down px-2 py-2">
       <div class="display-flex">
         <p class="big-footer-letters">DGLAB - </p>
@@ -105,6 +105,11 @@ try {
 #footer-image {
   min-width: 90px;
   max-width: 120px;
+}
+
+.footer {
+  margin-left: -1%;
+  margin-right: -1%;
 }
 
 </style>
