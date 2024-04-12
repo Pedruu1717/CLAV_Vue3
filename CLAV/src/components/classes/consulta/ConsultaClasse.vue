@@ -18,7 +18,7 @@
             <div v-if="classe.filhos.length > 0" class="d-inline-flex">
               <v-card class="text-center text-blue-darken-4 clav-info-label" width="150" height="25" >Descendência</v-card>
               <v-card style="margin-left: 20px;" color="#f3f7fc" width="1000">
-                <div style="margin: 20px;" v-for="(filho, index) in classe.filhos" :key="index">
+                <div class="small-margin" v-for="(filho, index) in classe.filhos" :key="index">
                   <v-row style="margin-bottom: 10px;">
                     <a :href="'/classes/consultar/c' + filho.codigo">
                       <span class="text-blue">{{ filho.codigo }}</span>
@@ -99,7 +99,7 @@
                         color="neutralpurple"
                       >
                         <template v-slot:conteudo>
-                              <ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" style="margin: 20px;"></ul>
+                              <ul v-for="item in classe.notasEx" v-html="analisaRefs(item.nota)" class="small-margin"></ul>
                         </template>
                       </Campo>
                     </div>
@@ -112,7 +112,7 @@
                       >
                         <template v-slot:conteudo>
                           <ul v-for="item in classe.termosInd">
-                            <li style="margin: 20px;">{{ item.termo }}</li>
+                            <li class="small-margin">{{ item.termo }}</li>
                           </ul>
                         </template>
                       </Campo>
@@ -158,7 +158,7 @@
                     >
                       <template v-slot:conteudo>
                         <ul v-for="item in classe.donos">
-                          <li style="margin: 20px;"><a :href="`${getOriginURL() + '/entidades/' + item.idDono}`">{{ item.sigla}}: {{ item.designacao }}</a></li>
+                          <li class="small-margin"><a :href="`${getOriginURL() + '/entidades/' + item.idDono}`">{{ item.sigla}}: {{ item.designacao }}</a></li>
                         </ul>              
                       </template>
                     </Campo>
@@ -247,7 +247,7 @@
                         color="neutralpurple"
                       >
                         <template v-slot:conteudo>                        
-                          <div v-for="c in classe.pca.justificacao" :key="c.tipoId" style="margin: 20px;">
+                          <div v-for="c in classe.pca.justificacao" :key="c.tipoId" class="small-margin">
                             <!-- Critério Gestionário ...............................-->
                             <v-row v-if="c.tipoId == 'CriterioJustificacaoGestionario'">
                               <v-col cols="3" class="pt-0">
@@ -327,7 +327,7 @@
                         color="neutralpurple"
                       >
                         <template v-slot:conteudo>
-                              <div style="margin: 20px;">
+                              <div class="small-margin">
                                 <span v-if="classe.df.valor == 'E'">Eliminação</span>
                                 <span v-else-if="classe.df.valor == 'C'"> Conservação </span>
                                 <span v-else-if="classe.df.valor == 'CP'">
@@ -360,7 +360,7 @@
                         color="neutralpurple"
                       >
                         <template v-slot:conteudo>
-                          <div v-for="c in classe.df.justificacao" :key="c.tipoId" style="margin: 20px;">
+                          <div v-for="c in classe.df.justificacao" :key="c.tipoId" class="small-margin">
                             <!-- Critério Legal ...................................-->
                             <v-row v-if="c.tipoId == 'CriterioJustificacaoLegal'">
                               <v-col cols="3" class="pt-0">
@@ -584,5 +584,9 @@ function analisaRefs(nota) {
   border: 1px solid #dee2f8;
   border-radius: 0 0 10px 10px;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.12);
+}
+
+.small-margin {
+  margin: 20px;
 }
 </style>
