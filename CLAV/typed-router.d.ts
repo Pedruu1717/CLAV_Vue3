@@ -47,7 +47,9 @@ declare module 'vue-router/auto/routes' {
     '/paginasInfo/Entidade': RouteRecordInfo<'/paginasInfo/Entidade', '/paginasInfo/Entidade', Record<never, never>, Record<never, never>>,
     '/paginasInfo/Legislacao': RouteRecordInfo<'/paginasInfo/Legislacao', '/paginasInfo/Legislacao', Record<never, never>, Record<never, never>>,
     '/paginasInfo/ListaConsl': RouteRecordInfo<'/paginasInfo/ListaConsl', '/paginasInfo/ListaConsl', Record<never, never>, Record<never, never>>,
+    '/paginasInfo/TabelaSelecao': RouteRecordInfo<'/paginasInfo/TabelaSelecao', '/paginasInfo/TabelaSelecao', Record<never, never>, Record<never, never>>,
     '/paginasInfo/TipEntidade': RouteRecordInfo<'/paginasInfo/TipEntidade', '/paginasInfo/TipEntidade', Record<never, never>, Record<never, never>>,
+    '/tabSel/TabSel': RouteRecordInfo<'/tabSel/TabSel', '/tabSel/TabSel', Record<never, never>, Record<never, never>>,
     '/tipologias/Tipologias': RouteRecordInfo<'/tipologias/Tipologias', '/tipologias/Tipologias', Record<never, never>, Record<never, never>>,
   }
 }

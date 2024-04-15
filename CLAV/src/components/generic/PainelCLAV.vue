@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import InfoBox from "@/components/generic/infoBox.vue";
+import InfoBox from "@/components/generic/InfoBox.vue";
 import { defineProps } from 'vue'
 
 const props = defineProps(["titulo", "icon", "infoHeader", "infoBody"])

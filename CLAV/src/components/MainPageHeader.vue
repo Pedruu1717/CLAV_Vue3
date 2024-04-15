@@ -55,7 +55,15 @@
                     <v-icon icon="mdi-magnify"/>
                   </router-link>
                 </router-link>
-              </v-list-item>             
+              </v-list-item>
+              <v-list-item>
+                <router-link :to="{name: 'tsInfo'}" >
+                  <v-btn flat @click="" color="white">Tabelas de Seleção</v-btn>
+                  <router-link :to="{name: 'ts'}" >
+                    <v-icon icon="mdi-magnify"/>
+                  </router-link>
+                </router-link>
+              </v-list-item>               
               <v-list-item>
                 <router-link :to="{name: 'entInfo'}">
                   <v-btn flat @click="" color="white">Entidades</v-btn>

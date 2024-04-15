@@ -72,6 +72,19 @@ const routes = [
     component: () => import("@/pages/tipologias/Tipologias.vue"),
     meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
   },
+  // Routes das tabelas de seleção
+  {
+    path: "/tsInfo",
+    name: "tsInfo",
+    component: () => import("@/pages/paginasInfo/TabelaSelecao.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7], tabAtiva: "Operações" }
+  },
+  {
+    path: "/ts/consultar",
+    name: "ts",
+    component: () => import("@/pages/tabSel/TabSel.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
+  },
 
 ]
 
