@@ -29,6 +29,8 @@ declare module 'vue' {
     ProcessosRelacionados: typeof import('./src/components/classes/consulta/ProcessosRelacionados.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TabelasSelecao: typeof import('./src/components/tabelasSelecao/TabelasSelecao.vue')['default']
+    TabSel: typeof import('./src/components/tabelasSelecao/TabSel.vue')['default']
     Voltar: typeof import('./src/components/generic/Voltar.vue')['default']
   }
 }

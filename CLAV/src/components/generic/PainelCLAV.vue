@@ -1,33 +1,32 @@
 <template>
   <v-expansion-panel>
-    <v-expansion-panel-header hide-actions class="white--text clav-linear-background">
-      <v-row class="ma-0 pa-0" align="center">
-        <v-col v-if="icon" cols="1" class="pl-3 ma-0 pa-0" align="center">
-          <v-icon color="secondary">
-            {{ icon }}
-          </v-icon>
-        </v-col>
-        <v-col v-if="!icon" cols="1" class="pl-3 ma-0 pa-0" align="center">
-          <slot name="icon"></slot>
-        </v-col>
-        <v-col cols="11" justify="center">
-          <span class="mr-3 clav-header-text">{{ titulo }}</span>
-          <InfoBox :header="infoHeader" :text="infoBody" />
-        </v-col>
-      </v-row>
-    </v-expansion-panel-header>
-    <v-expansion-panel-content>
+    <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" :icon=icon />{{ titulo }}</v-expansion-panel-title>
+    <v-expansion-panel-text>
       <slot name="conteudo"></slot>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
   </v-expansion-panel>
 </template>
 
 <script setup>
-import InfoBox from "@/components/generic/InfoBox.vue";
 import { defineProps } from 'vue'
 
 const props = defineProps(["titulo", "icon", "infoHeader", "infoBody"])
 </script>
 
 <style scoped>
+.separador {
+  display: grid;
+  grid-template-columns: 0.05fr 0.15fr 0.5fr 0.3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "icon titulo . btns";
+  color: white;
+  align-items: center;
+  padding: 5px;
+  font-weight: 400;
+  min-height: 50px;
+  background: linear-gradient(to right, #19237e 0%, #0056b6 100%) !important;
+  font-size: 14pt;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
 </style>
