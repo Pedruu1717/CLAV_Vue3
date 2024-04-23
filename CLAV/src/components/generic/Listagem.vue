@@ -10,6 +10,7 @@
       class="font-weight-medium"
     ></v-text-field>
     <v-data-table
+      v-model:sort-by="sortBy"
       :headers="cabecalhos"
       :items-length="totalItems"
       :items="items_list"
@@ -38,7 +39,7 @@ import { host } from '@/config/global';
 import { useAppStore } from '@/store/app';
 import CONSTS from "@/utils/consts";
 
-const props = defineProps(["tipo"])
+const props = defineProps(["tipo", "lista", "entidades"])
 const store = useAppStore()
 
 var items_list = ref([])
@@ -47,6 +48,7 @@ var loading = true
 var totalItems = 0
 var cabecalhos = ref([])
 var level = 0  // teste. é preciso ir buscar o nivel ao utilizador logado
+var sortBy = ref([{key: '', order: ''}])
 
 async function fetchItems() {
   try {
@@ -56,7 +58,7 @@ async function fetchItems() {
     })
     .then(response => response.json())
     .then(data => {
-      items_list.value = data;      
+      items_list.value = data;
       if (props.tipo == "legislacao") {
         let legislacoes = data;
         let legislacao;
@@ -79,7 +81,22 @@ async function fetchItems() {
           }
           else continue;           
         };     
-      };
+      }
+
+      else if (props.tipo == "pgd" || props.tipo == "pgd/lc" || props.tipo == "tabelasSelecao") {
+        let tabelasSelecao = data;
+        let entidades;
+        let entidade;
+        for (let i = 0; i < tabelasSelecao.length; i++) {
+          entidades = tabelasSelecao[i].entidades;
+          for (let e = 0; e < entidades.length; e++) {
+            entidade = entidades[e];
+            /* Passar cada link de uma entidade para a sigla dessa entidade. */
+            if (entidade.includes("#ent_")) items_list.value[i].entidades[e] = entidade.split("#ent_")[1].split("''")[0]
+            else if (entidade.includes("#tip_")) items_list.value[i].entidades[e] = entidade.split("#tip_")[1].split("''")[0]            
+          }
+        }
+      }
 
       totalItems = items_list.length;
     })
@@ -93,11 +110,19 @@ onMounted(() => {
   fetchItems()
   switch (props.tipo) {
     case "entidades":
-      cabecalhos.value = [{title: "Sigla", key: "id"}, {title: "Designação", key: "designacao"}, {title: "Estado", key: "estado"}, {title: "Internacional", key: "internacional"}]
+      cabecalhos.value = [
+        {title: "Sigla", key: "id"},
+        {title: "Designação", key: "designacao"},
+        {title: "Estado", key: "estado"},
+        {title: "Internacional", key: "internacional"},
+      ]
       break
 
     case "tipologias":
-      cabecalhos.value = [{title: "Sigla", key: "id"}, {title: "Designação", key: "designacao"}]
+      cabecalhos.value = [
+        {title: "Sigla", key: "id"},
+        {title: "Designação", key: "designacao"},
+      ]
       break
 
     case "legislacao":
@@ -107,10 +132,56 @@ onMounted(() => {
         {title: "Entidade(s)", key: "entidades"},
         {title: "Número", key: "numero"},
         {title: "Sumário", key: "sumario"},
-        {title: "Estado", key: "estado"}
+        {title: "Estado", key: "estado"},
       ]
       break
+
+    case "tabelasSelecao":
+      cabecalhos.value = [
+          {title: "Data", key: "data"},
+          {title: "Tipo", key: "tipo"},
+          {title: "Número", key: "numero"},
+          {title: "Entidade(s)", key: "entidades"},
+          {title: "Sumário", key: "sumario"},
+          {title: "Estado", key: "estado"},
+          {title: "Acesso", key: "acesso"},
+      ]
+      sortBy.value[0].key = 'data'
+      sortBy.value[0].order = 'desc'
+      break
+
+    case "pgd/lc":
+      cabecalhos.value = [
+          {title: "Data", key: "data"},
+          {title: "Tipo", key: "tipo"},
+          {title: "Número", key: "numero"},
+          {title: "Entidade(s)", key: "entidades"},
+          {title: "Sumário", key: "sumario"},
+          {title: "Estado", key: "estado"},
+          {title: "Acesso", key: "acesso"},
+      ]
+      sortBy.value[0].key = 'data'
+      sortBy.value[0].order = 'desc'      
+      break
+    
+    case "pgd":
+      cabecalhos.value = [
+          {title: "Data", key: "data"},
+          {title: "Tipo", key: "tipo"},
+          {title: "Número", key: "numero"},
+          {title: "Entidade(s)", key: "entidades"},
+          {title: "Sumário", key: "sumario"},
+          {title: "Estado", key: "estado"},
+          {title: "Acesso", key: "acesso"},
+      ]
+      sortBy.value[0].key = 'data'
+      sortBy.value[0].order = 'desc'
+      break
+    
+    default:
+      console.log('Tipo de listagem inválido.');
   }
+
   // Tem direito a operações quando tem nivel igual ou acima ao definido.
   if (level >= CONSTS.NIVEL_MINIMO_ALTERAR) { 
     cabecalhos.value.push({title: "Operações", key: "operacoes"})

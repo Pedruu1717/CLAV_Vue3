@@ -11,7 +11,6 @@
         <v-expansion-panels>
             <!-- Tabelas de Seleção inseridas na Clav -->  
             <PainelCLAV
-                v-if="fontesTSReady"
                 titulo="Tabelas de Seleção inseridas na Clav"
                 icon="mdi-clipboard-text"
                 infoHeader="Tabelas de Seleção criadas na Clav"
@@ -21,7 +20,7 @@
                 <template v-slot:conteudo>
                     <Listagem
                     :lista="fontesTS"
-                    tipo="TABELAS DE SELEÇÃO INSERIDAS NA CLAV"
+                    tipo="tabelasSelecao"
                     :entidades="entidades"
                     />
                 </template>
@@ -29,7 +28,6 @@
 
             <!-- Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos -->
             <PainelCLAV
-                v-if="fontesPGDLCReady"
                 titulo="Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos"
                 icon="mdi-clipboard-text"
                 infoHeader="Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos"
@@ -39,7 +37,7 @@
                 <template v-slot:conteudo>
                     <Listagem
                     :lista="fontesTS"
-                    tipo="Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos"
+                    tipo="pgd/lc"
                     :entidades="entidades"
                     />
                 </template>
@@ -47,7 +45,6 @@
 
             <!-- Tabelas de Seleção (NÃO derivadas da LC) inseridas em portaria de gestão de documentos -->
             <PainelCLAV
-                v-if="fontesPGDTSReady"
                 titulo="Tabelas de Seleção (não derivadas da LC) inseridas em portaria de gestão de documentos"
                 icon="mdi-clipboard-text"
                 infoHeader="Tabelas de Seleção (não derivadas da LC) inseridas em portaria de gestão de documentos"
@@ -57,7 +54,7 @@
                 <template v-slot:conteudo>
                     <Listagem
                     :lista="fontesTS"
-                    tipo="Tabelas de Seleção (não derivadas da LC) inseridas em portaria de gestão de documentos"
+                    tipo="pgd"
                     :entidades="entidades"
                     />
                 </template>
@@ -71,200 +68,13 @@ import Listagem from "../generic/Listagem.vue";
 import Voltar from "@/components/generic/Voltar";
 import PainelCLAV from "@/components/generic/PainelCLAV";
 import help from "@/config/help"
-import router from "@/router"
-import { useAppStore } from "@/store/app"
-import { host } from "@/config/global"
 
-const store = useAppStore()
-
-var fontesPGDReady = ref(false)
-var fontesPGD = ref([])
-var fontesPGDLC = ref([])
-var fontesPGDTS = ref([])
-var fontesPGDLCReady = ref(false)
-var fontesPGDTSReady = ref(false)
 var fontesTS = ref([])
-var fontesTSReady = ref(false)
 var entidades = ref([])
 // Array para poder expandir/fechar todos os panels
 var tabsSel = ref([])
 var tabsSelItems = ref(3)
 var myhelp = help
-
-function goBack() {
-    router.push("/tsInfo");
-}
-
-// Abrir todos os v-expansion-panel
-function expandAll() {
-    tabsSel = [...Array(tabsSelItems).keys()].map((k, i) => i);
-}
-
-// Fechar todos os v-expansion-panel
-function closeAll() {
-    tabsSel = [];
-}
-
-try {
-    await fetch(host + "/pgd/lc", { method: "GET", headers: { "Authorization": "token " + store.token } })
-    .then(response => response.json())
-    .then((data) => {
-    fontesPGDLC = data.map((f) => {
-        return {
-        idPGD: f.idPGD,
-        data: f.data,
-        tipo: f.tipo,
-        numero: f.numero,
-        entidades: f.entidades.map((e) => {
-            return e.includes("ent_")
-            ? e.split("ent_")[1]
-            : e.split("tip_")[1];
-        }),
-        sumario: f.sumario,
-        estado: f.estado,
-        link: f.link,
-        };
-    });
-    fontesPGDLCReady = true;
-    })
-} catch (e) {
-  console.log(e);
-}
-
-try {
-    await fetch(host + "/legislacao?fonte=PGD", { method: "GET", headers: { "Authorization": "token " + store.token } })
-    .then(response => response.json())
-    .then((data) => {
-    fontesPGD = data.map((f) => {
-        return {
-        data: f.data,
-        tipo: f.tipo,
-        numero: f.numero,
-        entidades: f.entidades,
-        sumario: f.sumario,
-        estado: f.estado,
-        link: f.link,
-        };
-    });
-    fontesPGDReady = true;
-    })
-} catch (e) {
-  console.log(e);
-}
-
-try {
-    await fetch(host + "/pgd", { method: "GET", headers: { "Authorization": "token " + store.token } })
-    .then(response => response.json())
-    .then((data) => {
-    fontesPGDTS = fontesPGD.map((f) => {
-        var obj = data.find(
-        (res) => res.tipo == f.tipo && res.numero == f.numero
-        );
-        if (obj)
-        return {
-            idPGD: obj.idPGD,
-            data: obj.data,
-            tipo: obj.tipo,
-            numero: obj.numero,
-            entidades: obj.entidades.map((e) => {
-            return e.includes("ent_")
-                ? e.split("ent_")[1]
-                : e.split("tip_")[1];
-            }),
-            sumario: obj.sumario,
-            estado: obj.estado,
-            link: obj.link,
-        };
-        else
-        return {
-            idPGD: "",
-            data: f.data,
-            tipo: f.tipo,
-            numero: f.numero,
-            entidades: f.entidades ? f.entidades : [],
-            sumario: f.sumario,
-            estado: f.estado ? f.estado : "Ativo",
-            link: f.link,
-        };
-    });
-    fontesPGDTSReady = true;
-    })
-} catch (e) {
-  console.log(e);
-}
-
-try {
-    await fetch(host + "/tabelasSelecao", { method: "GET", headers: { "Authorization": "token " + store.token } })
-    .then(response => response.json())
-    .then((data) => {
-    fontesTS = data.map((f) => {
-        return {
-        id: f.id.split("clav#")[1],
-        data: f.data,
-        tipo: f.tipoLeg,
-        numero: f.numLeg,
-        sumario: f.designacao,
-        entidades: f.entidades.map((e) => {
-            return e.includes("ent_")
-            ? e.split("ent_")[1]
-            : e.split("tip_")[1];
-        }),
-        estado: f.estado ? f.estado : "Ativo",
-        link: "",
-        };
-    });
-    fontesTSReady = true;
-    })
-} catch (e) {
-  console.log(e);
-}
-
-/*await fontesPGDTS.map(async (obj) => {
-    var leg =
-    obj.idPGD != ""
-        ? await fetch(host +            
-            `/legislacao/${obj.idPGD.split("pgd_")[1]}`,
-            { method: "GET", headers: { "Authorization": "token " + store.token } }
-        )
-        : "";
-    leg && leg.data.entidades1.length > 0
-    ? (obj.entidades = leg.data.entidades1.map((e) => {
-        return e.id.includes("ent_")
-            ? e.id.split("ent_")[1]
-            : e.id.split("tip_")[1];
-        }))
-    : "";
-});
-
-await fontesPGDLC.map(async (obj) => {
-    var leg =
-    obj.idPGD != ""
-        ? await fetch(host +            
-            `/legislacao/${obj.idPGD.split("pgd_lc_")[1]}`,
-            { method: "GET", headers: { "Authorization": "token " + store.token } }
-        )
-        : "";
-    leg && leg.data.entidades1.length > 0
-    ? (obj.entidades = leg.data.entidades1.map((e) => {
-        return e.id.includes("ent_")
-            ? e.id.split("ent_")[1]
-            : e.id.split("tip_")[1];
-        }))
-    : "";
-});*/
-
-// Faz load de todas as entidades
-try {
-    await fetch(host + "/entidades", { method: "GET", headers: { "Authorization": "token " + store.token } })
-    .then(response => response.json())
-    .then((data) => {
-    entidades = data.map(function (item) {
-        return item.sigla;
-    });
-    })
-} catch (e) {
-  console.log(e);
-}
 
 </script>
 
