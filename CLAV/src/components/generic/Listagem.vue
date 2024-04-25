@@ -28,6 +28,13 @@
           >Não foram encontrados resultados para "{{ search }}".</v-alert
         >
       </template>
+
+      <template v-slot:[`item.entidades`]="{ item }">
+        <span v-for="(ent, index) in item.entidades" :key="index">
+          <a :href="'/entidades/' + ent">{{ ent }}</a>
+          {{ item.entidades.length > 1 ? " " : "" }}
+        </span>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -83,18 +90,22 @@ async function fetchItems() {
         };     
       }
 
-      else if (props.tipo == "pgd" || props.tipo == "pgd/lc" || props.tipo == "tabelasSelecao") {
-        let tabelasSelecao = data;
+      else if (props.tipo == "pgd" || props.tipo == "pgd/lc" || props.tipo == "tabelasSelecao") {        
+        let tabelaSel;
         let entidades;
         let entidade;
-        for (let i = 0; i < tabelasSelecao.length; i++) {
-          entidades = tabelasSelecao[i].entidades;
+        /* Remover itens não ativos. */
+        items_list.value = items_list.value.filter((t) => { return t.estado == "Ativo" });
+        let tabelasSelecao = items_list.value;
+        for (let i = 0; i < tabelasSelecao.length; i++) {          
+          tabelaSel =  tabelasSelecao[i];
+          entidades = tabelaSel.entidades;          
           for (let e = 0; e < entidades.length; e++) {
             entidade = entidades[e];
             /* Passar cada link de uma entidade para a sigla dessa entidade. */
-            if (entidade.includes("#ent_")) items_list.value[i].entidades[e] = entidade.split("#ent_")[1].split("''")[0]
-            else if (entidade.includes("#tip_")) items_list.value[i].entidades[e] = entidade.split("#tip_")[1].split("''")[0]            
-          }
+            if (entidade.includes("#ent_")) items_list.value[i].entidades[e] = entidade.split("#ent_")[1];
+            else if (entidade.includes("#tip_")) items_list.value[i].entidades[e] = entidade.split("#tip_")[1];         
+          }          
         }
       }
 
