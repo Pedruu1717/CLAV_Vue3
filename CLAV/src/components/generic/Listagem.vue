@@ -27,7 +27,7 @@
           id="alerta-erro"
           >Não foram encontrados resultados para "{{ search }}".</v-alert
         >
-      </template>
+      </template>      
 
       <template v-slot:[`item.entidades`]="{ item }">
         <span v-for="(ent, index) in item.entidades" :key="index">
@@ -35,6 +35,26 @@
           {{ item.entidades.length > 1 ? " " : "" }}
         </span>
       </template>
+
+      <template v-slot:[`item.link`]="{ item }">
+        <v-tooltip text="Aceder a Diário da República" top color="info" open-delay="500">
+          <template v-slot:activator="{ props }">
+            <v-btn v-bind="props" small text rounded @click="go(item.link)" icon="mdi-file-pdf-box" />
+          </template>          
+        </v-tooltip>
+        <v-tooltip text="Ver Portaria" top color="info" open-delay="500" v-if="item.idPGD">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              small
+              text
+              rounded
+              @click="go('/pgd/' + item.idPGD)"
+              icon="mdi-eye"
+            />
+          </template>          
+        </v-tooltip>
+      </template>      
     </v-data-table>
   </div>
 </template>
@@ -45,6 +65,7 @@ import { ref, defineProps, onMounted } from 'vue';
 import { host } from '@/config/global';
 import { useAppStore } from '@/store/app';
 import CONSTS from "@/utils/consts";
+import router from "@/router"
 
 const props = defineProps(["tipo", "lista", "entidades"])
 const store = useAppStore()
@@ -75,14 +96,14 @@ async function fetchItems() {
           if (legislacao.entidades.length > 0) {
             entidades = legislacao.entidades;
             for (let e = 0; e < entidades.length; e++) {
-              /* Passar cada entidade de {"id": "ent_DGLAB", "sigla": "DGLAB"} para "DGLAB", por exemplo. */          
+              /* Passar cada entidade da forma de objecto para a sua sigla. */
               items_list.value[i].entidades[e] = items_list.value[i].entidades[e].sigla;
             };  
           }
           else if (legislacao.entidades1.length > 0) {
             entidades = legislacao.entidades1;
             for (let e = 0; e < entidades.length; e++) {
-              /* Passar cada entidade de {"id": "ent_DGLAB", "sigla": "DGLAB"} para "DGLAB", por exemplo. */          
+              /* Passar cada entidade da forma de objecto para a sua sigla. */          
               items_list.value[i].entidades1[e] = items_list.value[i].entidades1[e].sigla;
             };  
           }
@@ -155,7 +176,7 @@ onMounted(() => {
           {title: "Entidade(s)", key: "entidades"},
           {title: "Sumário", key: "sumario"},
           {title: "Estado", key: "estado"},
-          {title: "Acesso", key: "acesso"},
+          {title: "Acesso", key: "link"},
       ]
       sortBy.value[0].key = 'data'
       sortBy.value[0].order = 'desc'
@@ -169,7 +190,7 @@ onMounted(() => {
           {title: "Entidade(s)", key: "entidades"},
           {title: "Sumário", key: "sumario"},
           {title: "Estado", key: "estado"},
-          {title: "Acesso", key: "acesso"},
+          {title: "Acesso", key: "link"},
       ]
       sortBy.value[0].key = 'data'
       sortBy.value[0].order = 'desc'      
@@ -183,7 +204,7 @@ onMounted(() => {
           {title: "Entidade(s)", key: "entidades"},
           {title: "Sumário", key: "sumario"},
           {title: "Estado", key: "estado"},
-          {title: "Acesso", key: "acesso"},
+          {title: "Acesso", key: "link"},
       ]
       sortBy.value[0].key = 'data'
       sortBy.value[0].order = 'desc'
@@ -199,6 +220,14 @@ onMounted(() => {
   }
   loading = false;
 })
+
+function go(url, param) {
+  if (url.startsWith("http")) {
+    window.location.href = url;
+  } else {
+    router.push(url);
+  }
+}
 
 </script>
 

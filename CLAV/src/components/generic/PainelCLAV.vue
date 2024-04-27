@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel>
-    <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" :icon=icon />{{ titulo }}</v-expansion-panel-title>
+    <v-expansion-panel-title color="#1A237E" class="separador"><v-icon style="margin-right: 10px;" :icon=icon />{{ titulo }}<InfoBox :header="infoHeader" :text="infoBody" /></v-expansion-panel-title>
     <v-expansion-panel-text>
       <slot name="conteudo"></slot>
     </v-expansion-panel-text>
@@ -9,6 +9,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
+import InfoBox from "@/components/generic/InfoBox.vue";
 
 const props = defineProps(["titulo", "icon", "infoHeader", "infoBody"])
 </script>
@@ -16,7 +17,7 @@ const props = defineProps(["titulo", "icon", "infoHeader", "infoBody"])
 <style scoped>
 .separador {
   display: grid;
-  grid-template-columns: 0.05fr 0.15fr 0.5fr 0.3fr;
+  grid-template-columns: 0.05fr 0.75fr 0.5fr 0.3fr;
   grid-template-rows: 1fr;
   grid-template-areas: "icon titulo . btns";
   color: white;

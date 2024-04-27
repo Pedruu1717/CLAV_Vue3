@@ -12,9 +12,9 @@
             <!-- Tabelas de Seleção inseridas na Clav -->  
             <PainelCLAV
                 titulo="Tabelas de Seleção inseridas na Clav"
-                icon="mdi-clipboard-text"
+                icon="mdi-notebook"
                 infoHeader="Tabelas de Seleção criadas na Clav"
-                :infoBody="myhelp.TS_LC"                
+                :infoBody="myhelp.TS.Consulta.TS_LC"                
                 >
                 
                 <template v-slot:conteudo>
@@ -29,9 +29,9 @@
             <!-- Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos -->
             <PainelCLAV
                 titulo="Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos"
-                icon="mdi-clipboard-text"
+                icon="mdi-notebook"
                 infoHeader="Tabelas de Seleção (derivadas da LC) inseridas em portaria de gestão de documentos"
-                :infoBody="myhelp.TS_LC"                
+                :infoBody="myhelp.TS.Consulta.PGD_LC"                
                 >
                 
                 <template v-slot:conteudo>
@@ -46,9 +46,9 @@
             <!-- Tabelas de Seleção (NÃO derivadas da LC) inseridas em portaria de gestão de documentos -->
             <PainelCLAV
                 titulo="Tabelas de Seleção (não derivadas da LC) inseridas em portaria de gestão de documentos"
-                icon="mdi-clipboard-text"
+                icon="mdi-notebook"
                 infoHeader="Tabelas de Seleção (não derivadas da LC) inseridas em portaria de gestão de documentos"
-                :infoBody="myhelp.TS_LC"                
+                :infoBody="myhelp.TS.Consulta.PGD"                
                 >
                 
                 <template v-slot:conteudo>
