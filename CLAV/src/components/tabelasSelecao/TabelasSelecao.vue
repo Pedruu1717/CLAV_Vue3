@@ -1,14 +1,19 @@
 <template>
-    <v-card flat class="pa-3 conteudo">
-        <v-row class="titulo" align="center" justify="center">
+    <v-card flat class="pa-3 conteudo" style="margin-top: 10px;">
+        <v-row align="center" justify="center">
             <v-col cols="12" md="3" align="center"> <Voltar /> </v-col>
             <v-col cols="12" md="5" align="center">
-            <p class="clav-content-title-1 ">Consultar Tabelas de Seleção</p>
+            <p class="clav-content-title-1 titulo">Consultar Tabelas de Seleção</p>
             </v-col>
             <v-col cols="12" md="4" align="center">
             </v-col>
         </v-row>        
-        <v-expansion-panels>
+        <v-row style="margin-top: 70px;">
+            <v-col cols="12" md="3" align="center"></v-col>
+            <v-col cols="12" md="3" align="center"> <v-btn @click="expandAll" width=200 rounded class="text-white px-2 clav-linear-background" prepend-icon="mdi-arrow-expand" :text="'EXPANDIR TUDO'" /> </v-col>
+            <v-col cols="12" md="3" align="center"> <v-btn @click="closeAll" width=200 rounded class="text-white px-2 clav-linear-background" prepend-icon="mdi-arrow-collapse" :text="'FECHAR TUDO'" /> </v-col>
+        </v-row>        
+        <v-expansion-panels style="margin-top: 50px;" v-model="tabsSel">
             <!-- Tabelas de Seleção inseridas na Clav -->  
             <PainelCLAV
                 titulo="Tabelas de Seleção inseridas na Clav"
@@ -76,6 +81,16 @@ var tabsSel = ref([])
 var tabsSelItems = ref(3)
 var myhelp = help
 
+// Abrir todos os v-expansion-panel
+function expandAll() {
+    tabsSel.value = [...Array(tabsSelItems.value).keys()].map((k, i) => i);
+}
+
+// Fechar todos os v-expansion-panel
+function closeAll() {
+    tabsSel.value = [];
+}
+
 </script>
 
 <style scoped>
@@ -101,8 +116,13 @@ var myhelp = help
 }
 
 .titulo {
-   margin-bottom: 10px;
- }
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
  
  .conteudo {
    margin-top: -30px;
