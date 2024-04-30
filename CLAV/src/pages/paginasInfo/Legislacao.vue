@@ -34,71 +34,10 @@
             <span class="ml-2 btn-text"><v-icon icon="mdi-magnify btn-icon"/>Consultar</span>
             </v-btn>
           </v-col>
-          <!--<v-col
-            cols="12"
-            md="4"
-            v-if="
-              [1, 3, 3.5, 4, 5, 6, 7].includes(this.$userLevel()) &&
-              this.$store.state.token != '' &&
-              this.$store.state.name != ''
-            "
-          >
-            <v-btn
-              @click="$router.push('/legislacao/criar')"
-              rounded
-              class="white--text clav-linear-background"
-              :class="{
-                'px-8': $vuetify.breakpoint.lgAndUp,
-                'px-2': $vuetify.breakpoint.mdAndDown,
-              }"
-            >
-              <unicon
-                name="criar-icon"
-                width="20"
-                height="20"
-                viewBox="0 0 20.71 20.721"
-                fill="#ffffff"
-              />
-              <p class="ml-2">Criar</p>
-            </v-btn>
-          </v-col>
-          <v-col
-            cols="12"
-            md="4"
-            v-if="
-              [4, 5, 6, 7].includes(this.$userLevel()) &&
-              this.$store.state.token != '' &&
-              this.$store.state.name != ''
-            "
-          >
-            <v-btn
-              @click="legislacaoDialog = true"
-              rounded
-              class="white--text clav-linear-background"
-              :class="{
-                'px-8': $vuetify.breakpoint.lgAndUp,
-                'px-2': $vuetify.breakpoint.mdAndDown,
-              }"
-            >
-              <unicon
-                name="alterar-icon"
-                width="20"
-                height="20"
-                viewBox="0 0 20.71 20.727"
-                fill="#ffffff"
-              />
-              <p class="ml-2">Alterar</p>
-            </v-btn>
-          </v-col>-->
+         
         </v-row>
       </v-container>
-      <!--<CaixaDeDialogo
-        :ativo="legislacaoDialog"
-        :items="legislacao.legislacaoItems"
-        tipo="Legislação"
-        @fechar="legislacaoDialog = !legislacaoDialog"
-        @editar="editar($event)"
-      />-->
+ 
     </v-card>
 </template>
   
