@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AntigoListagem: typeof import('./src/components/generic/antigoListagem.vue')['default']
     CaixaDeDialogo: typeof import('./src/components/generic/CaixaDeDialogo.vue')['default']
     CampoCLAV: typeof import('./src/components/generic/CampoCLAV.vue')['default']
     ClassesArvore: typeof import('./src/components/classes/ClassesArvore.vue')['default']
@@ -17,9 +16,6 @@ declare module 'vue' {
     InfoBox: typeof import('./src/components/generic/InfoBox.vue')['default']
     Legislacao: typeof import('./src/components/classes/consulta/Legislacao.vue')['default']
     Listagem: typeof import('./src/components/generic/Listagem.vue')['default']
-    ListagemE: typeof import('./src/components/generic/ListagemE.vue')['default']
-    ListagemLegislacao: typeof import('./src/components/generic/ListagemLegislacao.vue')['default']
-    ListagemTE: typeof import('./src/components/generic/ListagemTE.vue')['default']
     Loading: typeof import('./src/components/generic/Loading.vue')['default']
     MainPageHeader: typeof import('./src/components/MainPageHeader.vue')['default']
     Noticias: typeof import('./src/components/principal/Noticias.vue')['default']
@@ -30,7 +26,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabelasSelecao: typeof import('./src/components/tabelasSelecao/TabelasSelecao.vue')['default']
-    TabSel: typeof import('./src/components/tabelasSelecao/TabSel.vue')['default']
     Voltar: typeof import('./src/components/generic/Voltar.vue')['default']
   }
 }

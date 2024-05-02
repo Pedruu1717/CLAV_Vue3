@@ -1,6 +1,6 @@
 {
   "name": "CLAV",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--no-warnings' vite",
     "build": "vue-tsc --noEmit && vite build",
