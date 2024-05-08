@@ -85,6 +85,19 @@ const routes = [
     component: () => import("@/pages/tabSel/TabSel.vue"),
     meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
   },
+  // Routes da gestão de utilizadores
+  {
+    path: "/users/autenticacao",
+    name: "autenticacao",
+    component: () => import("@/pages/users/Autenticacao.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
+  },
+  {
+    path: "/users/login",
+    name: "login",
+    component: () => import("@/pages/users/Login.vue"),
+    meta: { levels: [0, 1, 2, 3, 3.5, 4, 5, 6, 7] }
+  },
 
 ]
 

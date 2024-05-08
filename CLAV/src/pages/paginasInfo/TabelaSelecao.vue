@@ -56,7 +56,7 @@
             'px-2': display.mdAndDown
           }"
         >
-        <span class="ml-2 btn-text"><v-icon icon="mdi-magnify btn-icon"/>Consultar</span>
+        <span class="ml-2 btn-text"><v-icon icon="mdi-magnify btn-icon"/> Consultar</span>
         </v-btn>
      </v-col>
     </v-row>

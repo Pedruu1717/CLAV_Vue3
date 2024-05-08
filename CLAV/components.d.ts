@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Autenticacao: typeof import('./src/components/users/Autenticacao.vue')['default']
     CaixaDeDialogo: typeof import('./src/components/generic/CaixaDeDialogo.vue')['default']
     CampoCLAV: typeof import('./src/components/generic/CampoCLAV.vue')['default']
     ClassesArvore: typeof import('./src/components/classes/ClassesArvore.vue')['default']
@@ -17,6 +18,7 @@ declare module 'vue' {
     Legislacao: typeof import('./src/components/classes/consulta/Legislacao.vue')['default']
     Listagem: typeof import('./src/components/generic/Listagem.vue')['default']
     Loading: typeof import('./src/components/generic/Loading.vue')['default']
+    Login: typeof import('./src/components/users/Login.vue')['default']
     MainPageHeader: typeof import('./src/components/MainPageHeader.vue')['default']
     Noticias: typeof import('./src/components/principal/Noticias.vue')['default']
     PageFooter: typeof import('./src/components/PageFooter.vue')['default']

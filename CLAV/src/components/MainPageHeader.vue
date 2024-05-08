@@ -1,6 +1,8 @@
 <template>
   <!--Iniciar sessão-->
-  <v-btn class="btn-iniciar-sessao text-white" rounded="xl" color="green-accent-4" prepend-icon="mdi-key-variant" :text="'INICIAR SESSÃO'"></v-btn>
+  <router-link :to="{name: 'autenticacao'}">
+    <v-btn class="btn-iniciar-sessao text-white" rounded="xl" color="green-accent-4" prepend-icon="mdi-key-variant" :text="'INICIAR SESSÃO'"></v-btn>
+  </router-link>
   <!--Navbar para sm/md/lg/xl screens-->
   <v-tool-bar
     app
@@ -30,23 +32,23 @@
         </v-img>
       </template>
       <span>Voltar à página inicial</span>
-    </v-tooltip>      
-    
+    </v-tooltip>
+
     <!--Botões toolbar CLAV-->
     <v-tabs show-arrows fixed-tabs>
       <v-tab>
       <router-link :to="{name: 'home'}">
         <v-btn :class="(tabAtiva=='CLAV' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('CLAV')" :color="(tabAtiva=='CLAV' ? 'white' : 'transparent')" prepend-icon="mdi-home-outline">CLAV</v-btn>
       </router-link>
-      </v-tab>      
+      </v-tab>
       <v-tab><v-btn :class="(tabAtiva=='Registo na CLAV' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Registo na CLAV')" :color="(tabAtiva=='Registo na CLAV' ? 'white' : 'transparent')" prepend-icon="mdi-account-plus-outline">Registo na CLAV</v-btn></v-tab>
       <v-menu>
-        <template v-slot:activator="{ props: menu }">           
+        <template v-slot:activator="{ props: menu }">
         <v-tab>
           <v-btn :class="(tabAtiva=='Operações' ? 'text-blue-darken-4' : 'text-white')" flat @click="toggle('Operações')" :color="(tabAtiva=='Operações' ? 'white' : 'transparent')" v-bind="menu" prepend-icon="mdi-cog-outline">Operações</v-btn>
-        </v-tab>     
+        </v-tab>
         </template>
-        <v-card>           
+        <v-card>
           <v-list class="list">
               <v-list-item>
                 <router-link :to="{name: 'lcInfo'}" >
@@ -63,7 +65,7 @@
                     <v-icon icon="mdi-magnify"/>
                   </router-link>
                 </router-link>
-              </v-list-item>               
+              </v-list-item>
               <v-list-item>
                 <router-link :to="{name: 'entInfo'}">
                   <v-btn flat @click="" color="white">Entidades</v-btn>
@@ -71,7 +73,7 @@
                     <v-icon icon="mdi-magnify"/>
                   </router-link>
                 </router-link>
-              </v-list-item>              
+              </v-list-item>
               <v-list-item>
                 <router-link :to="{name: 'tipEntInfo'}">
                   <v-btn flat @click="" color="white">Tipologias de Entidades</v-btn>
@@ -109,7 +111,7 @@ watch(tabAtiva, (newValue) => {
 })
 
 function toggle(btn) {
-  tabAtiva.value = btn   
+  tabAtiva.value = btn
 }
 
 function go(url, param) {
@@ -123,8 +125,8 @@ function go(url, param) {
 
 <style scoped>
 .btn-iniciar-sessao {
-  position: absolute; 
-  right: 1%; 
+  position: absolute;
+  right: 1%;
   margin-top: 30px;
 }
 
