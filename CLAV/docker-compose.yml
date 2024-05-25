@@ -1,11 +1,9 @@
 services:
-  interface:
+  interfaceB:
     image: clav-interface-vue3
-    container_name: interface
+    container_name: interfaceB
     ports:
       - "8082:4173"
-    volumes:
-      - .:/app
     #build:
       #context: .
       #dockerfile: Dockerfile
