@@ -14,7 +14,7 @@ declare module 'vue' {
     ConsultaClasse: typeof import('./src/components/classes/consulta/ConsultaClasse.vue')['default']
     Definicoes: typeof import('./src/components/principal/Definicoes.vue')['default']
     Info: typeof import('./src/components/principal/Info.vue')['default']
-    InfoBox: typeof import('./src/components/generic/infoBox.vue')['default']
+    InfoBox: typeof import('./src/components/generic/InfoBox.vue')['default']
     Legislacao: typeof import('./src/components/classes/consulta/Legislacao.vue')['default']
     Listagem: typeof import('./src/components/generic/Listagem.vue')['default']
     Loading: typeof import('./src/components/generic/Loading.vue')['default']
