@@ -31,6 +31,10 @@
                             hide-details
                             required
                             prepend-icon="mdi-lock-outline"
+                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="show1 ? 'text' : 'password'"
+                            @click:append="show1 = !show1"
+                            autocomplete="on"
                         ></v-text-field>
                         </v-col>
                     </v-row>
@@ -89,6 +93,7 @@ const display  = useDisplay();
 const store = useAppStore()
 
 var valid = ref(false)
+var show1 = ref(false)
 var email = ref('')
 var password = ref('')
 
