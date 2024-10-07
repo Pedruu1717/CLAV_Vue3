@@ -11,6 +11,6 @@ const dominioDefault = "https://qldclav.dglab.gov.pt";
 const dominio = process.env.VUE_APP_API_URL || dominioDefault;
 const apiVersion = process.env.VUE_APP_API_VERSION || "v2";
 
-export const interfaceVersion = process.env.VUE_APP_INTERFACE_VERSION || "2022-10-18";
+export const interfaceVersion = process.env.VUE_APP_INTERFACE_VERSION || "2024-09-23";
 
 export const host = dominio + "/" + apiVersion;
