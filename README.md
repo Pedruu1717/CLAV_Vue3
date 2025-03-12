@@ -7,5 +7,5 @@ To run the app:
   - Build image: docker build -t clav-interface .
   - Create and run container: docker run -p 8082:4173 clav-interface
   - Go to localhost:8082 on the browser
-\
-Note: Official credentials (login with email and password) are needed to get access to the platform's content.
+
+**Note**: Official credentials (login with email and password) are needed to get access to the platform's content.
